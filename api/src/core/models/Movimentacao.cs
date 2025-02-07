@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Model.Movimentacao;
 
 namespace Model.Movimentacao;
 
+[Table("movimentacao")]
 public class MovimentacaoModel {
 
     public int id { get ; set; }

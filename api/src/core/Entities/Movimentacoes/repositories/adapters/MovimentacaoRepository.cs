@@ -7,25 +7,37 @@ namespace Repositories.Adapters.Movimentacao;
 
 public class MovimentacaoRepository: IMovimentacaoRepository {
 
-    public Context Context;
+        private readonly Context _context;
 
     public MovimentacaoRepository (Context context) {
-        Context = context;
+        _context = context;
         
     }
-    public async void CriarMovimentacao(MovimentacaoModel data) {
-        await Context.AddAsync(data);
+    public async Task<MovimentacaoModel> CriarMovimentacao(MovimentacaoModel data) {
+
+        if (data == null) {
+            throw new ArgumentNullException(nameof(data));
+        }
+
+        await _context.Movimentacoes.AddAsync(data);
+        await _context.SaveChangesAsync();
+        return data;
     }
-    public async Task<MovimentacaoModel[]> BuscarMovimentacoes() {
-        var movimentacoes = await Movimentacoes
-            .Where(m => 
-                m.criadoEm.Month == DateTime.Now.Month 
-                && m.criadoEm.Year == DateTime.Now.Year )
+    public async Task<List<MovimentacaoModel>> BuscarPorPeriodo(DateTime inicio, DateTime fim) {
+        return await _context.Movimentacoes
+            .Where(m => m.criadoEm >= inicio && m.criadoEm <= fim)
+            .OrderBy(m => m.criadoEm)
             .ToListAsync();
-        return movimentacoes;
     }
-    public void AtualizarMovimentacao(int id, MovimentacaoModel data) {
-        
+    public async Task<MovimentacaoModel> AtualizarMovimentacao(int id, MovimentacaoModel data) {
+
+        var movimentacaoExistente = await _context.Movimentacoes.FindAsync(id);
+        if ( movimentacaoExistente == null ) {
+            throw new KeyNotFoundException("Movimentação não encontrada!");
+        }
+
+        _context.Entry(movimentacaoExistente).CurrentValues.SetValues(data);
+        return data;
     }
 
 }

@@ -5,8 +5,8 @@ namespace Repositories.Movimentacao;
 
 interface IMovimentacaoRepository {
 
-    public void CriarMovimentacao(MovimentacaoModel data);
-    public Task<MovimentacaoModel[]> BuscarMovimentacoes();
-    public void AtualizarMovimentacao(int id, MovimentacaoModel data);
+    public Task<MovimentacaoModel> CriarMovimentacao(MovimentacaoModel data);
+    public Task<List<MovimentacaoModel>> BuscarPorPeriodo(DateTime inicio, DateTime fim);
+    public Task<MovimentacaoModel> AtualizarMovimentacao(int id, MovimentacaoModel data);
 
 }
