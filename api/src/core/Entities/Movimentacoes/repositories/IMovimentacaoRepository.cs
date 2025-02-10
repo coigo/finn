@@ -1,12 +1,12 @@
 
-using Model.Movimentacao;
+using Movimentacoes.Models;
 
-namespace Repositories.Movimentacao;
+namespace Movimentacoes.Repositories;
 
-interface IMovimentacaoRepository {
+public interface IMovimentacaoRepository {
 
-    public Task<MovimentacaoModel> CriarMovimentacao(MovimentacaoModel data);
-    public Task<List<MovimentacaoModel>> BuscarPorPeriodo(DateTime inicio, DateTime fim);
-    public Task<MovimentacaoModel> AtualizarMovimentacao(int id, MovimentacaoModel data);
+    public Task<Movimentacao> CriarMovimentacao(Movimentacao data);
+    public Task<List<Movimentacao>> BuscarPorPeriodo(DateTime inicio, DateTime fim);
+    public Task<Movimentacao> AtualizarMovimentacao(int id, Movimentacao data);
 
 }

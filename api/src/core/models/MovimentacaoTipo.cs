@@ -1,4 +1,4 @@
-namespace Model.Movimentacao;
+namespace Movimentacoes.Models;
 
 public enum MovimentacaoTipo {
     ENTRADA,

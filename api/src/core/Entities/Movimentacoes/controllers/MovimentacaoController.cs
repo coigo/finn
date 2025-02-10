@@ -2,7 +2,7 @@ using System.ComponentModel;
 using System.Numerics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Movimentacao.Controller;
+namespace Movimentacoes.Controller;
 
 [ApiController]
 [Route("movimentacoes")]

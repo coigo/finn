@@ -1,21 +1,25 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Model.Movimentacao;
+using Movimentacoes.Models  ;
 
-namespace Model.Movimentacao;
+namespace Movimentacoes.Models;
 
 [Table("movimentacao")]
-public class MovimentacaoModel {
+public class Movimentacao {
 
-    public int id { get ; set; }
+    [Key]
+    public int Id { get ; set; }
     public float Valor { get ; set; }
     public MovimentacaoTipo Tipo { get ; set; }
-    public required MovimentacaoCategoriaModel Categoria { get ; set; }
+    public MovimentacaoCategoria Categoria { get ; set; }
     public DateTime criadoEm { get ; set; } = DateTime.Now;   
 
-    public MovimentacaoModel ( 
+    protected Movimentacao () {}
+
+    public Movimentacao ( 
         float valor, 
         MovimentacaoTipo tipo, 
-        MovimentacaoCategoriaModel categoria
+        MovimentacaoCategoria categoria
         ) {
         
         Valor = valor;

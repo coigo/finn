@@ -1,12 +1,13 @@
-using Model.Movimentacao;
+using Movimentacoes.Models;
 
-namespace Model.Movimentacao;
+namespace Movimentacoes.Models;
 
-public class MovimentacaoParcelaModel {
+public class MovimentacaoParcela {
 
+    
     public int Id { get; set; }
-    public required MovimentacaoModel MovimentacaoId { get; set; }
-    public required int Vumero { get; set; }
+    public required Movimentacao MovimentacaoId { get; set; }
+    public required int Numero { get; set; }
     public required float Valor { get; set; }
     public DateTime CriadoEm { get; set; } = DateTime.Now;
 }

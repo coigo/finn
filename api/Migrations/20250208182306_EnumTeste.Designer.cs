@@ -3,6 +3,7 @@ using System;
 using Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace api.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20250208182306_EnumTeste")]
+    partial class EnumTeste
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.12");
@@ -39,21 +42,17 @@ namespace api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MovimentacoesCategorias");
+                    b.ToTable("MovimentacoesCategorias", t =>
+                        {
+                            t.HasCheckConstraint("Movimentacao_Categoria_Tipo", "[Tipo] in ('ENTRADA', 'SAIDA')");
+                        });
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CriadoEm = new DateTime(2025, 2, 9, 11, 44, 56, 433, DateTimeKind.Local).AddTicks(2975),
+                            CriadoEm = new DateTime(2025, 2, 8, 14, 23, 6, 473, DateTimeKind.Local).AddTicks(3624),
                             Nome = "Comida",
-                            Tipo = "SAIDA"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CriadoEm = new DateTime(2025, 2, 9, 11, 44, 56, 433, DateTimeKind.Local).AddTicks(3011),
-                            Nome = "Educação",
                             Tipo = "SAIDA"
                         });
                 });

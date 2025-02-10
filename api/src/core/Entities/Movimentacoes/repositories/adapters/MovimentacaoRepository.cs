@@ -1,9 +1,8 @@
 using Infra.Database;
 using Microsoft.EntityFrameworkCore;
-using Model.Movimentacao;
-using Repositories.Movimentacao;
+using Movimentacoes.Models;
 
-namespace Repositories.Adapters.Movimentacao;
+namespace Movimentacoes.Repositories.Adapters;
 
 public class MovimentacaoRepository: IMovimentacaoRepository {
 
@@ -13,7 +12,7 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
         _context = context;
         
     }
-    public async Task<MovimentacaoModel> CriarMovimentacao(MovimentacaoModel data) {
+    public async Task<Movimentacao> CriarMovimentacao(Movimentacao data) {
 
         if (data == null) {
             throw new ArgumentNullException(nameof(data));
@@ -23,13 +22,13 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
         await _context.SaveChangesAsync();
         return data;
     }
-    public async Task<List<MovimentacaoModel>> BuscarPorPeriodo(DateTime inicio, DateTime fim) {
+    public async Task<List<Movimentacao>> BuscarPorPeriodo(DateTime inicio, DateTime fim) {
         return await _context.Movimentacoes
             .Where(m => m.criadoEm >= inicio && m.criadoEm <= fim)
             .OrderBy(m => m.criadoEm)
             .ToListAsync();
     }
-    public async Task<MovimentacaoModel> AtualizarMovimentacao(int id, MovimentacaoModel data) {
+    public async Task<Movimentacao> AtualizarMovimentacao(int id, Movimentacao data) {
 
         var movimentacaoExistente = await _context.Movimentacoes.FindAsync(id);
         if ( movimentacaoExistente == null ) {

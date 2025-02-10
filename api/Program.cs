@@ -1,4 +1,6 @@
 using Infra.Database;
+using Movimentacoes.Repositories.Adapters;
+using Movimentacoes.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<Context>();
+builder.Services.AddScoped<IMovimentacaoRepository, MovimentacaoRepository>();
 
 var app = builder.Build();
 

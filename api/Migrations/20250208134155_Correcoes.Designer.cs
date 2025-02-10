@@ -3,6 +3,7 @@ using System;
 using Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace api.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20250208134155_Correcoes")]
+    partial class Correcoes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.12");
@@ -33,29 +36,12 @@ namespace api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Tipo")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Tipo")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.ToTable("MovimentacoesCategorias");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CriadoEm = new DateTime(2025, 2, 9, 11, 44, 56, 433, DateTimeKind.Local).AddTicks(2975),
-                            Nome = "Comida",
-                            Tipo = "SAIDA"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CriadoEm = new DateTime(2025, 2, 9, 11, 44, 56, 433, DateTimeKind.Local).AddTicks(3011),
-                            Nome = "Educação",
-                            Tipo = "SAIDA"
-                        });
                 });
 
             modelBuilder.Entity("Movimentacoes.Models.MovimentacaoModel", b =>
@@ -67,9 +53,8 @@ namespace api.Migrations
                     b.Property<int>("CategoriaId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Tipo")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Tipo")
+                        .HasColumnType("INTEGER");
 
                     b.Property<float>("Valor")
                         .HasColumnType("REAL");

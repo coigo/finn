@@ -1,17 +1,17 @@
- using Model.Movimentacao;
+ using Movimentacoes.Models;
 
-namespace Model.Movimentacao;
+namespace Movimentacoes.Models;
 
-public class MovimentacaoCategoriaModel {
+public class MovimentacaoCategoria {
 
     public int Id { get ; set; }
     public string Nome { get ; set; }
     public MovimentacaoTipo Tipo { get; set; }
     public DateTime CriadoEm { get; set; } = DateTime.Now;
     public DateTime? DeletadoEm { get; set; }
-    public List<MovimentacaoModel> Movimentacoes { get ; set; } = new List<MovimentacaoModel>();
+    public List<Movimentacao> Movimentacoes { get ; set; } = new List<Movimentacao>();
 
-    public MovimentacaoCategoriaModel (
+    public MovimentacaoCategoria (
         string nome,
         MovimentacaoTipo tipo
     ) {
