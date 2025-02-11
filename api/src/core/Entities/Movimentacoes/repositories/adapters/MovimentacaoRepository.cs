@@ -24,8 +24,8 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
     }
     public async Task<List<Movimentacao>> BuscarPorPeriodo(DateTime inicio, DateTime fim) {
         return await _context.Movimentacoes
-            .Where(m => m.criadoEm >= inicio && m.criadoEm <= fim)
-            .OrderBy(m => m.criadoEm)
+            .Where(m => m.CriadoEm >= inicio && m.CriadoEm <= fim)
+            .OrderBy(m => m.CriadoEm)
             .ToListAsync();
     }
     public async Task<Movimentacao> AtualizarMovimentacao(int id, Movimentacao data) {
