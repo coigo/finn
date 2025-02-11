@@ -9,4 +9,6 @@ public interface IMovimentacaoRepository {
     public Task<List<Movimentacao>> BuscarPorPeriodo(DateTime inicio, DateTime fim);
     public Task<Movimentacao> AtualizarMovimentacao(int id, Movimentacao data);
 
+    public Task<MovimentacaoParcela> CriarParcelas(MovimentacaoParcela data);
+
 }

@@ -39,4 +39,14 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
         return data;
     }
 
+    public async Task<MovimentacaoParcela> CriarParcelas(MovimentacaoParcela data ) {
+        if (data == null) {
+            throw new ArgumentNullException(nameof(data));
+        }
+        
+        await _context.MovimentacaoParcelas.AddAsync(data);
+        await _context.SaveChangesAsync();
+        return data;
+    }
+
 }

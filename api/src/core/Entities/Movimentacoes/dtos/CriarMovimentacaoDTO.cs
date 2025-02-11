@@ -2,9 +2,13 @@ using Movimentacoes.Models;
 
 namespace Movimentacoes.DTOS;
 
-public record CriarMovimentacao {
-    public float valor;
-    public MovimentacaoTipo tipo;
-    public MovimentacaoCategoria categoria;
+public record CriarMovimentacao (
+    float valor,
+    MovimentacaoTipo tipo,
+    MovimentacaoCategoria categoria,
+
+    int? quantidadeParcelas,
+    DateTime? primeiroVencimento
+
     
-}
+) {}

@@ -16,12 +16,26 @@ public class MovimentacaoParcela {
     [ForeignKey("MovimentacaoId")]
     public required Movimentacao Movimentacao { get; set; }
 
-    [Column("numero")]
-    public required int Numero { get; set; }
-
     [Column("valor")]
     public required float Valor { get; set; }
+
+    [Column("numero")]
+    public required int Numero { get; set; }
     
+    [DataType(DataType.Date)]
+    [Column("vencimento")]
+    public DateTime Vencimento { get; set; }
+
     [Column("criadoEm")]
     public DateTime CriadoEm { get; set; } = DateTime.Now;
+
+    protected MovimentacaoParcela () {}
+
+    public MovimentacaoParcela (int movimentacaoId, float valor, int numero, DateTime vencimento) {
+        MovimentacaoId = movimentacaoId;
+        Valor = valor;
+        Numero = numero;
+        Vencimento = vencimento;
+    }
+
 }
