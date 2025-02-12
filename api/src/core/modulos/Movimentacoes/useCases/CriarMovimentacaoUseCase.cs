@@ -24,18 +24,21 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, Movimentacao
 
         Movimentacao mov = await this._movimentacoes.CriarMovimentacao(movimentacao);
 
-        if (quantidadeParcelas != null ) {
+        if (quantidadeParcelas != null && primeiroVencimento != null ) {
 
             int quantidade = quantidadeParcelas.Value;
-            
-            // for ( int i = 0; i < quantidadeParcelas; i ++ ) {
-            //     MovimentacaoParcela parcela = new (
-            //         mov.Id, 
-            //         mov.Valor / quantidade,
-            //         i,
-            //         primeiroVencimento
-            //     );
-            // }
+            DateTime vencimento = primeiroVencimento.Value;
+
+            for ( int i = 0; i < quantidadeParcelas; i ++ ) {
+                MovimentacaoParcela parcela = new (
+                    mov, 
+                    mov.Valor / quantidade,
+                    i + 1,
+                    vencimento.AddMonths(i)
+                );
+
+                await this._movimentacoes.CriarParcelas(parcela);
+            }
 
         }
         return mov;

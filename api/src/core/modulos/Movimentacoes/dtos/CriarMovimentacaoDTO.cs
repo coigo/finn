@@ -4,11 +4,13 @@ namespace Movimentacoes.DTOS;
 
 public record CriarMovimentacao (
     float valor,
-    MovimentacaoTipo tipo,
-    MovimentacaoCategoria categoria,
+    string tipo,
+    int categoria,
 
     int? quantidadeParcelas,
     DateTime? primeiroVencimento
 
-    
 ) {}
+
+//	"quantidadeParcelas":undefined,
+//"primeiroVencimento":undefined

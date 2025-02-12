@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Movimentacoes.DTOS;
+using Movimentacoes.Models;
 using Movimentacoes.UseCases;
 
 namespace Pessoa.Routes ;
@@ -14,13 +15,12 @@ public class CriarMovimentacaoController : ControllerBase {
         UseCase = useCase;
     }
 
-    [HttpGet]
-    public  int handle () {
+    [HttpPost]
+    public async Task<Movimentacao> handle ([FromBody] CriarMovimentacao data) {
         Console.WriteLine("asdasdad");
         
-
-        return 200;
-        // return await UseCase.Execute(data);
+        var mov = await UseCase.Execute(data);
+        return mov;
     }
 
 }
