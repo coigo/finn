@@ -1,6 +1,8 @@
 using Infra.Database;
-using Movimentacoes.Repositories.Adapters;
 using Movimentacoes.Repositories;
+using Movimentacoes.Repositories.Adapters;
+using Movimentacoes.UseCases;
+using Pessoa.Routes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,9 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
 builder.Services.AddScoped<Context>();
 builder.Services.AddScoped<IMovimentacaoRepository, MovimentacaoRepository>();
-
+builder.Services.AddScoped<CriarMovimentacaoUseCase>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -18,33 +21,17 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+}   
 
-app.UseHttpsRedirection();
+app.Use(async (context, next) => {
+    Console.WriteLine("primeiro");
+    await next(context);
+});
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+app.UseRouting();
+app.MapControllers();
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
-
+Console.WriteLine("> Ligando.");
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+

@@ -1,25 +1,26 @@
-using System.ComponentModel;
-using System.Numerics;
 using Microsoft.AspNetCore.Mvc;
 using Movimentacoes.DTOS;
-using Movimentacoes.Models;
 using Movimentacoes.UseCases;
 
-namespace Movimentacoes.Controller;
+namespace Pessoa.Routes ;
 
 [ApiController]
 [Route("movimentacoes")]
-public class CriarMovimentacaoController : ControllerBase{
+public class CriarMovimentacaoController : ControllerBase {
 
     private readonly CriarMovimentacaoUseCase UseCase;
 
-    public CriarMovimentacaoController ( CriarMovimentacaoUseCase usecase) {
-        UseCase = usecase;
+    public CriarMovimentacaoController(CriarMovimentacaoUseCase useCase) {
+        UseCase = useCase;
     }
-    
-    [HttpPost("/")]
-    public async Task<Movimentacao> CriarMovimentacao ([FromBody] CriarMovimentacao data) {
-        return await this.UseCase.Execute(data);
-    } 
+
+    [HttpGet]
+    public  int handle () {
+        Console.WriteLine("asdasdad");
+        
+
+        return 200;
+        // return await UseCase.Execute(data);
+    }
 
 }
