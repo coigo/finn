@@ -23,9 +23,28 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }   
 
-app.Use(async (context, next) => {
-    Console.WriteLine("primeiro");
-    await next(context);
+app.UseExceptionHandler( appError => {
+
+    appError.Run( async context => {
+        var exceptionHandler = context.Features.Get<IExceptionHandlerFeature>();
+        
+        if ( exceptionHandler != null ) {
+            Console.WriteLine(exceptionHandler.Path);
+
+            var exceptionType = exceptionHandler.Error;
+
+            if ( exceptionType is ArgumentException ) {
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await context.Response.WriteAsync("Argumento inválido.");
+            }
+            else {
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                await context.Response.WriteAsync("Erro Interno.");
+            }
+
+        }
+    });
+
 });
 
 app.UseRouting();
