@@ -1,4 +1,5 @@
 using Infra.Database;
+using Microsoft.AspNetCore.Diagnostics;
 using Movimentacoes.Repositories;
 using Movimentacoes.Repositories.Adapters;
 using Movimentacoes.UseCases;
@@ -14,6 +15,10 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<Context>();
 builder.Services.AddScoped<IMovimentacaoRepository, MovimentacaoRepository>();
 builder.Services.AddScoped<CriarMovimentacaoUseCase>();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

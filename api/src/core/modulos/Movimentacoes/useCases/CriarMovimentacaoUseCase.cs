@@ -14,12 +14,12 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, Movimentacao
 
     public async Task<Movimentacao> Execute (CriarMovimentacao data) {
         
-        var (valor, tipo, categoria, quantidadeParcelas, primeiroVencimento) = data;
+        var (valor, tipo, categoriaId, quantidadeParcelas, primeiroVencimento) = data;
 
         Movimentacao movimentacao = new (
             valor,
             tipo, 
-            categoria
+            categoriaId
         );
 
         Movimentacao mov = await this._movimentacoes.CriarMovimentacao(movimentacao);

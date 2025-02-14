@@ -4,8 +4,8 @@ namespace Movimentacoes.DTOS;
 
 public record CriarMovimentacao (
     float valor,
-    string tipo,
-    int categoria,
+    MovimentacaoTipo tipo,
+    int categoriaId,
 
     int? quantidadeParcelas,
     DateTime? primeiroVencimento

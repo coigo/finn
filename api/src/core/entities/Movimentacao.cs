@@ -33,12 +33,12 @@ public class Movimentacao {
     public Movimentacao ( 
         float valor, 
         MovimentacaoTipo tipo, 
-        MovimentacaoCategoria categoria
+        int categoriaId
         ) {
         
         Valor = valor;
         Tipo = tipo;
-        Categoria = categoria;
+        CategoriaId = categoriaId;
 
     }
 
