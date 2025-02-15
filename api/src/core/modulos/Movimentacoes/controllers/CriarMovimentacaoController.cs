@@ -17,7 +17,6 @@ public class CriarMovimentacaoController : ControllerBase {
 
     [HttpPost]
     public async Task<Movimentacao> handle ([FromBody] CriarMovimentacao data) {
-        Console.WriteLine("asdasdad");
         
         var mov = await UseCase.Execute(data);
         return mov;

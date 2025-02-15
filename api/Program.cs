@@ -15,9 +15,10 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<Context>();
 builder.Services.AddScoped<IMovimentacaoRepository, MovimentacaoRepository>();
 builder.Services.AddScoped<CriarMovimentacaoUseCase>();
+builder.Services.AddScoped<BuscarMovimentacoesUseCase>();
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
-    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
 });
 var app = builder.Build();
 
