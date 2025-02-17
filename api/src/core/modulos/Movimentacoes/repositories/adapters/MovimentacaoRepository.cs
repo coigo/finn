@@ -1,5 +1,6 @@
 using Infra.Database;
 using Microsoft.EntityFrameworkCore;
+using Movimentacoes.DTOS;
 using Movimentacoes.Models;
 
 namespace Movimentacoes.Repositories.Adapters;
@@ -22,11 +23,23 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
         await _context.SaveChangesAsync();
         return data;
     }
-    public async Task<List<Movimentacao>> BuscarPorPeriodo(DateTime inicio, DateTime fim) {
-        return await _context.Movimentacoes
-            .Where(m => m.CriadoEm >= inicio && m.CriadoEm <= fim)
-            .OrderBy(m => m.CriadoEm)
-            .ToListAsync();
+    public async Task<List<ListaMovimentacoesDTO>> BuscarPorPeriodo(DateTime inicio, DateTime fim) {
+        return await _context.Database.SqlQuery<ListaMovimentacoesDTO>($@"
+            SELECT 
+                COALESCE(mp.valor, m.valor) AS valor,
+                m.tipo,
+                m.categoria_id,
+                m.criadoEm,
+                mp.vencimento
+            FROM movimentacoes m
+            LEFT JOIN movimentacoes_parcelas mp 
+                ON mp.movimentacao_id = m.id 
+                AND mp.vencimento BETWEEN '{inicio}' AND '{fim}'
+            WHERE 
+                m.criadoEm BETWEEN '{inicio}' AND '{fim}'
+                OR mp.vencimento BETWEEN '{inicio}' AND '{fim}'
+            GROUP BY m.id")
+        .ToListAsync();
     }
     public async Task<Movimentacao> AtualizarMovimentacao(int id, Movimentacao data) {
 

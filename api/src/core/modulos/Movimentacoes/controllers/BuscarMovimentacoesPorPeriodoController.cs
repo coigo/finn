@@ -16,7 +16,7 @@ public class BuscarMovimentacoesPorPeriodoController : ControllerBase {
     }
 
     [HttpGet]
-    public async Task<List<Movimentacao>> handle ([FromQuery] BuscarPorPeriodoDTO query) {
+    public async Task<List<ListaMovimentacoesDTO>> handle ([FromQuery] BuscarPorPeriodoDTO query) {
         
         var mov = await UseCase.Execute(query);
         return mov;
