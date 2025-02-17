@@ -34,10 +34,10 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
             FROM movimentacoes m
             LEFT JOIN movimentacoes_parcelas mp 
                 ON mp.movimentacao_id = m.id 
-                AND mp.vencimento BETWEEN '{inicio}' AND '{fim}'
+                AND mp.vencimento BETWEEN {inicio} AND {fim}
             WHERE 
-                m.criadoEm BETWEEN '{inicio}' AND '{fim}'
-                OR mp.vencimento BETWEEN '{inicio}' AND '{fim}'
+                m.criadoEm BETWEEN {inicio} AND {fim}
+                OR mp.vencimento BETWEEN {inicio} AND {fim}
             GROUP BY m.id")
         .ToListAsync();
     }
