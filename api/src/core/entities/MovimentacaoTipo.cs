@@ -2,5 +2,6 @@ namespace Movimentacoes.Models;
 
 public enum MovimentacaoTipo {
     ENTRADA,
-    SAIDA
+    SAIDA,
+    INVESTIMENTOS,
 }

@@ -24,24 +24,47 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, Movimentacao
 
         Movimentacao mov = await this._movimentacoes.CriarMovimentacao(movimentacao);
 
+        var SalvarPorTipo = new Dictionary<MovimentacaoTipo, Action<Movimentacao, CriarMovimentacao>>{
+
+            {MovimentacaoTipo.INVESTIMENTOS, CriarTipoInvestimento},
+            {MovimentacaoTipo.ENTRADA, CriarTipoEntrada},
+            {MovimentacaoTipo.SAIDA, CriarTipoSaida}
+        };
+
+        SalvarPorTipo[tipo](mov, data);
+
+        return mov;
+    }
+
+    private async void CriarTipoSaida(Movimentacao movimentacao, CriarMovimentacao data) {
+
+        var (valor, tipo, categoriaId, quantidadeParcelas, primeiroVencimento) = data;
         if (quantidadeParcelas != null && primeiroVencimento != null ) {
 
-            int quantidade = quantidadeParcelas.Value;
-            DateTime vencimento = primeiroVencimento.Value;
+        int quantidade = quantidadeParcelas.Value;
+        DateTime vencimento = primeiroVencimento.Value;
 
-            for ( int i = 0; i < quantidadeParcelas; i ++ ) {
+        for ( int i = 0; i < quantidadeParcelas; i ++ ) {
                 MovimentacaoParcela parcela = new (
-                    mov, 
-                    mov.Valor / quantidade,
+                    movimentacao, 
+                    movimentacao.Valor / quantidade,
                     i + 1,
                     vencimento.AddMonths(i)
                 );
 
                 await this._movimentacoes.CriarParcelas(parcela);
             }
-
         }
-        return mov;
+
+    }
+
+    private async void CriarTipoInvestimento(Movimentacao movimentacao, CriarMovimentacao data) {
+        Console.WriteLine("testinho");
+    }
+
+    private async void CriarTipoEntrada(Movimentacao movimentacao, CriarMovimentacao data) {
+        Console.WriteLine("testinho");
+        
     }
 
 }

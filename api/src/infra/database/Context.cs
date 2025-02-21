@@ -36,6 +36,10 @@ public class Context : DbContext {
                 new MovimentacaoCategoria("Transferências", MovimentacaoTipo.ENTRADA) {Id = 12},
                 new MovimentacaoCategoria("Outros", MovimentacaoTipo.ENTRADA) {Id = 13}
             );
+            modelBuilder.Entity<Resumo>().HasData(
+                new Resumo(0, "Corrente") {Id = 1},
+                new Resumo(0, "Investimentos") {Id = 2}
+            );
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
