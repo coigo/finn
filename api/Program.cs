@@ -1,9 +1,8 @@
 using Infra.Database;
+using Infra.Repositories;
+using Infra.Repositories.Adapters;
 using Microsoft.AspNetCore.Diagnostics;
-using Movimentacoes.Repositories;
-using Movimentacoes.Repositories.Adapters;
 using Movimentacoes.UseCases;
-using Pessoa.Routes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddScoped<Context>();
 builder.Services.AddScoped<IMovimentacaoRepository, MovimentacaoRepository>();
+builder.Services.AddScoped<IResumoRepository, ResumoRepository>();
 builder.Services.AddScoped<CriarMovimentacaoUseCase>();
 builder.Services.AddScoped<BuscarMovimentacoesUseCase>();
 builder.Services.AddControllers().AddJsonOptions(options =>

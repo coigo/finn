@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Movimentacoes.Models;
+namespace Resumos.Models;
 
 [Table("resumo")]
 public class Resumo {

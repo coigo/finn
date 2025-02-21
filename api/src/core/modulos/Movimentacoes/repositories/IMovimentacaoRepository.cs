@@ -2,7 +2,7 @@
 using Movimentacoes.DTOS;
 using Movimentacoes.Models;
 
-namespace Movimentacoes.Repositories;
+namespace Infra.Repositories;
 
 public interface IMovimentacaoRepository {
 

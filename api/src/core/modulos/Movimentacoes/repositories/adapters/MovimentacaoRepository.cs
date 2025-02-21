@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Movimentacoes.DTOS;
 using Movimentacoes.Models;
 
-namespace Movimentacoes.Repositories.Adapters;
+namespace Infra.Repositories.Adapters;
 
 public class MovimentacaoRepository: IMovimentacaoRepository {
 

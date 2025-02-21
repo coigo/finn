@@ -1,15 +1,19 @@
 using Infra.Shared;
 using Movimentacoes.Models;
 using Movimentacoes.DTOS;
-using Movimentacoes.Repositories;
+using Infra.Repositories;
+using Resumos.Models;
 
 namespace Movimentacoes.UseCases;
 
 public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, Movimentacao> {
 
     private readonly IMovimentacaoRepository _movimentacoes;
-    public CriarMovimentacaoUseCase ( IMovimentacaoRepository movimentacoes ) {
+    private readonly IResumoRepository _resumos;
+
+    public CriarMovimentacaoUseCase ( IMovimentacaoRepository movimentacoes, IResumoRepository resumos ) {
         _movimentacoes = movimentacoes;
+        _resumos = resumos;
     }
 
     public async Task<Movimentacao> Execute (CriarMovimentacao data) {
@@ -55,11 +59,14 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, Movimentacao
                 await this._movimentacoes.CriarParcelas(parcela);
             }
         }
-
     }
 
     private async void CriarTipoInvestimento(Movimentacao movimentacao, CriarMovimentacao data) {
-        Console.WriteLine("testinho");
+        Console.WriteLine("chegou aqui");
+        Resumo resumo = await this._resumos.BuscarResumoPorNome("Investimentos");
+        resumo.Valor += data.valor; 
+        Console.WriteLine(resumo);
+        await this._resumos.AtualizarResumo(resumo.Id, resumo);
     }
 
     private async void CriarTipoEntrada(Movimentacao movimentacao, CriarMovimentacao data) {

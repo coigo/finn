@@ -1,7 +1,7 @@
 using Infra.Shared;
 using Movimentacoes.Models;
 using Movimentacoes.DTOS;
-using Movimentacoes.Repositories;
+using Infra.Repositories;
 
 namespace Movimentacoes.UseCases;
 

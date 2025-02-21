@@ -1,11 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using Movimentacoes.Models;
+using Resumos.Models;
 
 namespace Infra.Database  {
 public class Context : DbContext {
+    
         public required DbSet<Movimentacao> Movimentacoes { get; set; }
         public required DbSet<MovimentacaoCategoria> MovimentacoesCategorias { get; set; }
         public required DbSet<MovimentacaoParcela> MovimentacaoParcelas { get; set; }
+
+        public required DbSet<Resumo> Resumos { get; set; }
+        public required DbSet<ResumoHistorico> ResumoHistoricos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
