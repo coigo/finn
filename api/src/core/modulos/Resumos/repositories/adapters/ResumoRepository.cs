@@ -30,6 +30,7 @@ public class ResumoRepository : IResumoRepository {
         }
 
         _context.Entry(resumoExistente).CurrentValues.SetValues(data);
+        await _context.SaveChangesAsync();
         return data;
 
     }
@@ -40,7 +41,7 @@ public class ResumoRepository : IResumoRepository {
     }
 
     public async Task<Resumo> BuscarResumoPorNome(string Nome) {
-        var resumo = await _context.Resumos.Where(m => m.Nome == Nome).FirstOrDefaultAsync ();
+        var resumo = await _context.Resumos.Where(m => m.Nome == Nome).FirstAsync();
         if (resumo == null) {
             throw new KeyNotFoundException("Reusmo não encontrado!");
         }

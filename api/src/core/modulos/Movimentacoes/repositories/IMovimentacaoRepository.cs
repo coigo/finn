@@ -12,4 +12,6 @@ public interface IMovimentacaoRepository {
 
     public Task<MovimentacaoParcela> CriarParcelas(MovimentacaoParcela data);
 
+    public Task<MovimentacaoCategoria> BuscarCategoriaPorNome(string nome);
+
 }

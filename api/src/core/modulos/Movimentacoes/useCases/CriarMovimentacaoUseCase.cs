@@ -24,24 +24,21 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, Movimentacao
             valor,
             tipo, 
             categoriaId
-        );
+        ); 
 
         Movimentacao mov = await this._movimentacoes.CriarMovimentacao(movimentacao);
 
         var SalvarPorTipo = new Dictionary<MovimentacaoTipo, Action<Movimentacao, CriarMovimentacao>>{
-
             {MovimentacaoTipo.INVESTIMENTOS, CriarTipoInvestimento},
             {MovimentacaoTipo.ENTRADA, CriarTipoEntrada},
             {MovimentacaoTipo.SAIDA, CriarTipoSaida}
         };
-
         SalvarPorTipo[tipo](mov, data);
 
         return mov;
     }
 
     private async void CriarTipoSaida(Movimentacao movimentacao, CriarMovimentacao data) {
-
         var (valor, tipo, categoriaId, quantidadeParcelas, primeiroVencimento) = data;
         if (quantidadeParcelas != null && primeiroVencimento != null ) {
 
@@ -62,15 +59,13 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, Movimentacao
     }
 
     private async void CriarTipoInvestimento(Movimentacao movimentacao, CriarMovimentacao data) {
-        Console.WriteLine("chegou aqui");
+
         Resumo resumo = await this._resumos.BuscarResumoPorNome("Investimentos");
         resumo.Valor += data.valor; 
-        Console.WriteLine(resumo);
         await this._resumos.AtualizarResumo(resumo.Id, resumo);
     }
 
     private async void CriarTipoEntrada(Movimentacao movimentacao, CriarMovimentacao data) {
-        Console.WriteLine("testinho");
         
     }
 

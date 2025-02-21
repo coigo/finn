@@ -62,4 +62,13 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
         return data;
     }
 
+    public async Task<MovimentacaoCategoria> BuscarCategoriaPorNome(string nome ) {
+        MovimentacaoCategoria categoria = await _context.MovimentacoesCategorias.Where(c => c.Nome == nome).FirstAsync();
+        
+        if ( categoria == null) {
+            throw new KeyNotFoundException(nameof(categoria));
+        }
+        return categoria;
+    }
+
 }
