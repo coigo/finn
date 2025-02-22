@@ -35,6 +35,23 @@ public class ResumoRepository : IResumoRepository {
 
     }
 
+    public async Task<Resumo> AtualizarSaldo(string nome, float valor) {
+        
+        var resumoExistente = await _context.Resumos
+            .Where(r =>r.Nome == nome)
+            .FirstAsync();
+            
+        if (resumoExistente == null) {
+            throw new KeyNotFoundException("Reusmo não encontrado!");
+        }
+
+        resumoExistente.Valor += valor; 
+
+        await _context.SaveChangesAsync();
+        return resumoExistente;
+
+    }
+
     public async Task<List<Resumo>> BuscarTodosResumos() {
         var resumos = await _context.Resumos.ToListAsync(); 
         return resumos;

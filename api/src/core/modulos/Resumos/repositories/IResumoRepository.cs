@@ -8,7 +8,10 @@ public interface IResumoRepository {
 
     public Task<Resumo> AtualizarResumo(int Id, Resumo data);
 
+    public Task<Resumo> AtualizarSaldo(string nome, float valor);
+
     public Task<List<Resumo>> BuscarTodosResumos();
 
     public Task<Resumo> BuscarResumoPorNome(string Nome);
+
 }

@@ -6,67 +6,93 @@ using Resumos.Models;
 
 namespace Movimentacoes.UseCases;
 
-public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, Movimentacao> {
+public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimentacao>
+{
 
     private readonly IMovimentacaoRepository _movimentacoes;
     private readonly IResumoRepository _resumos;
 
-    public CriarMovimentacaoUseCase ( IMovimentacaoRepository movimentacoes, IResumoRepository resumos ) {
+    public CriarMovimentacaoUseCase(IMovimentacaoRepository movimentacoes, IResumoRepository resumos)
+    {
         _movimentacoes = movimentacoes;
         _resumos = resumos;
     }
 
-    public async Task<Movimentacao> Execute (CriarMovimentacao data) {
-        
+    public async Task<CriarMovimentacao> Execute(CriarMovimentacao data)
+    {
         var (valor, tipo, categoriaId, quantidadeParcelas, primeiroVencimento) = data;
 
-        Movimentacao movimentacao = new (
-            valor,
-            tipo, 
-            categoriaId
-        ); 
-
-        Movimentacao mov = await this._movimentacoes.CriarMovimentacao(movimentacao);
-
-        var SalvarPorTipo = new Dictionary<MovimentacaoTipo, Action<Movimentacao, CriarMovimentacao>>{
+        var SalvarPorTipo = new Dictionary<MovimentacaoTipo, Func<CriarMovimentacao, Task>>{
             {MovimentacaoTipo.INVESTIMENTOS, CriarTipoInvestimento},
             {MovimentacaoTipo.ENTRADA, CriarTipoEntrada},
             {MovimentacaoTipo.SAIDA, CriarTipoSaida}
         };
-        SalvarPorTipo[tipo](mov, data);
+        await SalvarPorTipo[tipo](data);
 
-        return mov;
+        return data;
     }
 
-    private async void CriarTipoSaida(Movimentacao movimentacao, CriarMovimentacao data) {
+    private async Task CriarTipoSaida(CriarMovimentacao data)
+    {
         var (valor, tipo, categoriaId, quantidadeParcelas, primeiroVencimento) = data;
-        if (quantidadeParcelas != null && primeiroVencimento != null ) {
+        
+        Movimentacao movimentacao = await this.CriarMovimentacao(data);
 
-        int quantidade = quantidadeParcelas.Value;
-        DateTime vencimento = primeiroVencimento.Value;
+        if (quantidadeParcelas != null && primeiroVencimento != null)
+        {
+            int quantidade = quantidadeParcelas.Value;
+            DateTime vencimento = primeiroVencimento.Value;
 
-        for ( int i = 0; i < quantidadeParcelas; i ++ ) {
-                MovimentacaoParcela parcela = new (
-                    movimentacao, 
+            var parcelas = Enumerable.Range(0, quantidade).Select(i => 
+                new MovimentacaoParcela(
+                    movimentacao,
                     movimentacao.Valor / quantidade,
                     i + 1,
-                    vencimento.AddMonths(i)
-                );
-
-                await this._movimentacoes.CriarParcelas(parcela);
-            }
+                    vencimento.AddMonths(i))
+            );
+            await this._movimentacoes.CriarParcelas(parcelas);
+        }
+        else {
+            await this._resumos.AtualizarSaldo("Corrente", -valor);
         }
     }
 
-    private async void CriarTipoInvestimento(Movimentacao movimentacao, CriarMovimentacao data) {
+    private async Task CriarTipoInvestimento(CriarMovimentacao data)
+    {
+        Movimentacao mov = await this.CriarMovimentacao(data);
 
-        Resumo resumo = await this._resumos.BuscarResumoPorNome("Investimentos");
-        resumo.Valor += data.valor; 
-        await this._resumos.AtualizarResumo(resumo.Id, resumo);
+        await this._resumos.AtualizarSaldo("Corrente", -data.valor);
+        await this._resumos.AtualizarSaldo("Investimentos", data.valor);
     }
 
-    private async void CriarTipoEntrada(Movimentacao movimentacao, CriarMovimentacao data) {
-        
+    private async Task CriarTipoEntrada(CriarMovimentacao data)
+    {
+        var (valor, tipo, categoriaId, quantidadeParcelas, primeiroVencimento) = data;
+
+        int[] categorias = { (int)MovimentacaoCategoriaDTO.DIVIDENDO, (int)MovimentacaoCategoriaDTO.VENDA };
+
+        if (categorias.Contains(categoriaId)) {
+            await this._resumos.AtualizarSaldo("Investimentos", valor);
+        }
+        else {
+            await this._resumos.AtualizarSaldo("Corrente", valor);
+        }
+        await this.CriarMovimentacao(data);
+
+    }
+
+    private async Task<Movimentacao> CriarMovimentacao(CriarMovimentacao data)
+    {
+        var (valor, tipo, categoriaId, quantidadeParcelas, primeiroVencimento) = data;
+
+        Movimentacao movimentacao = new(
+            valor,
+            tipo,
+            categoriaId
+        );
+
+        Movimentacao mov = await this._movimentacoes.CriarMovimentacao(movimentacao);
+        return mov;
     }
 
 }

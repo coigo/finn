@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Movimentacoes.DTOS;
 using Movimentacoes.Models;
 using Resumos.Models;
 
@@ -26,20 +27,20 @@ public class Context : DbContext {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<MovimentacaoCategoria>().HasData(
-                new MovimentacaoCategoria("Comida e Mercado", MovimentacaoTipo.SAIDA) {Id = 1},
-                new MovimentacaoCategoria("Educação e Desenvolvimento", MovimentacaoTipo.SAIDA) {Id = 2},
-                new MovimentacaoCategoria("Investimentos", MovimentacaoTipo.SAIDA) {Id = 3},
-                new MovimentacaoCategoria("Lazer e Bem-estar", MovimentacaoTipo.SAIDA) {Id = 4},
-                new MovimentacaoCategoria("Serviços", MovimentacaoTipo.SAIDA) {Id = 5},
-                new MovimentacaoCategoria("Moradia", MovimentacaoTipo.SAIDA) {Id = 6},
-                new MovimentacaoCategoria("Transporte", MovimentacaoTipo.SAIDA) {Id = 7},
-                new MovimentacaoCategoria("Saúde", MovimentacaoTipo.SAIDA) {Id = 8},
+                new MovimentacaoCategoria("Comida e Mercado", MovimentacaoTipo.SAIDA) {Id = (int) MovimentacaoCategoriaDTO.COMIDA_MERCADO},
+                new MovimentacaoCategoria("Educação e Desenvolvimento", MovimentacaoTipo.SAIDA) {Id = (int) MovimentacaoCategoriaDTO.EDUCACAO_DESENVOLVIMENTO},
+                new MovimentacaoCategoria("Investimentos", MovimentacaoTipo.SAIDA) {Id = (int) MovimentacaoCategoriaDTO.INVESTIMENTOS},
+                new MovimentacaoCategoria("Lazer e Bem-estar", MovimentacaoTipo.SAIDA) {Id = (int) MovimentacaoCategoriaDTO.LAZER_BEM_ESTAR},
+                new MovimentacaoCategoria("Serviços", MovimentacaoTipo.SAIDA) {Id = (int) MovimentacaoCategoriaDTO.SERVICOS},
+                new MovimentacaoCategoria("Moradia", MovimentacaoTipo.SAIDA) {Id = (int) MovimentacaoCategoriaDTO.MORADIA},
+                new MovimentacaoCategoria("Transporte", MovimentacaoTipo.SAIDA) {Id = (int) MovimentacaoCategoriaDTO.TRANSPORTE},
+                new MovimentacaoCategoria("Saúde", MovimentacaoTipo.SAIDA) {Id = (int) MovimentacaoCategoriaDTO.SAUDE},
 
-                new MovimentacaoCategoria("Salário", MovimentacaoTipo.ENTRADA) {Id = 9},
-                new MovimentacaoCategoria("Dividendo", MovimentacaoTipo.ENTRADA) {Id = 10},
-                new MovimentacaoCategoria("Venda", MovimentacaoTipo.ENTRADA) {Id = 11},
-                new MovimentacaoCategoria("Transferências", MovimentacaoTipo.ENTRADA) {Id = 12},
-                new MovimentacaoCategoria("Outros", MovimentacaoTipo.ENTRADA) {Id = 13}
+                new MovimentacaoCategoria("Salário", MovimentacaoTipo.ENTRADA) {Id = (int) MovimentacaoCategoriaDTO.SALARIO},
+                new MovimentacaoCategoria("Dividendo", MovimentacaoTipo.ENTRADA) {Id = (int) MovimentacaoCategoriaDTO.DIVIDENDO},
+                new MovimentacaoCategoria("Venda", MovimentacaoTipo.ENTRADA) {Id = (int) MovimentacaoCategoriaDTO.VENDA},
+                new MovimentacaoCategoria("Transferências", MovimentacaoTipo.ENTRADA) {Id = (int) MovimentacaoCategoriaDTO.TRANSFERENCIAS},
+                new MovimentacaoCategoria("Outros", MovimentacaoTipo.ENTRADA) {Id = (int) MovimentacaoCategoriaDTO.OUTROS}
             );
             modelBuilder.Entity<Resumo>().HasData(
                 new Resumo(0, "Corrente") {Id = 1},
