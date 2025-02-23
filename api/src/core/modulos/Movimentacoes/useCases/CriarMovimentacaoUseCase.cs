@@ -38,6 +38,7 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimen
         
         Movimentacao movimentacao = await this.CriarMovimentacao(data);
 
+            Console.WriteLine("testinho");
         if (quantidadeParcelas != null && primeiroVencimento != null)
         {
             int quantidade = quantidadeParcelas.Value;

@@ -3,7 +3,7 @@ using Movimentacoes.DTOS;
 using Movimentacoes.Models;
 using Movimentacoes.UseCases;
 
-namespace Pessoa.Routes ;
+namespace Movimentacoes.Routes ;
 
 [ApiController]
 [Route("movimentacoes")]
