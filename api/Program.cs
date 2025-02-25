@@ -3,7 +3,6 @@ using Infra.Repositories;
 using Infra.Repositories.Adapters;
 using Microsoft.AspNetCore.Diagnostics;
 using Movimentacoes.UseCases;
-using Resumos.UseCases;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +16,7 @@ builder.Services.AddScoped<IMovimentacaoRepository, MovimentacaoRepository>();
 builder.Services.AddScoped<IResumoRepository, ResumoRepository>();
 builder.Services.AddScoped<CriarMovimentacaoUseCase>();
 builder.Services.AddScoped<BuscarMovimentacoesUseCase>();
-builder.Services.AddScoped<SubtrairParcelasDoMes>();
+builder.Services.AddScoped<SubtrairParcelasUseCase>();
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;

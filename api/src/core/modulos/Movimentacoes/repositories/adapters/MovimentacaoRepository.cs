@@ -62,9 +62,9 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
         return data.ToList();
     }
 
-    public async Task<List<MovimentacaoParcela>> BuscarParcelasDoMes(DateTime inicio, DateTime fim) {
+    public async Task<List<MovimentacaoParcela>> BuscarParcelasPorId(int[] parcelas) {
         return await this._context.MovimentacaoParcelas
-            .Where(p => p.Vencimento >= inicio && p.Vencimento <= fim)
+            .Where(p => parcelas.Contains(p.Id))
             .ToListAsync();
     }
 
