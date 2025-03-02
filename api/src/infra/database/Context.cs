@@ -1,3 +1,4 @@
+using Aportes.Models;
 using Microsoft.EntityFrameworkCore;
 using Movimentacoes.DTOS;
 using Movimentacoes.Models;
@@ -12,6 +13,9 @@ public class Context : DbContext {
 
         public required DbSet<Resumo> Resumos { get; set; }
         public required DbSet<ResumoHistorico> ResumoHistoricos { get; set; }
+
+        public required DbSet<Aporte> Aportes { get; set; }
+        public required DbSet<AporteHistorico> AportesHistoricos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,6 +50,10 @@ public class Context : DbContext {
                 new Resumo(0, "Corrente") {Id = 1},
                 new Resumo(0, "Investimentos") {Id = 2}
             );
+
+            modelBuilder.Entity<Aporte>().HasAlternateKey(a => a.Identificador);
+
+            modelBuilder.Entity<AporteHistorico>().HasIndex(h => h.Identificador);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

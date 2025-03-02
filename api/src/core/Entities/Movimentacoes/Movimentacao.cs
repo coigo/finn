@@ -16,7 +16,7 @@ public class Movimentacao {
     [Column("tipo")]
     public MovimentacaoTipo Tipo { get ; set; }
 
-    [Column("categoria_id")]
+    [Column("categoriaId")]
     public int  CategoriaId { get ; set; }
 
     [Column("criadoEm")]
