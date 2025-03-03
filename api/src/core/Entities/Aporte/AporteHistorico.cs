@@ -16,6 +16,9 @@ public class AporteHistorico {
     [Column("identificador")]
     public string Identificador { get ; set; }
 
+    [Column("categoria")]
+    public AporteCategoria Categoria { get ; set; }
+
     [Column("tipo")]
     public AporteTipo Tipo { get ; set; }
 

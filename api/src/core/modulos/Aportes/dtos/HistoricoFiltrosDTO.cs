@@ -3,7 +3,10 @@ using Aportes.Models;
 namespace Aportes.DTOS;
 
 public record HistoricoFiltrosDTO (
-    DateTime Inicio,
-    DateTime Fim,
-    AporteCategoria Categoria
+    bool FiltrarPeriodo,
+    DateTime? Inicio,
+    DateTime? Fim,
+
+    bool FiltrarCategoria,
+    AporteCategoria? Categoria
 );

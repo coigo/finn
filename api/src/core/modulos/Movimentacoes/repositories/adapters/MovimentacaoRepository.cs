@@ -49,6 +49,7 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
         }
 
         _context.Entry(movimentacaoExistente).CurrentValues.SetValues(data);
+        await this._context.SaveChangesAsync();
         return data;
     }
 

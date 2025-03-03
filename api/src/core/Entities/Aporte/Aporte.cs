@@ -10,16 +10,16 @@ public class Aporte {
     [Column("id")]
     public int Id { get ; set; }
     
+    [Column("identificador")]
+    public string Identificador { get ; set; }
+
     [Column("precoMedio")]
     public float PrecoMedio { get ; set; }
     
-    [Column("identificador")]
-    public string Identificador { get ; set; }
+    [Column("quantidade")]
+    public float Quantidade { get ; set; }
     
-    [Column("categoriaId")]
-    public int CategoriaId { get ; set; }
-
-    [ForeignKey("CategoriaId")]
+    [Column("categoria")]
     public AporteCategoria Categoria { get ; set; }
 
     [Column("criadoEm")]
@@ -30,11 +30,11 @@ public class Aporte {
     public Aporte (
         float precoMedio,
         string identificador,
-        int categoriaId
+        AporteCategoria categoria
     ) {
         PrecoMedio = precoMedio;
         Identificador = identificador;
-        CategoriaId = categoriaId;
+        Categoria = categoria;
 
 
     }
