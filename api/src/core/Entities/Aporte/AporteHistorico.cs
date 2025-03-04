@@ -30,13 +30,14 @@ public class AporteHistorico {
     public AporteHistorico (
         float preco,
         string identificador,
-        AporteTipo tipo
+        AporteTipo tipo,
+        AporteCategoria categoria
 
     ) {
         Preco = preco;
         Identificador = identificador;
         Tipo = tipo;
-
+        Categoria = categoria;
     }
 
 }

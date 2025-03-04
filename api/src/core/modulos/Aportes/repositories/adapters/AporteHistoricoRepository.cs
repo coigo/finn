@@ -31,8 +31,8 @@ public class AporteHistoricoRepository: IAporteHistoricoRepository {
         return await query.ToListAsync();
     }
 
-    public async Task<Aporte> CriarRegistro (Aporte data) {
-        await this._context.AddAsync(data);
+    public async Task<AporteHistorico> CriarRegistro (AporteHistorico data) {
+        await this._context.AportesHistoricos.AddAsync(data);
         await this._context.SaveChangesAsync();
         return data;
     }

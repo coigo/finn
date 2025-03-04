@@ -1,3 +1,4 @@
+using Aportes.UseCases;
 using Infra.Database;
 using Infra.Repositories;
 using Infra.Repositories.Adapters;
@@ -12,11 +13,23 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddScoped<Context>();
+
+//Repositorios
+
 builder.Services.AddScoped<IMovimentacaoRepository, MovimentacaoRepository>();
 builder.Services.AddScoped<IResumoRepository, ResumoRepository>();
+builder.Services.AddScoped<IAporteHistoricoRepository, AporteHistoricoRepository>();
+builder.Services.AddScoped<IAporteRepository, AporteRepository>();
+
+//UseCases
+
 builder.Services.AddScoped<CriarMovimentacaoUseCase>();
 builder.Services.AddScoped<BuscarMovimentacoesUseCase>();
 builder.Services.AddScoped<SubtrairParcelasUseCase>();
+builder.Services.AddScoped<SubtrairParcelasUseCase>();
+
+builder.Services.AddScoped<MovimentarAportesUseCase>();
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;

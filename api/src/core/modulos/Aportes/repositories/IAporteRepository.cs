@@ -5,7 +5,7 @@ namespace Infra.Repositories;
 public interface IAporteRepository {
     public Task<List<Aporte>> BuscarTodos ();
 
-    public Task<List<Aporte>> BuscarPorIdentificador (string Identificador);
+    public Task<Aporte> BuscarPorIdentificador (string Identificador);
 
     public Task<List<Aporte>> BuscarPorCategoria (AporteCategoria categoria);
     

@@ -16,10 +16,10 @@ public class AporteRepository: IAporteRepository {
         return await this._context.Aportes.ToListAsync();
     }
 
-    public async Task<List<Aporte>> BuscarPorIdentificador (string Identificador) {
+    public async Task<Aporte> BuscarPorIdentificador (string Identificador) {
         return await this._context.Aportes
         .Where(a => a.Identificador == Identificador)
-        .ToListAsync();
+        .FirstAsync();
 
     }
 
