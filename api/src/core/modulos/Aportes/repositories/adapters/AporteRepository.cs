@@ -1,3 +1,4 @@
+using Aportes.DTOS;
 using Aportes.Models;
 using Infra.Database;
 using Microsoft.EntityFrameworkCore;
@@ -16,10 +17,10 @@ public class AporteRepository: IAporteRepository {
         return await this._context.Aportes.ToListAsync();
     }
 
-    public async Task<Aporte> BuscarPorIdentificador (string Identificador) {
+    public async Task<Aporte?> BuscarPorIdentificador (string Identificador) {
         return await this._context.Aportes
         .Where(a => a.Identificador == Identificador)
-        .FirstAsync();
+        .FirstOrDefaultAsync();
 
     }
 
@@ -36,14 +37,19 @@ public class AporteRepository: IAporteRepository {
         return data;
     }
     
-    public async Task<Aporte> AtualizarAporte (int id, Aporte data) {
+    public async Task<AtualizarAporteDTO> AtualizarAporte (int id, AtualizarAporteDTO data) {
+        
+        
         var aporte = await this._context.Aportes.FindAsync(id);
-
+        
         if ( aporte == null ) {
             throw new KeyNotFoundException();
         }
 
-        _context.Entry(aporte).CurrentValues.SetValues(data);
+        aporte.PrecoMedio = data.PrecoMedio;
+        aporte.Quantidade = data.Quantidade;
+
+        _context.Entry(aporte).CurrentValues.SetValues(aporte);
         await this._context.SaveChangesAsync();
         return data;
 

@@ -52,8 +52,11 @@ public class Context : DbContext {
             );
 
             modelBuilder.Entity<Aporte>().HasAlternateKey(a => a.Identificador);
+            modelBuilder.Entity<Aporte>().Property(a => a.Categoria).HasConversion<string>();
 
             modelBuilder.Entity<AporteHistorico>().HasIndex(h => h.Identificador);
+            modelBuilder.Entity<AporteHistorico>().Property(a => a.Categoria ).HasConversion<string>();
+            modelBuilder.Entity<AporteHistorico>().Property(a => a.Tipo ).HasConversion<string>();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

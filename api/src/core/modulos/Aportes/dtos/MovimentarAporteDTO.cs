@@ -2,7 +2,7 @@ using Aportes.Models;
 
 namespace Aportes.DTOS;
 
-public record MovimentarAporteDTO (
+public record MovimentarAporteDTO(
     string Identificador,
     float Quantidade,
     float Preco,

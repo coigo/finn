@@ -22,6 +22,9 @@ public class AporteHistorico {
     [Column("tipo")]
     public AporteTipo Tipo { get ; set; }
 
+    [Column("data")]
+    public DateTime Data { get ; set; }
+
     [Column("criadoEm")]
     public DateTime CriadoEm { get ; set; } = DateTime.Now;
 
@@ -31,13 +34,15 @@ public class AporteHistorico {
         float preco,
         string identificador,
         AporteTipo tipo,
-        AporteCategoria categoria
+        AporteCategoria categoria,
+        DateTime data
 
     ) {
         Preco = preco;
         Identificador = identificador;
         Tipo = tipo;
         Categoria = categoria;
+        Data = data;
     }
 
 }
