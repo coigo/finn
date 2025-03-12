@@ -14,13 +14,91 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* --background: #0a0a0a; */
+    --background: #1b191d;
     --foreground: #ededed;
   }
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: #ededed;
+    --foreground: #0a0a0a;
+  }
+}
+
 body {
+  overflow: hidden;
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.nav-bar-item {
+  background-color: transparent;
+  text-align: center;
+  padding: 8px;
+  width: fit-content;
+  min-width: 36px;
+  border-radius: 50%;
+}
+.nav-bar-item-round {
+  background-color: transparent;
+  text-align: center;
+  padding: 8px;
+  width: 36px;
+  height: 36px; 
+  border-radius: 50%;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+}
+
+
+.nav-bar-item:hover, .nav-bar-item-round:hover {
+  background-color: rgba(10, 10, 10, 0.3);
+  transition: background-color 200ms linear;
+}
+
+.menu {
+  
+}
+
+.menu-outline {
+  opacity: 0;
+  background: linear-gradient(180deg, rgba(2,0,36,0) 10%, rgba(255,255,255,0.4) 49%, rgba(0,212,255,0) 90%);
+  width: 1px;
+  transition: opacity 300ms ease;
+}
+
+.menu:hover .menu-outline {
+  opacity: 1;
+}
+
+.menu-item {
+  position: relative;
+  transition: padding 200ms ease, transform 200ms ease;
+  transform: translate(50%, 50%);
+  transform: translateX(0)
+}
+
+.menu-item::after {
+  content: "";
+  position: absolute;
+  top: -20px; /* Expande para cima */
+  left: -55px; /* Expande para a esquerda */
+  right: -55px; /* Expande para a direita */
+  bottom: -20px; /* Expande para baixo */
+  background: transparent;
+  z-index: 50; /* Coloca o pseudo-elemento acima do conteúdo */
+}
+
+.menu-item:hover {
+  transform: translateX(30%);
+}
+.menu-item::after:hover {
+  transform: translateX(50%);
+}
+.menu-item:hover, .menu-outline{
+  margin-left: -4px;
+}
+
