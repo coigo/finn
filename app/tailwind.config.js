@@ -1,6 +1,6 @@
 module.exports = {
   purge: [],
-  darkMode: 'class', // or 'media' or 'class'
+  darkMode: 'class',
   theme: {
     screens: {
       sm: "40rem",
