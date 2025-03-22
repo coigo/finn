@@ -60,13 +60,12 @@ body {
 
 .menu-outline {
   opacity: 0;
-  background: linear-gradient(180deg, rgba(2,0,36,0) 10%, rgba(255,255,255,0.4) 49%, rgba(0,212,255,0) 90%);
   width: 1px;
   transition: opacity 300ms ease;
 }
 
 .menu:hover .menu-outline {
-  opacity: 1;
+  opacity: 0.6;
 }
 
 .menu-item {
@@ -79,12 +78,12 @@ body {
 .menu-item::after {
   content: "";
   position: absolute;
-  top: -20px; /* Expande para cima */
-  left: -55px; /* Expande para a esquerda */
-  right: -55px; /* Expande para a direita */
-  bottom: -20px; /* Expande para baixo */
+  top: -20px;
+  left: -55px; 
+  right: -55px; 
+  bottom: -20px;
   background: transparent;
-  z-index: 50; /* Coloca o pseudo-elemento acima do conteúdo */
+  z-index: 50; 
 }
 
 .menu-item:hover {

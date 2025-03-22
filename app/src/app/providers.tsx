@@ -1,10 +1,13 @@
 "use client";
 
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, useColorScheme } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
+
+  const {mode} = useColorScheme()
 
   const darkTheme = createTheme({
     colorSchemes: {
@@ -18,27 +21,57 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         paper: "#1b191d",
       },
       primary: {
-        main: "#4b3d05",
+        main: "#eee",
       },
       text: {
-        primary: "#ffffff",
+        primary: "#eee",
+        secondary:"#432004"
       },
     },
     components: {
       MuiPaper: {
         styleOverrides: {
           root: {
-            backgroundImage: "none"
+            backgroundImage: "none",
           },
         },
       },
-    }
+    },
+  });
+  
+  const lightTheme = createTheme({
+    colorSchemes: {
+      dark: true,
+      light: true
+    },
+    palette: {
+      mode: "light",
+      background: {
+        default: "#f0f0f0",
+        paper: "#f0f0f0",
+      },
+      primary: {
+        main: "#777",
+      },
+      text: {
+        primary: "#222",
+        secondary:"#432004"
+      },
+    },
+    components: {
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            backgroundImage: "none",
+          },
+        },
+      },
+    },
   });
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={mode === "dark" ? darkTheme : lightTheme}>
       <CssBaseline />
-
       {children}
     </ThemeProvider>
   );
