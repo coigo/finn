@@ -4,10 +4,12 @@ import { CssBaseline, useColorScheme } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { ModalProvider } from "./components/Modal/ModalProvider";
+import Modal from "./components/Modal";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
 
-  const {mode} = useColorScheme()
+  const { mode } = useColorScheme()
 
   const darkTheme = createTheme({
     colorSchemes: {
@@ -25,8 +27,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       },
       text: {
         primary: "#eee",
-        secondary:"#432004"
+        secondary: "#432004"
       },
+      
     },
     components: {
       MuiPaper: {
@@ -38,7 +41,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       },
     },
   });
-  
+
   const lightTheme = createTheme({
     colorSchemes: {
       dark: true,
@@ -55,7 +58,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       },
       text: {
         primary: "#222",
-        secondary:"#432004"
+        secondary: "#432004"
       },
     },
     components: {
@@ -72,7 +75,11 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider theme={mode === "dark" ? darkTheme : lightTheme}>
       <CssBaseline />
-      {children}
+      <ModalProvider>
+
+        {children}
+        <Modal />
+      </ModalProvider>
     </ThemeProvider>
   );
 }

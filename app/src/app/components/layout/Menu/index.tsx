@@ -7,10 +7,11 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import { useTheme } from '@mui/material';
 
+
 export default function Menu() {
 
   const {palette} = useTheme()
-
+  
   const itemsTempl = () => {
     return (
       <>

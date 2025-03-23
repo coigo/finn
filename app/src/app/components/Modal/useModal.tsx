@@ -1,29 +1,11 @@
-"use client"
+import { useContext } from "react";
+import { ModalContext } from "./ModalProvider";
 
-import Modal from "@/app/components/Modal"
-import { ReactNode, useEffect, useRef, useState } from "react"
-
-
-type OpenModalProps = {
-    component: ReactNode
-    initialData: any
-}
-
-export function useModal() {
-    const [isOpen, setIsOpen] = useState<boolean>(false)
-
-    const openModal = () => {
-        setIsOpen(true)
+export const useModal = () => {
+    const context = useContext(ModalContext);
+    if (!context) {
+      throw new Error("useModal deve ser usado dentro de um ModalProvider");
     }
-
-    const closeModal = () => {
-        setIsOpen(true)
-    }
-
-    const ModalWrapper = ({ title, children }: { title: string; children: ReactNode }) => (
-        isOpen && <Modal title={title} onClose={closeModal}>{children}</Modal>
-    );
-
-    return { openModal, closeModal, ModalWrapper }
-
-}
+    return context;
+  };
+  
