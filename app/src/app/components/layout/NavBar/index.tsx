@@ -8,12 +8,11 @@ import { useModal } from '@/app/components/Modal/useModal';
 
 export default function NavBar() {
   const { mode, setMode } = useColorScheme();
-  const { openModal, ModalWrapper, closeModal } = useModal()
+  const { openModal, closeModal } = useModal()
 
   const { palette } = useTheme()
 
   const handleChangeTheme = () => {
-    console.log(mode)
     setMode(mode == "dark" ? "light" : "dark")
   };
 
@@ -23,19 +22,12 @@ export default function NavBar() {
 
   const itemsTempl = () => {
     return (
-      <div onClick={openModal} className='nav-bar-item-round'>
+      <div onClick={() => openModal(<>weeeeeeeeeeeeee</>)} className='nav-bar-item-round'>
         oi
       </div>
     )
   }
 
-  const modal = () => {
-    return (
-      <ModalWrapper title='sim'>
-          aaskjdhas
-      </ModalWrapper>
-    )
-  }
 
   return (
     <>

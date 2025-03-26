@@ -21,24 +21,28 @@ const Modal: React.FC = () => {
     if (!isOpen) return null;
     
     return ReactDOM.createPortal(
-        <div className="modal absolute overflow-hidden  inset-0 md:top-auto md:right-auto md:left-1/2 md:bottom-0 md:w-4/5 lg:w-3/5 md:-translate-x-1/2">
-            <div className="mb-4 shadow-sm shadow-gray-700 h-full md:h-fit md:rounded-lg overflow-hidden">
-                <div className="w-full p-4 pb-2 bg-amber-300">
-                    Titulo
+        <div className="modal-border absolute mb-4 overflow-hidden md:rounded-lg md:p-[1px] md:pb-0 bg-white inset-0 md:top-auto md:right-auto md:left-1/2 md:bottom-0 md:w-4/5 lg:w-3/5 md:-translate-x-1/2"
+            style={{background:`radial-gradient(circle, rgba(255,255,255,0) 0%, color-mix(in srgb, ${palette.text.primary} 70%, transparent) 31%, ${palette.background.default} 100%)`}}
+        >
+                <div className="modal-content shadow-sm shadow-gray-700 h-full md:h-fit md:rounded-lg overflow-hidden"
+                    style={{
+                        backgroundColor: `${[palette.background.default]}`,
+                    }}
+                >
+                    <div className="w-full p-4 pb-2 bg-neutral-900">
+                        Titulo
+                    </div>
+                    <div className="p-4 pt-2">
+                        {content}
+                    </div>
+                    <div className="px-4 p-2">
+                        enviar
+                    </div>
                 </div>
-                <div className="p-4 pt-2">
-                    {content}
-                </div>
-                <div className="px-4 p-2">
-                    enviar
-                </div>
-            </div>
-        </div>,
+
+            </div>,
         document.body
     );
 };
 
 export default Modal;
-
-
-

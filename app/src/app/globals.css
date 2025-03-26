@@ -98,6 +98,10 @@ body {
   margin-left: -4px;
 }
 
-.modal {
-  border-image: linear-gradient(white, black);
+.modal-border {
+  transition: background 0.3s ease;
+}
+
+.modal-border:hover {
+  background: white;
 }
