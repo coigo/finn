@@ -5,7 +5,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { ModalProvider } from "./components/Modal/ModalProvider";
-import Modal from "./components/Modal";
+import Modal from "./components/Modal/Modal";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
 
