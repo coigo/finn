@@ -21,7 +21,7 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimen
     public async Task<CriarMovimentacao> Execute(CriarMovimentacao data)
     {
         var (valor, tipo, categoriaId, quantidadeParcelas, primeiroVencimento) = data;
-
+        Console.WriteLine(data.ToString());
         var SalvarPorTipo = new Dictionary<MovimentacaoTipo, Func<CriarMovimentacao, Task>>{
             {MovimentacaoTipo.INVESTIMENTOS, CriarTipoInvestimento},
             {MovimentacaoTipo.ENTRADA, CriarTipoEntrada},
@@ -38,7 +38,6 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimen
         
         Movimentacao movimentacao = await this.CriarMovimentacao(data);
 
-            Console.WriteLine("testinho");
         if (quantidadeParcelas != null && primeiroVencimento != null)
         {
             int quantidade = quantidadeParcelas.Value;

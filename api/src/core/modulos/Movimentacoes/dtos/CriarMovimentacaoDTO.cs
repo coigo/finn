@@ -11,6 +11,3 @@ public record CriarMovimentacao (
     DateTime? primeiroVencimento
 
 ) {}
-
-//	"quantidadeParcelas":undefined,
-//"primeiroVencimento":undefined
