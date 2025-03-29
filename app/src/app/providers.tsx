@@ -2,8 +2,6 @@
 
 import { CssBaseline, useColorScheme } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 import { ModalProvider } from "./components/Modal/ModalProvider";
 import Modal from "./components/Modal/Modal";
 
