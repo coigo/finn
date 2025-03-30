@@ -7,7 +7,9 @@ import { ModalContent } from "@/app/components/Modal/ModalContent"
 import { ModalFooter } from "@/app/components/Modal/ModalFooter"
 import { ModalHeader } from "@/app/components/Modal/ModalHeader"
 import { formatCurrency } from "@/utils/string"
+import { Button } from "@mui/material"
 import { Controller, useForm } from "react-hook-form"
+import CheckIcon from '@mui/icons-material/Check';
 
 const categorias = [
     {id:1, name:"asdasd"},
@@ -85,7 +87,7 @@ export const AporteModal = () => {
                 </form>
             </ModalContent>
             <ModalFooter>
-                <button type="submit" onClick={handleSubmit(submit)}> asd</button>
+                <Button startIcon={<CheckIcon/>} variant="contained" type="submit" onClick={handleSubmit(submit)} color="warning"  > Enviar </Button>
             </ModalFooter>
         </>        
     )
