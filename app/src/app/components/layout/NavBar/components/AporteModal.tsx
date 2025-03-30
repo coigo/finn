@@ -1,8 +1,12 @@
+import { CurrencyField } from "@/app/components/Inputs/CurrencyField"
+import { DateField } from "@/app/components/Inputs/DateField"
+import { NumberField } from "@/app/components/Inputs/NumberField"
 import { SelectField } from "@/app/components/Inputs/SelectField"
 import { TextField } from "@/app/components/Inputs/TextField"
 import { ModalContent } from "@/app/components/Modal/ModalContent"
 import { ModalFooter } from "@/app/components/Modal/ModalFooter"
 import { ModalHeader } from "@/app/components/Modal/ModalHeader"
+import { formatCurrency } from "@/utils/string"
 import { Controller, useForm } from "react-hook-form"
 
 const categorias = [
@@ -40,9 +44,40 @@ export const AporteModal = () => {
                         control={control}
                         render={({field}) =>  
                             <SelectField 
-                                data={categorias} 
-                                label="Categoria" 
-                                {...field} 
+                        data={categorias} 
+                        label="Categoria" 
+                        {...field} 
+                        />
+                    }
+                    />
+                    <Controller 
+                    name="quantidade"
+                    control={control}
+                    render={({ field }) => (
+                        <NumberField 
+                            {...field}
+                            label="Quantidade"
+                        />
+                    )}
+                    />
+                    <Controller 
+                        name="preco"
+                        control={control}
+                        render={({field}) => 
+                            <CurrencyField 
+                                {...field}
+                                label="Preço"
+                            />
+                        }
+                    />
+                    <Controller 
+                        name="dataCompra"
+                        control={control}
+                        render={({field}) => 
+                            <DateField 
+                                {...field}
+                                label="Data da Compra" 
+                                
                             />
                         }
                     />

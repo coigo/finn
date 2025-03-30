@@ -6,7 +6,7 @@ type SelectFieldProps = SelectProps & {
 
 export const SelectField = ({ data, label, value, ...props }: SelectFieldProps) => {
     return (
-        <FormControl className="w-full md:w-60">
+        <FormControl className="w-full md:w-60 px-2">
             {label && <InputLabel id="demo-simple-select-label">{label}</InputLabel>}
             <Select
                 labelId="demo-simple-select-label"

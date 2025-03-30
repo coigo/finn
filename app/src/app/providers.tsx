@@ -4,6 +4,11 @@ import { CssBaseline, useColorScheme } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { ModalProvider } from "./components/Modal/ModalProvider";
 import Modal from "./components/Modal/Modal";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 
 export default function Providers({ children }: { children: React.ReactNode }) {
 
@@ -27,7 +32,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         primary: "#eee",
         secondary: "#432004"
       },
-      
+
     },
     components: {
       MuiPaper: {
@@ -70,14 +75,21 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     },
   });
 
+
+
+  dayjs.extend(utc);
+
   return (
     <ThemeProvider theme={mode === "dark" ? darkTheme : lightTheme}>
       <CssBaseline />
-      <ModalProvider>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
 
-        {children}
-        <Modal />
-      </ModalProvider>
+        <ModalProvider>
+
+          {children}
+          <Modal />
+        </ModalProvider>
+      </LocalizationProvider>
     </ThemeProvider>
   );
 }

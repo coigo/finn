@@ -27,6 +27,11 @@ body {
   font-family: var(--font-sans);
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
 .nav-bar-item {
   background-color: transparent;
