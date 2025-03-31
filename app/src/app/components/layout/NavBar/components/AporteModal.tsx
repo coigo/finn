@@ -10,6 +10,7 @@ import { formatCurrency } from "@/utils/string"
 import { Button } from "@mui/material"
 import { Controller, useForm } from "react-hook-form"
 import CheckIcon from '@mui/icons-material/Check';
+import { CriarAporteRequest } from "@/services/aportes"
 
 const categorias = [
     {id:1, name:"asdasd"},
@@ -22,8 +23,13 @@ export const AporteModal = () => {
 
     const { control, handleSubmit } = useForm()
 
-    const submit = (data: any) => {
-        console.log(data)
+    const submit = async (data: any) => {
+        try {
+            await CriarAporteRequest(data)
+        }
+        catch(err) {
+            console.log(err)
+        }
     }
 
     return (

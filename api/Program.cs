@@ -3,10 +3,11 @@ using Infra.Database;
 using Infra.Repositories;
 using Infra.Repositories.Adapters;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 using Movimentacoes.UseCases;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var allowLocal = "allowLocal";
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -34,6 +35,18 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
 });
+
+
+
+builder.Services.AddCors( opt => {
+    opt.AddPolicy(name: allowLocal, 
+ policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") 
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -66,8 +79,10 @@ app.UseExceptionHandler( appError => {
     });
 
 });
+app.UseCors(allowLocal);
 
 app.UseRouting();
+
 app.MapControllers();
 
 Console.WriteLine("> Ligando.");
