@@ -8,6 +8,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { PublicEnvScript } from "next-runtime-env";
 
 
 export default function Providers({ children }: { children: React.ReactNode }) {
@@ -83,8 +84,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <ThemeProvider theme={mode === "dark" ? darkTheme : lightTheme}>
       <CssBaseline />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-
+      <PublicEnvScript />
         <ModalProvider>
+
 
           {children}
           <Modal />

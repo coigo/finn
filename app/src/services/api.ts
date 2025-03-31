@@ -1,6 +1,8 @@
 import { config } from "@/app/config";
 import axios, { AxiosError } from "axios";
 
+console.log(config.baseUrl)
+
 export const api = axios.create({
     baseURL: config.baseUrl,
     headers: {
