@@ -8,7 +8,6 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { PublicEnvScript } from "next-runtime-env";
 
 
 export default function Providers({ children }: { children: React.ReactNode }) {
@@ -81,17 +80,16 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   dayjs.extend(utc);
 
   return (
-    <ThemeProvider theme={mode === "dark" ? darkTheme : lightTheme}>
-      <CssBaseline />
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <PublicEnvScript />
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <ThemeProvider theme={mode === "dark" ? darkTheme : lightTheme}>
+        <CssBaseline />
         <ModalProvider>
 
 
           {children}
           <Modal />
         </ModalProvider>
-      </LocalizationProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </LocalizationProvider>
   );
 }

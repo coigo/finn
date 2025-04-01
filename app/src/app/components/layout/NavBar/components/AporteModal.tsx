@@ -25,6 +25,7 @@ export const AporteModal = () => {
 
     const submit = async (data: any) => {
         try {
+            console.log("asdasd")
             await CriarAporteRequest(data)
         }
         catch(err) {

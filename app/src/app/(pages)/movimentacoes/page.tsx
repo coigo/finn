@@ -17,14 +17,6 @@ export default function Movimentacoes() {
         {id:6, nome:"oiiiiii"},
         {id:6, nome:"oiiiiii"},
         {id:6, nome:"oiiiiii"},
-        {id:6, nome:"oiiiiii"},
-        {id:6, nome:"oiiiiii"},
-        {id:6, nome:"oiiiiii"},
-        {id:6, nome:"oiiiiii"},
-        {id:6, nome:"oiiiiii"},
-        {id:6, nome:"oiiiiii"},
-        {id:6, nome:"oiiiiii"},
-        {id:6, nome:"oiiiiii"},
     ]
     const fields: FieldProps[] = [
         {field: "id", description: "Id", align: "right"},
