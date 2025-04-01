@@ -8,6 +8,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { ToastProvider } from "./components/Toast/ToastProvider";
 
 
 export default function Providers({ children }: { children: React.ReactNode }) {
@@ -83,12 +84,15 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <ThemeProvider theme={mode === "dark" ? darkTheme : lightTheme}>
         <CssBaseline />
+        <ToastProvider >
+
         <ModalProvider>
 
 
           {children}
           <Modal />
         </ModalProvider>
+        </ToastProvider>
       </ThemeProvider>
     </LocalizationProvider>
   );

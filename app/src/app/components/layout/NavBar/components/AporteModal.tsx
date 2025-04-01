@@ -11,6 +11,7 @@ import { Button } from "@mui/material"
 import { Controller, useForm } from "react-hook-form"
 import CheckIcon from '@mui/icons-material/Check';
 import { CriarAporteRequest } from "@/services/aportes"
+import { useToast } from "@/app/components/Toast/useToast"
 
 const categorias = [
     {id:1, name:"asdasd"},
@@ -22,13 +23,16 @@ const categorias = [
 export const AporteModal = () => {
 
     const { control, handleSubmit } = useForm()
+    const {showToast} = useToast()
 
     const submit = async (data: any) => {
         try {
+            throw {message: "asdasd"}
             console.log("asdasd")
             await CriarAporteRequest(data)
         }
-        catch(err) {
+        catch(err: any) {
+            showToast( err.message, "error")
             console.log(err)
         }
     }
