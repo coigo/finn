@@ -12,23 +12,25 @@ import { Controller, useForm } from "react-hook-form"
 import CheckIcon from '@mui/icons-material/Check';
 import { CriarAporteRequest } from "@/services/aportes"
 import { useToast } from "@/app/components/Toast/useToast"
+import { useBuscarAporteCategorias } from "@/hooks/useBuscarAporteCategorias"
+import { useEffect } from "react"
 
-const categorias = [
-    {id:1, name:"asdasd"},
-    {id:2, name:"dois"},
-    {id:3, name:"3"},
-    {id:4, name:"jhin"},
-]
+
 
 export const AporteModal = () => {
 
     const { control, handleSubmit } = useForm()
     const {showToast} = useToast()
 
+    const { buscar, categorias, loading } = useBuscarAporteCategorias()
+
+    useEffect(() => {
+        buscar()
+    }, [])
+
     const submit = async (data: any) => {
         try {
-            throw {message: "asdasd"}
-            console.log("asdasd")
+            console.log(data)
             await CriarAporteRequest(data)
         }
         catch(err: any) {

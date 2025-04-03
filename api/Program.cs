@@ -28,6 +28,7 @@ builder.Services.AddScoped<CriarMovimentacaoUseCase>();
 builder.Services.AddScoped<BuscarMovimentacoesUseCase>();
 builder.Services.AddScoped<SubtrairParcelasUseCase>();
 builder.Services.AddScoped<SubtrairParcelasUseCase>();
+builder.Services.AddScoped<BuscarCategoriasUseCase>();
 
 builder.Services.AddScoped<MovimentarAportesUseCase>();
 
