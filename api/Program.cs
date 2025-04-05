@@ -21,6 +21,7 @@ builder.Services.AddScoped<IMovimentacaoRepository, MovimentacaoRepository>();
 builder.Services.AddScoped<IResumoRepository, ResumoRepository>();
 builder.Services.AddScoped<IAporteHistoricoRepository, AporteHistoricoRepository>();
 builder.Services.AddScoped<IAporteRepository, AporteRepository>();
+builder.Services.AddScoped<IAtivosRepository, AtivosRepository>();
 
 //UseCases
 
@@ -29,6 +30,7 @@ builder.Services.AddScoped<BuscarMovimentacoesUseCase>();
 builder.Services.AddScoped<SubtrairParcelasUseCase>();
 builder.Services.AddScoped<SubtrairParcelasUseCase>();
 builder.Services.AddScoped<BuscarCategoriasUseCase>();
+builder.Services.AddScoped<BuscarAportesUseCase>();
 
 builder.Services.AddScoped<MovimentarAportesUseCase>();
 
@@ -50,12 +52,7 @@ builder.Services.AddCors( opt => {
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())    
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}   
+// Configure the HTTP equest pipeline.
 
 app.UseExceptionHandler( appError => {
 
@@ -63,10 +60,14 @@ app.UseExceptionHandler( appError => {
         var exceptionHandler = context.Features.Get<IExceptionHandlerFeature>();
         
         if ( exceptionHandler != null ) {
-            Console.WriteLine(exceptionHandler.Path);
 
             var exceptionType = exceptionHandler.Error;
-
+            Console.WriteLine(exceptionHandler.Endpoint);
+            Console.WriteLine(exceptionHandler.Path);
+            if ( exceptionType is KeyNotFoundException ) {
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await context.Response.WriteAsync("O que você estava buscando não encontrado.");
+            }
             if ( exceptionType is ArgumentException ) {
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 await context.Response.WriteAsync("Argumento inválido.");
@@ -80,9 +81,11 @@ app.UseExceptionHandler( appError => {
     });
 
 });
+
 app.UseCors(allowLocal);
 
 app.UseRouting();
+
 
 app.MapControllers();
 
