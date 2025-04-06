@@ -6,9 +6,11 @@ namespace Infra.Repositories.Adapters;
 
 public class AtivosRepository: IAtivosRepository {
     
-    private readonly HttpClient _client = new () {
-        BaseAddress =  new Uri("http://brapi.dev/api/")
-    };
+    private static HttpClient _httpClient;
+
+    public AtivosRepository(HttpClient httpClient) {
+        _httpClient = httpClient;
+    }
 
     public async Task<Ativo> BuscarPorTicker (string ticker) {
 
@@ -17,10 +19,12 @@ public class AtivosRepository: IAtivosRepository {
         };
 
         var url = QueryHelpers.AddQueryString($"quote/{ticker}", queryParams);
-        var result = await _client.GetAsync(url);
+        var result = await _httpClient.GetAsync(url);
 
-            var parsed = await result.Content.ReadFromJsonAsync<AtivoResponse>();
-            return parsed.Results[0];
-
+            if (result.IsSuccessStatusCode) {
+                var parsed = await result.Content.ReadFromJsonAsync<AtivoResponse>();
+                return parsed.Results[0];
+            }
+            return new Ativo();
         }
 }

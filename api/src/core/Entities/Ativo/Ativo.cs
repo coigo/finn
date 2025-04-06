@@ -39,7 +39,7 @@ public class Ativo
     public DateTime? RegularMarketTime { get; set; }
 
     [JsonPropertyName("regularMarketPrice")]
-    public decimal? RegularMarketPrice { get; set; }
+    public decimal RegularMarketPrice { get; set; }
 
     [JsonPropertyName("regularMarketDayHigh")]
     public decimal? RegularMarketDayHigh { get; set; }

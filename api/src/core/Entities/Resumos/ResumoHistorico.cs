@@ -11,7 +11,7 @@ public class ResumoHistorico {
     public int Id { get ; set; }
 
     [Column("valor")]
-    public float Valor { get ; set; }
+    public decimal Valor { get ; set; }
 
     [Column("criadoEm")]
     public DateTime CriadoEm { get ; set; } = DateTime.Now;
@@ -27,7 +27,7 @@ public class ResumoHistorico {
     protected ResumoHistorico () {}
 
     public ResumoHistorico ( 
-        float valor 
+        decimal valor 
         ) {
         
         Valor = valor;

@@ -3,8 +3,8 @@ using Aportes.Models;
 namespace Aportes.DTOS;
 
 public record AtualizarAporteDTO(
-    float PrecoMedio,
+    decimal PrecoMedio,
     string Identificador,
-    float Quantidade,
+    decimal Quantidade,
     AporteCategoria Categoria
 );

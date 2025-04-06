@@ -1,3 +1,4 @@
+using Aportes.DTOS;
 using Aportes.Models;
 using Aportes.UseCases;
 using Infra.Shared;
@@ -16,7 +17,7 @@ public class BuscarAportes {
     }
 
     [HttpGet]
-    public async Task<List<Aporte>> Handle () {
+    public async Task<List<BuscarAportesDTO>> Handle () {
         return await  this._useCase.Execute(Unit.Value);
     }
 

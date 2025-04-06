@@ -3,7 +3,7 @@ using Movimentacoes.Models;
 namespace Movimentacoes.DTOS;
 
 public record CriarMovimentacao (
-    float valor,
+    decimal valor,
     MovimentacaoTipo tipo,
     int categoriaId,
 

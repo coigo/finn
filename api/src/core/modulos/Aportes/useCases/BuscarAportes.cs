@@ -1,10 +1,11 @@
+using Aportes.DTOS;
 using Aportes.Models;
 using Infra.Repositories;
 using Infra.Shared;
 
 namespace Aportes.UseCases;
 
-public class BuscarAportesUseCase: IUseCase<Unit, List<Aporte>> {
+public class BuscarAportesUseCase: IUseCase<Unit, List<BuscarAportesDTO>> {
 
     private readonly IAtivosRepository _ativos;
     private readonly IAporteRepository _aportes;
@@ -14,13 +15,23 @@ public class BuscarAportesUseCase: IUseCase<Unit, List<Aporte>> {
         _aportes = aportes;
     }
 
-    public async Task<List<Aporte>> Execute (Unit _) {
+    public async Task<List<BuscarAportesDTO>> Execute (Unit _) {
         var aportes = await this._aportes.BuscarTodos();
         
+        var coisa = new List<BuscarAportesDTO>();
+
         foreach (var aporte in aportes) {
-            await this._ativos.BuscarPorTicker(aporte.Identificador);
+            var ativoInfo = await this._ativos.BuscarPorTicker(aporte.Identificador);
+            coisa.Add(new BuscarAportesDTO(
+                aporte.Identificador,
+                ativoInfo.ShortName,
+                aporte.PrecoMedio,
+                ativoInfo.RegularMarketPrice,
+                aporte.Quantidade,
+                aporte.Categoria
+            ));
         }
-        return aportes;
+        return coisa;
     }
 
 }

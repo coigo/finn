@@ -31,7 +31,7 @@ public class MovimentarAportesUseCase : IUseCase<MovimentarAporteDTO, Aporte>
         
         var tipo = Quantidade < 0 ? AporteTipo.VENDA : AporteTipo.COMPRA; 
         await this._historico.CriarRegistro(new AporteHistorico(Preco, Identificador, tipo, Categoria, DataCompra));
-        await this._resumo.AtualizarSaldo("Investimentos", Quantidade * Preco);
+        await this._resumo.AtualizarSaldo("Investimentos", Quantidade *  Preco);
 
         return aporte == null 
         ? await this.CriarAporte(data)

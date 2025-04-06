@@ -4,8 +4,8 @@ namespace Aportes.DTOS;
 
 public record MovimentarAporteDTO(
     string Identificador,
-    float Quantidade,
-    float Preco,
+    decimal Quantidade,
+    decimal Preco,
     AporteCategoria Categoria,
     DateTime DataCompra
 );

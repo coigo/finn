@@ -35,7 +35,7 @@ public class ResumoRepository : IResumoRepository {
 
     }
 
-    public async Task<Resumo> AtualizarSaldo(string nome, float valor) {
+    public async Task<Resumo> AtualizarSaldo(string nome, decimal valor) {
         
         var resumoExistente = await _context.Resumos
             .Where(r =>r.Nome == nome)

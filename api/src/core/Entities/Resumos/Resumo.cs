@@ -11,7 +11,7 @@ public class Resumo {
     public int Id { get ; set; }
 
     [Column("valor")]
-    public float Valor { get ; set; }
+    public decimal Valor { get ; set; }
 
     [Column("nome")]
     public string Nome { get ; set; }
@@ -22,7 +22,7 @@ public class Resumo {
     protected Resumo () {}
 
     public Resumo ( 
-        float valor, 
+        decimal valor, 
         string nome
         ) {
         

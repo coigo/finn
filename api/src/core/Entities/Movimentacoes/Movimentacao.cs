@@ -11,7 +11,7 @@ public class Movimentacao {
     public int Id { get ; set; }
 
     [Column("valor")]
-    public float Valor { get ; set; }
+    public decimal Valor { get ; set; }
 
     [Column("tipo")]
     public MovimentacaoTipo Tipo { get ; set; }
@@ -31,7 +31,7 @@ public class Movimentacao {
     protected Movimentacao () {}
 
     public Movimentacao ( 
-        float valor, 
+        decimal valor, 
         MovimentacaoTipo tipo, 
         int categoriaId
         ) {

@@ -21,7 +21,7 @@ public class SubtrairParcelasUseCase  : IUseCase<SubtrairParcelas, SubtrairParce
 
         var parcelas = await this._movimentacoes.BuscarParcelasPorId(data.parcelas);
 
-        float valorTotal = parcelas.Sum(p => p.Valor);
+        decimal valorTotal = parcelas.Sum(p => p.Valor);
         await this._resumo.AtualizarSaldo("Corrente", -valorTotal);
         return data;
     }

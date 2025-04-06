@@ -14,10 +14,10 @@ public class Aporte {
     public string Identificador { get ; set; }
 
     [Column("precoMedio")]
-    public float PrecoMedio { get ; set; }
+    public decimal PrecoMedio { get ; set; }
     
     [Column("quantidade")]
-    public float Quantidade { get ; set; }
+    public decimal Quantidade { get ; set; }
     
     [Column("categoria")]
     public AporteCategoria Categoria { get ; set; }
@@ -30,9 +30,9 @@ public class Aporte {
     protected Aporte () {}
 
     public Aporte (
-        float precoMedio,
+        decimal precoMedio,
         string identificador,
-        float quantidade,
+        decimal quantidade,
         AporteCategoria categoria
     ) {
         PrecoMedio = precoMedio;

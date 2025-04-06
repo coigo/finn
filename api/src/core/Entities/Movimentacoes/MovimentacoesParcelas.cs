@@ -17,7 +17,7 @@ public class MovimentacaoParcela {
     public Movimentacao Movimentacao { get; private set; }  
 
     [Column("valor")]
-    public float Valor { get; private set; }
+    public decimal Valor { get; private set; }
 
     [Column("numero")]
     public int Numero { get; private set; }
@@ -31,7 +31,7 @@ public class MovimentacaoParcela {
 
     protected MovimentacaoParcela() { }
 
-    public MovimentacaoParcela(Movimentacao movimentacao, float valor, int numero, DateTime vencimento) {
+    public MovimentacaoParcela(Movimentacao movimentacao, decimal valor, int numero, DateTime vencimento) {
         Movimentacao = movimentacao ?? throw new ArgumentNullException(nameof(movimentacao));
         MovimentacaoId = movimentacao.Id;
         Valor = valor;

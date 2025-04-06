@@ -5,7 +5,7 @@ namespace Movimentacoes.DTOS;
 public record BuscarPorPeriodoDTO (string inicio, string fim);
 
 public record ListaMovimentacoesDTO (
-    float valor,
+    decimal valor,
     MovimentacaoTipo tipo,
     int categoria_id,
     DateTime criadoEm,

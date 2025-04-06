@@ -21,7 +21,10 @@ builder.Services.AddScoped<IMovimentacaoRepository, MovimentacaoRepository>();
 builder.Services.AddScoped<IResumoRepository, ResumoRepository>();
 builder.Services.AddScoped<IAporteHistoricoRepository, AporteHistoricoRepository>();
 builder.Services.AddScoped<IAporteRepository, AporteRepository>();
-builder.Services.AddScoped<IAtivosRepository, AtivosRepository>();
+builder.Services.AddSingleton<IAtivosRepository, AtivosRepository>();
+builder.Services.AddHttpClient<IAtivosRepository, AtivosRepository>(client => {
+    client.BaseAddress =  new Uri("http://brapi.dev/api/");
+});
 
 //UseCases
 
@@ -58,14 +61,14 @@ app.UseExceptionHandler( appError => {
 
     appError.Run( async context => {
         var exceptionHandler = context.Features.Get<IExceptionHandlerFeature>();
-        
+        Console.WriteLine(exceptionHandler.Error.Message);
         if ( exceptionHandler != null ) {
 
             var exceptionType = exceptionHandler.Error;
             Console.WriteLine(exceptionHandler.Endpoint);
             Console.WriteLine(exceptionHandler.Path);
             if ( exceptionType is KeyNotFoundException ) {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                context.Response.StatusCode = StatusCodes.Status404NotFound;
                 await context.Response.WriteAsync("O que você estava buscando não encontrado.");
             }
             if ( exceptionType is ArgumentException ) {
