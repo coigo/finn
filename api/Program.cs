@@ -3,7 +3,6 @@ using Infra.Database;
 using Infra.Repositories;
 using Infra.Repositories.Adapters;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Identity;
 using Movimentacoes.UseCases;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,8 +21,9 @@ builder.Services.AddScoped<IResumoRepository, ResumoRepository>();
 builder.Services.AddScoped<IAporteHistoricoRepository, AporteHistoricoRepository>();
 builder.Services.AddScoped<IAporteRepository, AporteRepository>();
 builder.Services.AddSingleton<IAtivosRepository, AtivosRepository>();
-builder.Services.AddHttpClient<IAtivosRepository, AtivosRepository>(client => {
-    client.BaseAddress =  new Uri("http://brapi.dev/api/");
+builder.Services.AddHttpClient<IAtivosRepository, AtivosRepository>(client =>
+{
+    client.BaseAddress = new Uri("http://brapi.dev/api/");
 });
 
 //UseCases
@@ -44,11 +44,12 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 
 
-builder.Services.AddCors( opt => {
-    opt.AddPolicy(name: allowLocal, 
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy(name: allowLocal,
  policy =>
     {
-        policy.WithOrigins("http://localhost:3001") 
+        policy.WithOrigins("http://localhost:3000")
               .AllowAnyHeader();
     });
 });
@@ -57,25 +58,34 @@ var app = builder.Build();
 
 // Configure the HTTP equest pipeline.
 
-app.UseExceptionHandler( appError => {
 
-    appError.Run( async context => {
+app.UseCors(allowLocal);
+app.UseRouting();
+
+app.UseExceptionHandler(appError =>
+{
+
+    appError.Run(async context =>
+    {
         var exceptionHandler = context.Features.Get<IExceptionHandlerFeature>();
-        Console.WriteLine(exceptionHandler.Error.Message);
-        if ( exceptionHandler != null ) {
+        if (exceptionHandler != null)
+        {
 
             var exceptionType = exceptionHandler.Error;
             Console.WriteLine(exceptionHandler.Endpoint);
             Console.WriteLine(exceptionHandler.Path);
-            if ( exceptionType is KeyNotFoundException ) {
+            if (exceptionType is KeyNotFoundException)
+            {
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 await context.Response.WriteAsync("O que você estava buscando não encontrado.");
             }
-            if ( exceptionType is ArgumentException ) {
+            if (exceptionType is ArgumentException)
+            {
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 await context.Response.WriteAsync("Argumento inválido.");
             }
-            else {
+            else
+            {
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 await context.Response.WriteAsync("Erro Interno.");
             }
@@ -84,11 +94,6 @@ app.UseExceptionHandler( appError => {
     });
 
 });
-
-app.UseCors(allowLocal);
-
-app.UseRouting();
-
 
 app.MapControllers();
 

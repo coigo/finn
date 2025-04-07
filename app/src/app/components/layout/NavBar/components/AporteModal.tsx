@@ -13,6 +13,7 @@ import { CriarAporteRequest } from "@/services/aportes"
 import { useToast } from "@/app/components/Toast/useToast"
 import { useBuscarAporteCategorias } from "@/hooks/useBuscarAporteCategorias"
 import { useEffect } from "react"
+import { useAportesHook } from "@/hooks/UseBuscarAportes"
 
 
 
@@ -22,7 +23,7 @@ export const AporteModal = () => {
     const { showToast } = useToast()
 
     const { buscar, categorias, loading } = useBuscarAporteCategorias()
-
+    const { buscar: onClose } = useAportesHook()
     useEffect(() => {
         buscar()
     }, [])
@@ -31,6 +32,7 @@ export const AporteModal = () => {
         try {
             console.log(data)
             await CriarAporteRequest(data)
+            onClose()
         }
         catch (err: any) {
             showToast(err.message, "error")

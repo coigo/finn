@@ -1,6 +1,6 @@
 "use client"
 import { CustomDataTable, FieldProps } from "@/app/components/DataTable"
-import { useBuscarAportes } from "@/hooks/UseBuscarAportes"
+import { useAportesHook } from "@/hooks/UseBuscarAportes"
 import { groupBy } from "@/utils/array"
 import { useEffect } from "react"
 
@@ -14,7 +14,7 @@ const fields: FieldProps[] = [
 
 export const AportesDetalhes = () => {
 
-    const { aportes, buscar, loading } = useBuscarAportes()
+    const { aportes, buscar, loading } = useAportesHook()
     const aportesAgrupados = groupBy(aportes, "categoria")
 
     useEffect(() => {
