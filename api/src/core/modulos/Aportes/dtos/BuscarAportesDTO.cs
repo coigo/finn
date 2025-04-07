@@ -8,6 +8,6 @@ public record BuscarAportesDTO (
     decimal PrecoMedio,
     decimal PrecoAtual,
     decimal Quantidade,
-    AporteCategoria categoria
+    string categoria
 
 );

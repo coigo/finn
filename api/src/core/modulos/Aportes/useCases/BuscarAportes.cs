@@ -18,20 +18,20 @@ public class BuscarAportesUseCase: IUseCase<Unit, List<BuscarAportesDTO>> {
     public async Task<List<BuscarAportesDTO>> Execute (Unit _) {
         var aportes = await this._aportes.BuscarTodos();
         
-        var coisa = new List<BuscarAportesDTO>();
+        var listaAportes = new List<BuscarAportesDTO>();
 
         foreach (var aporte in aportes) {
             var ativoInfo = await this._ativos.BuscarPorTicker(aporte.Identificador);
-            coisa.Add(new BuscarAportesDTO(
+            listaAportes.Add(new BuscarAportesDTO(
                 aporte.Identificador,
                 ativoInfo.ShortName,
                 aporte.PrecoMedio,
                 ativoInfo.RegularMarketPrice,
                 aporte.Quantidade,
-                aporte.Categoria
+                aporte.Categoria.ToString()
             ));
         }
-        return coisa;
+        return listaAportes;
     }
 
 }
