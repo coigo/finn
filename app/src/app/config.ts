@@ -7,5 +7,5 @@ type configExport = {
 }
 
 export const config: configExport = {
-    baseUrl: NEXT_PUBLIC_API_URL || "http://localhost:5021aaaa"
+    baseUrl: NEXT_PUBLIC_API_URL || "http://localhost:5021"
 }

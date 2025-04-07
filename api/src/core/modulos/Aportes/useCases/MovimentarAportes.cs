@@ -40,7 +40,8 @@ public class MovimentarAportesUseCase : IUseCase<MovimentarAporteDTO, Aporte>
     }
 
     private async Task<Aporte> CriarAporte(MovimentarAporteDTO data) {
-        Aporte novoAporte = new (   data.Preco, data.Identificador, data.Quantidade, data.Categoria );
+        Console.WriteLine(data.Quantidade);
+        Aporte novoAporte = new ( data.Preco, data.Identificador, data.Quantidade, data.Categoria );
         return await this._aportes.CriarAporte(novoAporte);
     }
 

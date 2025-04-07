@@ -6,7 +6,6 @@ import { TextField } from "@/app/components/Inputs/TextField"
 import { ModalContent } from "@/app/components/Modal/ModalContent"
 import { ModalFooter } from "@/app/components/Modal/ModalFooter"
 import { ModalHeader } from "@/app/components/Modal/ModalHeader"
-import { formatCurrency } from "@/utils/string"
 import { Button } from "@mui/material"
 import { Controller, useForm } from "react-hook-form"
 import CheckIcon from '@mui/icons-material/Check';
@@ -20,7 +19,7 @@ import { useEffect } from "react"
 export const AporteModal = () => {
 
     const { control, handleSubmit } = useForm()
-    const {showToast} = useToast()
+    const { showToast } = useToast()
 
     const { buscar, categorias, loading } = useBuscarAporteCategorias()
 
@@ -33,66 +32,67 @@ export const AporteModal = () => {
             console.log(data)
             await CriarAporteRequest(data)
         }
-        catch(err: any) {
-            showToast( err.message, "error")
+        catch (err: any) {
+            showToast(err.message, "error")
             console.log(err)
         }
     }
 
     return (
         <>
-            <ModalHeader title="Aportes"/>
+        {JSON.stringify(categorias)}
+            <ModalHeader title="Aportes" />
             <ModalContent>
                 <form className="md:flex ">
-                    <Controller 
+                    <Controller
                         name="identificador"
                         control={control}
-                        render={({field}) => 
-                            <TextField 
+                        render={({ field }) =>
+                            <TextField
                                 {...field}
-                                label="Identificador" 
+                                label="Identificador"
                             />
                         }
                     />
-                    <Controller 
-                        name="categoriaId"
+                    <Controller
+                        name="categoria"
                         control={control}
-                        render={({field}) =>  
-                            <SelectField 
-                        data={categorias} 
-                        label="Categoria" 
-                        {...field} 
-                        />
-                    }
+                        render={({ field }) =>
+                            <SelectField
+                                data={categorias}
+                                label="Categoria"
+                                {...field}
+                            />
+                        }
                     />
-                    <Controller 
-                    name="quantidade"
-                    control={control}
-                    render={({ field }) => (
-                        <NumberField 
-                            {...field}
-                            label="Quantidade"
-                        />
-                    )}
+                    <Controller
+                        name="quantidade"
+                        control={control}
+                        render={({ field }) => (
+                            <NumberField
+                                label="Quantidade"
+                                {...field}
+                            />
+                        )}
                     />
-                    <Controller 
+                    <Controller
                         name="preco"
                         control={control}
-                        render={({field}) => 
-                            <CurrencyField 
+                        render={({ field }) =>
+                            <CurrencyField
                                 {...field}
                                 label="Preço"
                             />
                         }
                     />
-                    <Controller 
+                    <Controller
                         name="dataCompra"
                         control={control}
-                        render={({field}) => 
-                            <DateField 
+                        render={({ field }) =>
+                            <DateField
                                 {...field}
-                                label="Data da Compra" 
-                                
+                                label="Data da Compra"
+
                             />
                         }
                     />
@@ -100,9 +100,9 @@ export const AporteModal = () => {
                 </form>
             </ModalContent>
             <ModalFooter>
-                <Button startIcon={<CheckIcon/>} variant="contained" type="submit" onClick={handleSubmit(submit)} color="warning"  > Enviar </Button>
+                <Button startIcon={<CheckIcon />} variant="contained" type="submit" onClick={handleSubmit(submit)} color="warning"  > Enviar </Button>
             </ModalFooter>
-        </>        
+        </>
     )
 
 }

@@ -1,10 +1,6 @@
 import { TextField, TextFieldProps } from "@mui/material"
-import { useState } from "react"
 
-
-
-
-export const NumberField = ({ onChange, value, ...props }: TextFieldProps) => {
+export const NumberField = ({ ...props }: TextFieldProps) => {
 
     return (
         <div className="mx-2">
