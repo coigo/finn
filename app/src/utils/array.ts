@@ -6,7 +6,7 @@ export const groupBy = function (arr: any[], key: any) {
 };
 
 export const countBy = (arr: any[], key: string) => {
-    return arr.reduce((acc: any[], curr: any, i: number) => {
+    return arr.reduce((acc: any[], curr: any) => {
         const existente = acc.find(obj => obj.label == curr[key])
         if (existente) {
             existente.value += 1

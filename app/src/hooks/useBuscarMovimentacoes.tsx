@@ -1,9 +1,12 @@
 "use client"
 
+import { useToast } from "@/app/components/Toast/useToast"
 import { BuscarMovimentacoesRequest } from "@/services/movimentacoes"
 import { useState } from "react"
 
 export const useBuscarMovimentacoes = () => {
+
+    const {showToast} = useToast()
 
     const [ movimentacoes, setMovimentacoes ] = useState([])
     const [ loading, setLoading ] = useState(false)
@@ -16,6 +19,7 @@ export const useBuscarMovimentacoes = () => {
             setLoading(false)
         }
         catch ( err: any ) {
+            showToast(err.message, "error")
             setLoading(false)
         }
     }

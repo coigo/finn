@@ -4,14 +4,15 @@ import { InputAdornment, TextField, TextFieldProps } from "@mui/material"
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 
-export const CurrencyField = (props: TextFieldProps) => {
-    return (
-        <TextField
+export function CurrencyField (props: TextFieldProps) {
+    return <TextField
             {...props}
             value={props.value || ""}
             onChange={(e) => {
                 e.target.value = formatCurrency(e.target.value)
-                props.onChange && props.onChange(e)
+                if (props.onChange) {
+                    props.onChange(e)
+                  }
             }}
 
             slotProps={{
@@ -20,5 +21,5 @@ export const CurrencyField = (props: TextFieldProps) => {
                 },
             }}
         />
-    )
+    
 }

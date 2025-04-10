@@ -15,7 +15,7 @@ const fields: FieldProps[] = [
 
 export const AportesDetalhes = () => {
 
-    const { aportes, buscar, loading, onUpdate } = useAportesHook()
+    const { aportes, buscar, loading } = useAportesHook()
     const [categoria, setCategoria] = useState<string>("")
     
     
@@ -27,11 +27,11 @@ export const AportesDetalhes = () => {
         buscar()
     }, [])
 
-    onUpdate(() => {
+    useEffect(() => {
         if (aportes.length) {
             setCategoria(aportes[0].categoria)
         }
-    })
+    }, [aportes])
     
     return (
 
@@ -54,7 +54,7 @@ export const AportesDetalhes = () => {
                                 <h3>{categoria}</h3>
                             </div>
                             <div className="flex justify-center w-full">
-                                <PieChart loading={loading} data={[] } />
+                                {/* <PieChart loading={loading} data={[] } /> */}
                             </div>
 
                         </div>

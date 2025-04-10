@@ -1,9 +1,12 @@
 "use client"
 
+import { useToast } from "@/app/components/Toast/useToast"
 import { BuscarCategoriasRequest } from "@/services/aportes"
 import { useState } from "react"
 
 export const useBuscarAporteCategorias = () => {
+
+    const {showToast} = useToast()
 
     const [ categorias, setCategorias ] = useState([])
     const [ loading, setLoading ] = useState(false)
@@ -17,6 +20,7 @@ export const useBuscarAporteCategorias = () => {
             setLoading(false)
         }
         catch ( err: any ) {
+            showToast(err.message, "error")
             setLoading(false)
         }
     }

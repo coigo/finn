@@ -1,4 +1,3 @@
-import { ReactNode } from "react"
 import { useModal } from "./useModal"
 import CloseIcon from '@mui/icons-material/Close';
 

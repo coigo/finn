@@ -3,7 +3,7 @@
 import { CssBaseline, useColorScheme } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { ModalProvider } from "./components/Modal/ModalProvider";
-import Modal from "./components/Modal/Modal";
+import { Modal } from "./components/Modal/Modal";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';

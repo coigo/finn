@@ -2,7 +2,6 @@
 import Menu from "./components/layout/Menu";
 import NavBar from "./components/layout/NavBar";
 import { Box } from "@mui/material";
-import { useModal } from "./components/Modal/useModal";
 
 export default function App({ children }: { children: React.ReactNode }) {
 

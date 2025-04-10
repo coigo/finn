@@ -1,6 +1,6 @@
 "use client"
 import * as React from 'react';
-import { IconButton, useColorScheme, useTheme } from '@mui/material';
+import { IconButton, useColorScheme } from '@mui/material';
 import { useModal } from '@/app/components/Modal/useModal';
 
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
@@ -14,9 +14,7 @@ import { MovimentacaoModal } from './components/MovimentacaoModal';
 
 export default function NavBar() {
   const { mode, setMode } = useColorScheme();
-  const { openModal, closeModal } = useModal()
-
-  const { palette } = useTheme()
+  const { openModal } = useModal()
 
   const handleChangeTheme = () => {
     setMode(mode == "dark" ? "light" : "dark")

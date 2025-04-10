@@ -22,11 +22,11 @@ export const AporteModal = () => {
     const { control, handleSubmit } = useForm()
     const { showToast } = useToast()
 
-    const { buscar, categorias, loading } = useBuscarAporteCategorias()
+    const { buscar, categorias } = useBuscarAporteCategorias()
     const { buscar: onClose } = useAportesHook()
     useEffect(() => {
         buscar()
-    }, [])
+    })
 
     const submit = async (data: any) => {
         try {

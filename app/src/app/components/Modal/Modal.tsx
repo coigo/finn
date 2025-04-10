@@ -40,11 +40,5 @@ const Modal: React.FC = () => {
     );
 };
 
-export default Modal;
+export { Modal };
 
-{/* <div  */}
-{/* Titulo */}
-{/* </div> */}
-{/* <div */}
-{/* {content} */}
-{/* </div> */}

@@ -2,11 +2,10 @@
 
 import { useToast } from "@/app/components/Toast/useToast"
 import { BuscarAportesRequest } from "@/services/aportes"
-import { createContext, ReactNode, useContext, useEffect, useState } from "react"
+import { createContext, ReactNode, useContext, useState } from "react"
 
 type AporteContextProps = {
     buscar: () => void
-    onUpdate: (callBack: () => void) => void
     loading: boolean
     aportes: Aporte[]
 }
@@ -32,9 +31,8 @@ export const AportesProvider = ({children}: {children: ReactNode}) => {
             }
         }
     
-        const onUpdate = (callBack: () => void) => useEffect(callBack, [aportes])
 
-    return <AporteContext.Provider value={{buscar, onUpdate, aportes, loading}} >
+    return <AporteContext.Provider value={{buscar, aportes, loading}} >
         {children}
     </AporteContext.Provider>
 }

@@ -18,7 +18,7 @@ export function CustomDataTable({ data, fields }: ICustomDataTable) {
                 <TableHead>
                     <TableRow>
                         {
-                            fields.map(({ field, description,...fieldProps }, i) => {
+                            fields.map(({ description,...fieldProps }, i) => {
                                 return (
                                     <TableCell key={"header" + i} {...fieldProps}>{description}</TableCell>
                                 )
@@ -46,13 +46,3 @@ export function CustomDataTable({ data, fields }: ICustomDataTable) {
         </TableContainer>
     )
 }
-/***
- * mandar a data
- * de algum jetio mandar os campos tbm
- * ele que no header mapear os campos
- * no body mapear a data e vincular com os campos
- * 
- *  campos
- * --------
- * data > campo
- */

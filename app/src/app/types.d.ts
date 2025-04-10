@@ -1,3 +1,9 @@
+type Error = {
+    succes:boolean
+    message: string
+    status: number
+}
+
 type SelectValues = {
     id: number
     name: string
