@@ -1,11 +1,10 @@
 import { api } from "./api"
 
 export const  CriarAporteRequest = async (data: any) => {
-    console.log("asd")
     await api.post("/aportes", data)
 }
 
-export const BuscarAportesRequest = async () => {
+export const BuscarAportesRequest = async (): Promise<Aporte[]> => {
     const { data } = await api.get('/aportes') 
     return data
 }

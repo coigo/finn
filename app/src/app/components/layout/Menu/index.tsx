@@ -16,17 +16,17 @@ export default function Menu() {
     return (
       <>
         <Link href={"/dashboard"}>
-          <div className='menu-item md:my-10 md:mx-0 md:hover:bg-yellow-600 md:hover:p-2 hover:rounded-2xl hover:text-amber-950'>
+          <div className='menu-item md:my-10 md:mx-0 md:hover:bg-[#de983b] md:hover:p-2 hover:rounded-2xl hover:text-amber-950'>
             <DataSaverOffIcon fontSize='large' />
           </div>
         </Link>
         <Link href={"/movimentacoes"}>
-          <div className='menu-item relative md:my-10 md:mx-0 md:hover:bg-yellow-600 md:hover:p-2 hover:rounded-2xl hover:text-amber-950'>
+          <div className='menu-item relative md:my-10 md:mx-0 md:hover:bg-[#de983b] md:hover:p-2 hover:rounded-2xl hover:text-amber-950'>
             <CompareArrowsIcon fontSize='large' />
           </div>
         </Link>
         <Link href={"/aportes"}>
-          <div className='menu-item relative md:my-10 md:mx-0 md:hover:bg-yellow-600 md:hover:p-2 hover:rounded-2xl hover:text-amber-950'>
+          <div className='menu-item relative md:my-10 md:mx-0 md:hover:bg-[#de983b] md:hover:p-2 hover:rounded-2xl hover:text-amber-950'>
             <AttachMoneyIcon fontSize='large' />
           </div>
         </Link>

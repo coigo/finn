@@ -2,16 +2,21 @@
 
 import { useToast } from "@/app/components/Toast/useToast"
 import { BuscarAportesRequest } from "@/services/aportes"
-import { BuscarMovimentacoesRequest } from "@/services/movimentacoes"
-import { createContext, ReactNode, useContext, useState } from "react"
+import { createContext, ReactNode, useContext, useEffect, useState } from "react"
 
-const AporteContext = createContext<any | undefined>(undefined)
+type AporteContextProps = {
+    buscar: () => void
+    onUpdate: (callBack: () => void) => void
+    loading: boolean
+    aportes: Aporte[]
+}
 
+const AporteContext = createContext< AporteContextProps| undefined>(undefined)
 
 export const AportesProvider = ({children}: {children: ReactNode}) => {
     
         const { showToast } = useToast()
-        const [ aportes, setAportes ] = useState<any[]>([])
+        const [ aportes, setAportes ] = useState<Aporte[]>([])
         const [ loading, setLoading ] = useState(false)
         
         const buscar = async () => {
@@ -27,8 +32,9 @@ export const AportesProvider = ({children}: {children: ReactNode}) => {
             }
         }
     
-    
-    return <AporteContext.Provider value={{buscar, aportes, loading}} >
+        const onUpdate = (callBack: () => void) => useEffect(callBack, [aportes])
+
+    return <AporteContext.Provider value={{buscar, onUpdate, aportes, loading}} >
         {children}
     </AporteContext.Provider>
 }

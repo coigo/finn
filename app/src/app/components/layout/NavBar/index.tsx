@@ -25,7 +25,7 @@ export default function NavBar() {
   return (
     <>
       <div className='w-full md:flex md:justify-center mb-8 '>
-        <div className='flex justify-between w-full md:w-3/4 p-2 bg-yellow-600 rounded-b-2xl'>
+        <div className='flex justify-between w-full md:w-3/4 p-2 bg-[#de983b] rounded-b-2xl'>
           <span className='flex gap-2 ml-4'>
             <div onClick={() => openModal(<MovimentacaoModal/>)} className='nav-bar-item-round'>
               <CompareArrowsIcon className='text-yellow-950'/>
