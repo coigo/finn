@@ -17,8 +17,8 @@ export const AportesDetalhes = () => {
 
     const { aportes, buscar, loading } = useAportesHook()
     const [categoria, setCategoria] = useState<string>("")
-    
-    
+
+
     const aportesAgrupados = groupBy(aportes, "categoria")
     const gruposPorcategoria = countBy(aportes, "categoria")
 
@@ -32,7 +32,7 @@ export const AportesDetalhes = () => {
             setCategoria(aportes[0].categoria)
         }
     }, [aportes])
-    
+
     return (
 
         <div className="grid grid-cols-1 md:grid-cols-2 h-full gap-4">
