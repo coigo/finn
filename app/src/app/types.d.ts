@@ -5,15 +5,20 @@ type Error = {
 }
 
 type SelectValues = {
-    id: number
+    id: string | number
     name: string
 }
 
 type Aporte = {
-    Identificador: string 
-    NomeCurto: string 
-    PrecoMedio: number 
-    PrecoAtual: number 
-    Quantidade: number 
+    identificador: string 
+    nomeCurto: string 
+    precoMedio: number 
+    precoAtual: number 
+    quantidade: number 
     categoria: string 
+}
+
+type PieData = {
+    label: string
+    value: number
 }

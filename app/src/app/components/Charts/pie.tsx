@@ -1,20 +1,25 @@
 import { PieChart as Pie } from "@mui/x-charts"
 
 type PieChartProps = {
-    data: any[]
+    data: {
+        label: string, 
+        value: number
+    }[]
     loading: boolean
 }
 
-export function PieChart({data, loading}: PieChartProps) {
+export function PieChart({ data, loading }: PieChartProps) {
+
+    
     return (
         <Pie
-        loading={loading}
-        width={220}
-        height={220}
-        colors= {
-            ['#e0aa3e', '#de983b', '#f0903a', '#ee7630', '#d86120']
+            loading={loading}
+            width={220}
+            height={220}
+            colors={
+                ['#e0aa3e', '#de983b', '#f0903a', '#ee7630', '#d86120']
 
-        }
+            }
             series={[
                 {
                     data: data,
@@ -26,11 +31,11 @@ export function PieChart({data, loading}: PieChartProps) {
                     endAngle: 250,
                     cx: 110,
                     cy: 110,
-                    
+
                 },
 
             ]}
-            slotProps= {{ legend: { hidden: true } }}
+            slotProps={{ legend: { hidden: true } }}
 
 
         />

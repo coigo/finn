@@ -11,8 +11,25 @@ export const countBy = (arr: any[], key: string) => {
         if (existente) {
             existente.value += 1
         }
-        else acc.push({label: curr[key], value: 1})
+        else acc.push({ label: curr[key], value: 1 })
         return acc
     }, [])
-    
+
+}
+
+export const filterBy = (arr: any[], key: string, filter: string) => {
+    return arr.reduce((acc: any[], curr: any) => {
+        curr[key] == filter && acc.push(curr)
+        return acc
+    }, [])
+}
+
+export const totalizarAportes = (aportes: Aporte[]): PieData[] => {
+    return aportes.map(aporte => {
+        console.log(aporte)
+        return {
+            label: aporte.identificador,
+            value: aporte.quantidade * aporte.precoAtual
+        }
+    })
 }

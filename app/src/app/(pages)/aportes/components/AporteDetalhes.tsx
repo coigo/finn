@@ -1,8 +1,9 @@
 "use client"
 import { PieChart } from "@/app/components/Charts/pie"
 import { CustomDataTable, FieldProps } from "@/app/components/DataTable"
+import { SelectField } from "@/app/components/Inputs/SelectField"
 import { useAportesHook } from "@/hooks/UseBuscarAportes"
-import { countBy, groupBy } from "@/utils/array"
+import { countBy, filterBy, groupBy, totalizarAportes } from "@/utils/array"
 import { useEffect, useState } from "react"
 
 
@@ -16,12 +17,12 @@ const fields: FieldProps[] = [
 export const AportesDetalhes = () => {
 
     const { aportes, buscar, loading } = useAportesHook()
-    const [categoria, setCategoria] = useState<string>("")
+    const [categoria, setCategoria] = useState<string>("ACAO")
 
 
     const aportesAgrupados = groupBy(aportes, "categoria")
-    const gruposPorcategoria = countBy(aportes, "categoria")
-
+    const quantidadeCategoria = countBy(aportes, "categoria")
+    const categoriaDetalhes = totalizarAportes(filterBy(aportes, "categoria", categoria))
 
     useEffect(() => {
         buscar()
@@ -31,6 +32,9 @@ export const AportesDetalhes = () => {
         if (aportes.length) {
             setCategoria(aportes[0].categoria)
         }
+
+        console.log("------------------------------------------------")
+        console.log(categoriaDetalhes)
     }, [aportes])
 
     return (
@@ -44,17 +48,29 @@ export const AportesDetalhes = () => {
                                 <h3>Geral</h3>
                             </div>
                             <div className="flex justify-center w-full">
-                                <PieChart loading={loading} data={gruposPorcategoria} />
+                                <PieChart loading={loading} data={quantidadeCategoria} />
                             </div>
 
                         </div>
                         <div className="flex flex-col justify-center w-full md:w-1/2">
-                            {JSON.stringify(aportesAgrupados[categoria])}
-                            <div className="m-4 font-semibold w-full md:mb-12">
-                                <h3>{categoria}</h3>
+                            <div className="m-4 pr-4 font-semibold w-full md:mb-12">
+
+                                <SelectField 
+                                    controlClass="md:w-full"
+                                    onChange={e => setCategoria(e.target.value as string)}
+                                    className="w-full outline-0 border-0 bg-neutral-500/10 rounded-lg"
+                                    sx={{padding:'0'}}
+                                    value={categoria}
+                                    data={[
+                                        {id: "ACAO", name:"ACAO"},
+                                        {id: "FII", name:"FII"}
+                                    ]}
+                                    
+                                />
+
                             </div>
                             <div className="flex justify-center w-full">
-                                {/* <PieChart loading={loading} data={[] } /> */}
+                                <PieChart loading={loading} data={categoriaDetalhes} />
                             </div>
 
                         </div>
