@@ -14,12 +14,22 @@ import { useToast } from "@/app/components/Toast/useToast"
 import { useBuscarAporteCategorias } from "@/hooks/useBuscarAporteCategorias"
 import { useEffect } from "react"
 import { useAportesHook } from "@/hooks/UseBuscarAportes"
+import { z } from 'zod'
+import dayjs from "dayjs"
 
+const schema = z.object({
+    identificador: z.string(),
+    quantidade: z.number(),
+    preco: z.number(),
+    categoria: z.number(),
+    dataCompra: z.custom<dayjs.Dayjs>(),
+})
 
+type AporteForm = z.infer<typeof schema>
 
 export const AporteModal = () => {
 
-    const { control, handleSubmit } = useForm()
+    const { control, handleSubmit } = useForm<AporteForm>()
     const { showToast } = useToast()
 
     const { buscar, categorias } = useBuscarAporteCategorias()
@@ -28,7 +38,7 @@ export const AporteModal = () => {
         buscar()
     })
 
-    const submit = async (data: any) => {
+    const submit = async (data: AporteForm) => {
         try {
             console.log(data)
             await CriarAporteRequest(data)
@@ -42,7 +52,6 @@ export const AporteModal = () => {
 
     return (
         <>
-        {JSON.stringify(categorias)}
             <ModalHeader title="Aportes" />
             <ModalContent>
                 <form className="md:flex ">
