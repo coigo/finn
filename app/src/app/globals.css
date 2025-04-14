@@ -130,9 +130,11 @@ input[type=number] {
   background: transparent;
 }
 
-
-/* Firefox */
 .transparent-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.chip {
+  transition: background-color ease 300ms;
 }
