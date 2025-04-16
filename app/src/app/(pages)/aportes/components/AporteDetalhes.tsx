@@ -35,8 +35,6 @@ export const AportesDetalhes = () => {
             setCategoria(aportes[0].categoria)
         }
 
-        console.log("------------------------------------------------")
-        console.log(categoriaDetalhes)
     }, [aportes])
 
     return (
