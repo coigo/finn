@@ -22,3 +22,17 @@ type PieData = {
     label: string
     value: number
 }
+
+type MovimentacaoCategoria = {
+    id: number
+    name: string
+    tipo: MovimentacaoTipo
+}
+
+type MovimentacaoTipo = "ENTRADA" |"SAIDA"
+
+type MovimentacaoForm<T> = {
+    control: Control<T, any, T>
+    handleSubmit: UseFormHandleSubmit<T, T>
+    onSubmit: (data: T) => void
+}

@@ -36,7 +36,7 @@ export const AporteModal = () => {
     const { buscar: onClose } = useAportesHook()
     useEffect(() => {
         buscar()
-    })
+    },[])
 
     const submit = async (data: AporteForm) => {
         try {
@@ -54,7 +54,7 @@ export const AporteModal = () => {
         <>
             <ModalHeader title="Aportes" />
             <ModalContent>
-                <form className="md:flex ">
+                <form className=" flex flex-col md:flex-row gap-3 justify-evenly">
                     <Controller
                         name="identificador"
                         control={control}

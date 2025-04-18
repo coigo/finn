@@ -1,45 +1,39 @@
 import { CurrencyField } from "@/app/components/Inputs/CurrencyField"
-import { NumberField } from "@/app/components/Inputs/NumberField"
 import { DateField } from "@/app/components/Inputs/DateField"
-import { TextField } from "@/app/components/Inputs/TextField"
 import dayjs from "dayjs"
-import { Control, Controller, UseFormHandleSubmit } from "react-hook-form"
+import { Control, Controller, FieldValues, UseFormHandleSubmit } from "react-hook-form"
 import { z } from "zod"
+import { SelectField } from "@/app/components/Inputs/SelectField"
 
 const schema = z.object({
     identificador: z.string(),
-    quantidade: z.number(),
+    categoriaId: z.number(),
     preco: z.number(),
     dataCompra: z.custom<dayjs.Dayjs>(),
 })
 
 export type RecorrenteForm = z.infer<typeof schema>
 
-type FormRecorrenteProps = {
-    control: Control<RecorrenteForm, any, RecorrenteForm>
-    handleSubmit: UseFormHandleSubmit<RecorrenteForm, RecorrenteForm>
-    onSubmit: (data: any) => void
+type FormProps = {
+    config: {
+        control: Control<FieldValues, any, FieldValues>
+        handleSubmit: UseFormHandleSubmit<FieldValues, FieldValues>
+        onSubmit: (data: FieldValues) => void
+    }
+    categorias: MovimentacaoCategoria[]
 }
 
-export const FormRecorrente = ({ handleSubmit, control, onSubmit } : FormRecorrenteProps) => {
+export const FormRecorrente = ({ config: { control, handleSubmit, onSubmit }, categorias }: FormProps)  => {
     return (
 
-        <form onSubmit={() => handleSubmit(onSubmit)} className="md:flex ">
+        <form onSubmit={() => handleSubmit(onSubmit)} className="flex flex-col md:flex-row gap-3 justify-evenly">
+
         <Controller
-            name="identificador"
-            control={control}
-            render={({ field }) =>
-                <TextField
-                    {...field}
-                    label="Identificador"
-                />
-            }
-        />
-        <Controller
-            name="quantidade"
+            name="categoriaId"
             control={control}
             render={({ field }) => (
-                <NumberField
+                <SelectField
+                    data={categorias}
                     label="Quantidade"
                     {...field}
                 />

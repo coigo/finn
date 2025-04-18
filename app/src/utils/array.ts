@@ -26,7 +26,6 @@ export const filterBy = (arr: any[], key: string, filter: string) => {
 
 export const totalizarAportes = (aportes: Aporte[]): PieData[] => {
     return aportes.map(aporte => {
-        console.log(aporte)
         return {
             label: aporte.identificador,
             value: aporte.quantidade * aporte.precoAtual

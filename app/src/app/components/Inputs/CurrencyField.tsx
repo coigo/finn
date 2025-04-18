@@ -6,6 +6,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 export function CurrencyField (props: TextFieldProps) {
     return <TextField
+            className="flex flex-1"
             {...props}
             value={props.value || ""}
             onChange={(e) => {

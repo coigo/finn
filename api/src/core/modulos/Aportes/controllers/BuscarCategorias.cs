@@ -6,18 +6,21 @@ namespace Infra.Http.Controllers.Aportes;
 
 [ApiController]
 [Route("aportes")]
-public class BuscarCategorias {
-    
+public class BuscarCategorias
+{
+
     private readonly BuscarCategoriasUseCase _useCase;
 
-    public BuscarCategorias (BuscarCategoriasUseCase useCase) {
+    public BuscarCategorias(BuscarCategoriasUseCase useCase)
+    {
         _useCase = useCase;
     }
 
     [HttpGet]
     [Route("categorias")]
-    public List<SelectValues> Handle () {
-        return this._useCase.Execute(Unit.Value);
+    public List<SelectValues> Handle()
+    {
+        return this._useCase.Execute(Unity.Value);
     }
 
 }

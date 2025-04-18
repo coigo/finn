@@ -78,4 +78,17 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
         return categoria;
     }
 
+    public async Task<List<BuscarMovimentacaoCategoriaDTO>> BuscarCategorias( ) {
+        var categoria = await _context.MovimentacoesCategorias.Select(x => new BuscarMovimentacaoCategoriaDTO(
+            x.Id,
+            x.Nome,
+            x.Tipo.ToString()
+        )).ToListAsync();
+        
+        if ( categoria == null) {
+            throw new KeyNotFoundException(nameof(categoria));
+        }
+        return categoria;
+    }
+
 }

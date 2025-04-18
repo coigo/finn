@@ -1,6 +1,6 @@
 namespace Infra.Shared;
 
-public struct Unit
+public struct Unity
 {
-    public static readonly Unit Value = new Unit();
+    public static readonly Unity Value = new Unity();
 }

@@ -5,12 +5,11 @@ import { Dayjs } from "dayjs"
 
 export const DateField = (props: DatePickerProps<Dayjs>) => {
     return (
-        <div className="mx-2">
             <DatePicker 
+                className="flex flex-1"
                 {...props}
                 value={props.value ?? null}
                 format="DD/MM/YYYY"
             />
-        </div>
     )
 }

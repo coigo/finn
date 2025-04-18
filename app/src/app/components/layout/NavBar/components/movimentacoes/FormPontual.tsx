@@ -3,66 +3,59 @@ import { NumberField } from "@/app/components/Inputs/NumberField"
 import { DateField } from "@/app/components/Inputs/DateField"
 import { TextField } from "@/app/components/Inputs/TextField"
 import dayjs from "dayjs"
-import { Control, Controller, UseFormHandleSubmit } from "react-hook-form"
+import { Control, Controller, FieldValues, UseFormHandleSubmit } from "react-hook-form"
 import { z } from "zod"
+import { SelectField } from "@/app/components/Inputs/SelectField"
 
 const schema = z.object({
-    identificador: z.string(),
-    quantidade: z.number(),
-    preco: z.number(),
-    dataCompra: z.custom<dayjs.Dayjs>(),
+    categoriaId: z.number(),
+    valor: z.number(),
+    data: z.custom<dayjs.Dayjs>(),
 })
 
 export type PontualForm = z.infer<typeof schema>
 
 type FormProps = {
-    control: Control<PontualForm, any, PontualForm>
-    handleSubmit: UseFormHandleSubmit<PontualForm, PontualForm>
-    onSubmit: (data: any) => void
+    config: {
+        control: Control<FieldValues, any, FieldValues>
+        handleSubmit: UseFormHandleSubmit<FieldValues, FieldValues>
+        onSubmit: (data: FieldValues) => void
+    }
+    categorias: MovimentacaoCategoria[]
 }
 
-
-export const FormPontual = ({ handleSubmit, control, onSubmit } : FormProps) => {
+export const FormPontual = ({ config: { control, handleSubmit, onSubmit }, categorias }: FormProps) => {
     return (
 
-        <form onSubmit={() => handleSubmit(onSubmit)} className="md:flex ">
+        <form onSubmit={() => handleSubmit(onSubmit)} className="flex flex-col md:flex-row gap-3 justify-evenly">
         <Controller
-            name="identificador"
-            control={control}
-            render={({ field }) =>
-                <TextField
-                    {...field}
-                    label="Identificador"
-                />
-            }
-        />
-        <Controller
-            name="quantidade"
+            name="categoriaId"
             control={control}
             render={({ field }) => (
-                <NumberField
-                    label="Quantidade"
+                <SelectField
+                    data={categorias}
+                    label="Categoria"
                     {...field}
                 />
             )}
         />
         <Controller
-            name="preco"
+            name="valor"
             control={control}
             render={({ field }) =>
                 <CurrencyField
                     {...field}
-                    label="Preço"
+                    label="Valor"
                 />
             }
         />
         <Controller
-            name="dataCompra"
+            name="data"
             control={control}
             render={({ field }) =>
                 <DateField
                     {...field}
-                    label="Data da Compra"
+                    label="Data"
 
                 />
             }

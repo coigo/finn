@@ -3,11 +3,13 @@ using Infra.Shared;
 
 namespace Aportes.UseCases;
 
-public class BuscarCategoriasUseCase: IUseCaseSyncronous<Unit, List<SelectValues>> {
+public class BuscarCategoriasUseCase : IUseCaseSyncronous<Unity, List<SelectValues>>
+{
 
-    public List<SelectValues> Execute (Unit _) {
+    public List<SelectValues> Execute(Unity _)
+    {
         var categorias = Enum.GetValues(typeof(AporteCategoria))
-            .Cast<AporteCategoria>().Select(e => new SelectValues((int) e, e.ToString()))
+            .Cast<AporteCategoria>().Select(e => new SelectValues((int)e, e.ToString()))
             .ToList();
         return categorias;
     }

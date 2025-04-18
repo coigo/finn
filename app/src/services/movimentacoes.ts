@@ -8,3 +8,8 @@ export const  BuscarMovimentacoesRequest = async () => {
     const { data } =  await api.get("/movimentacoes")
     return data
 }
+
+export const  BuscarCategoriasRequest = async () => {
+    const { data } =  await api.get("/movimentacoes/categorias")
+    return data
+}

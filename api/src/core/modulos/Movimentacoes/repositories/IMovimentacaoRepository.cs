@@ -14,5 +14,6 @@ public interface IMovimentacaoRepository {
     public Task<List<MovimentacaoParcela>> BuscarParcelasPorId( int[] parcelas );
 
     public Task<MovimentacaoCategoria> BuscarCategoriaPorNome(string nome);
+    public Task<List<BuscarMovimentacaoCategoriaDTO>> BuscarCategorias();
 
 }

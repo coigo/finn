@@ -5,22 +5,26 @@ using Infra.Shared;
 
 namespace Aportes.UseCases;
 
-public class BuscarAportesUseCase: IUseCase<Unit, List<BuscarAportesDTO>> {
+public class BuscarAportesUseCase : IUseCase<Unity, List<BuscarAportesDTO>>
+{
 
     private readonly IAtivosRepository _ativos;
     private readonly IAporteRepository _aportes;
 
-    public BuscarAportesUseCase ( IAporteRepository aportes, IAtivosRepository ativos ) {
+    public BuscarAportesUseCase(IAporteRepository aportes, IAtivosRepository ativos)
+    {
         _ativos = ativos;
         _aportes = aportes;
     }
 
-    public async Task<List<BuscarAportesDTO>> Execute (Unit _) {
+    public async Task<List<BuscarAportesDTO>> Execute(Unity _)
+    {
         var aportes = await this._aportes.BuscarTodos();
-        
+
         var listaAportes = new List<BuscarAportesDTO>();
 
-        foreach (var aporte in aportes) {
+        foreach (var aporte in aportes)
+        {
             var ativoInfo = await this._ativos.BuscarPorTicker(aporte.Identificador);
             listaAportes.Add(new BuscarAportesDTO(
                 aporte.Identificador,

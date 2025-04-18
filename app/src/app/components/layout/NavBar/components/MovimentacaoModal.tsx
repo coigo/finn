@@ -2,17 +2,16 @@ import { ModalContent } from "@/app/components/Modal/ModalContent"
 import { ModalFooter } from "@/app/components/Modal/ModalFooter"
 import { ModalHeader } from "@/app/components/Modal/ModalHeader"
 import { Button } from "@mui/material"
-import { Controller, useForm } from "react-hook-form"
+import {  FieldValues, useForm } from "react-hook-form"
 import CheckIcon from '@mui/icons-material/Check';
-import { CriarAporteRequest } from "@/services/aportes"
 import { useToast } from "@/app/components/Toast/useToast"
-import { useBuscarAporteCategorias } from "@/hooks/useBuscarAporteCategorias"
 import { useEffect, useState } from "react"
 import { useAportesHook } from "@/hooks/UseBuscarAportes"
 import { Chips } from "@/app/components/Chips"
 import { FormPontual, PontualForm } from "./movimentacoes/FormPontual"
 import { FormRecorrente, RecorrenteForm } from "./movimentacoes/FormRecorrente"
 import { FormParcela, ParcelaForm } from "./movimentacoes/FormParcela"
+import { useBuscarMovimentacoesCategoria } from "@/hooks/useBuscarMovimentacoesCategorias"
 
 
 
@@ -22,12 +21,20 @@ export const MovimentacaoModal = () => {
 
     const [movimentacaoTipo, setTipo] = useState<"PONTUAL" | "PARCELADA" | "RECORRENTE">("PONTUAL")
 
-    const { control, handleSubmit, reset } = useForm<PontualForm | RecorrenteForm | ParcelaForm>()
+    const { control, handleSubmit, reset } = useForm<FieldValues>()
     const { showToast } = useToast()
-    const { buscar, categorias } = useBuscarAporteCategorias()
+    const { buscar, categorias, loading } = useBuscarMovimentacoesCategoria()
     const { buscar: onClose } = useAportesHook()
 
-    const submit = async (data: PontualForm | RecorrenteForm | ParcelaForm) => {
+    const categoriasPorFiltro = (tipo: MovimentacaoTipo) => {
+        return categorias.filter(categoria => categoria.tipo == tipo) || [] as MovimentacaoCategoria[]
+    }
+
+    useEffect(() => {
+        buscar()
+    }, [])
+
+    const submit = async (data: FieldValues) => {
         try {
             console.log(data)
             // await CriarAporteRequest(data)
@@ -42,15 +49,20 @@ export const MovimentacaoModal = () => {
     const onSelectTipo = (mov: "PONTUAL" | "PARCELADA" | "RECORRENTE") => {
         if (movimentacaoTipo != mov ) {
             setTipo(mov)
+            reset()
         }
-        reset()
     }
+    
+    const formConfig = {
+        control, handleSubmit, onSubmit: submit
+    }  
 
     const forms = {
-        "PONTUAL" : <FormPontual control={control} handleSubmit={handleSubmit} onSubmit={submit}/>,
-        "PARCELADA" : <FormParcela control={control} handleSubmit={handleSubmit} onSubmit={submit}/>,
-        "RECORRENTE" : <FormRecorrente control={control} handleSubmit={handleSubmit} onSubmit={submit}/>
+        "PONTUAL" : <FormPontual config={formConfig} categorias={categoriasPorFiltro("SAIDA")}/>,
+        "PARCELADA" : <FormParcela config={formConfig} categorias={categoriasPorFiltro("SAIDA")} />,
+        "RECORRENTE" : <FormRecorrente config={formConfig} categorias={categoriasPorFiltro("SAIDA")} />
     }
+
 
     return (
         <>
@@ -68,7 +80,7 @@ export const MovimentacaoModal = () => {
             </ModalHeader>
             <ModalContent  >
                 {
-                    <FormPontual control={control} handleSubmit={handleSubmit} onSubmit={submit}/>
+                    forms[movimentacaoTipo]
                 }
             </ModalContent>
             <ModalFooter>
