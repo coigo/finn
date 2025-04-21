@@ -29,7 +29,7 @@ type FormProps = {
 export const FormParcela = ({ config: { control, handleSubmit, onSubmit }, categorias }: FormProps) => {
     return (
 
-        <form onSubmit={() => handleSubmit(onSubmit)} className="flex flex-col md:flex-row gap-3 justify-evenly">
+        <form onSubmit={() => handleSubmit(onSubmit)} className="flex flex-col md:flex-row flex-wrap gap-3 justify-evenly">
             <Controller
                 name="categoriaId"
                 control={control}
@@ -57,6 +57,7 @@ export const FormParcela = ({ config: { control, handleSubmit, onSubmit }, categ
                 render={({ field }) =>
                     <NumberField
                         {...field}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
                         label="Quantidade de Parcelas"
                     />
                 }

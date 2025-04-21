@@ -6,6 +6,7 @@ export const NumberField = ({ ...props }: TextFieldProps) => {
         <TextField
             className="flex flex-1"
             {...props}
+            value={props.value || ""}
             type="number"
         />
     )
