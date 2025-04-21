@@ -20,7 +20,7 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimen
 
     public async Task<CriarMovimentacao> Execute(CriarMovimentacao data)
     {
-        var (valor, tipo, categoriaId, quantidadeParcelas, primeiroVencimento) = data;
+        var (valor, tipo, categoriaId, descricao, date, quantidadeParcelas, primeiroVencimento) = data;
         Console.WriteLine(data.ToString());
         var SalvarPorTipo = new Dictionary<MovimentacaoTipo, Func<CriarMovimentacao, Task>>{
             {MovimentacaoTipo.INVESTIMENTOS, CriarTipoInvestimento},
@@ -34,7 +34,7 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimen
 
     private async Task CriarTipoSaida(CriarMovimentacao data)
     {
-        var (valor, tipo, categoriaId, quantidadeParcelas, primeiroVencimento) = data;
+        var (valor, tipo, categoriaId, descricao, date, quantidadeParcelas, primeiroVencimento) = data;
         
         Movimentacao movimentacao = await this.CriarMovimentacao(data);
 
@@ -67,7 +67,7 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimen
 
     private async Task CriarTipoEntrada(CriarMovimentacao data)
     {
-        var (valor, tipo, categoriaId, quantidadeParcelas, primeiroVencimento) = data;
+        var (valor, tipo, categoriaId, descricao, date, quantidadeParcelas, primeiroVencimento) = data;
 
         int[] categorias = { (int)MovimentacaoCategoriaDTO.DIVIDENDO, (int)MovimentacaoCategoriaDTO.VENDA };
 
@@ -83,12 +83,14 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimen
 
     private async Task<Movimentacao> CriarMovimentacao(CriarMovimentacao data)
     {
-        var (valor, tipo, categoriaId, quantidadeParcelas, primeiroVencimento) = data;
+        var (valor, tipo, categoriaId, descricao, date, quantidadeParcelas, primeiroVencimento ) = data;
 
         Movimentacao movimentacao = new(
             valor,
             tipo,
-            categoriaId
+            categoriaId,
+            descricao,
+            date = primeiroVencimento ?? date 
         );
 
         Movimentacao mov = await this._movimentacoes.CriarMovimentacao(movimentacao);

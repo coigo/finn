@@ -36,3 +36,5 @@ type MovimentacaoForm<T> = {
     handleSubmit: UseFormHandleSubmit<T, T>
     onSubmit: (data: T) => void
 }
+
+type TipoMovimentacaoFormulario = "PONTUAL" | "PARCELADA" | "RECORRENTE" | "ENTRADA"

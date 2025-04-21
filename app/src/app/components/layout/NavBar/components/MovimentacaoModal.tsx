@@ -2,28 +2,28 @@ import { ModalContent } from "@/app/components/Modal/ModalContent"
 import { ModalFooter } from "@/app/components/Modal/ModalFooter"
 import { ModalHeader } from "@/app/components/Modal/ModalHeader"
 import { Button } from "@mui/material"
-import {  FieldValues, useForm } from "react-hook-form"
+import {  FieldValues, useForm, useWatch } from "react-hook-form"
 import CheckIcon from '@mui/icons-material/Check';
 import { useToast } from "@/app/components/Toast/useToast"
 import { useEffect, useState } from "react"
 import { useAportesHook } from "@/hooks/UseBuscarAportes"
 import { Chips } from "@/app/components/Chips"
-import { FormPontual, PontualForm } from "./movimentacoes/FormPontual"
-import { FormRecorrente, RecorrenteForm } from "./movimentacoes/FormRecorrente"
-import { FormParcela, ParcelaForm } from "./movimentacoes/FormParcela"
+import { FormPontual, pontualSchema } from "./movimentacoes/FormPontual"
+import { FormRecorrente, recorrenteSchema } from "./movimentacoes/FormRecorrente"
+import { FormParcela, parcelaSchema } from "./movimentacoes/FormParcela"
 import { useBuscarMovimentacoesCategoria } from "@/hooks/useBuscarMovimentacoesCategorias"
+import { CriarMovimentacaoRequest } from "@/services/movimentacoes"
 
-
-
-const MovimentacooesTipos: ["PONTUAL",  "PARCELADA" , "RECORRENTE"] = ["PONTUAL", "PARCELADA", "RECORRENTE"]
+const MovimentacooesTipos: ["PONTUAL",  "PARCELADA" , "RECORRENTE", "ENTRADA"] = ["PONTUAL", "PARCELADA", "RECORRENTE", "ENTRADA"]
 
 export const MovimentacaoModal = () => {
 
-    const [movimentacaoTipo, setTipo] = useState<"PONTUAL" | "PARCELADA" | "RECORRENTE">("PONTUAL")
+    const [movimentacaoTipo, setTipo] = useState<TipoMovimentacaoFormulario>("PONTUAL")
 
     const { control, handleSubmit, reset } = useForm<FieldValues>()
+    const categoriaId =  useWatch({control, name: "categoriaId"})
     const { showToast } = useToast()
-    const { buscar, categorias, loading } = useBuscarMovimentacoesCategoria()
+    const { buscar, categorias } = useBuscarMovimentacoesCategoria()
     const { buscar: onClose } = useAportesHook()
 
     const categoriasPorFiltro = (tipo: MovimentacaoTipo) => {
@@ -34,19 +34,36 @@ export const MovimentacaoModal = () => {
         buscar()
     }, [])
 
+    const validate = (data: any) => {
+        console.log(data)
+        const schema = {
+            "PONTUAL": pontualSchema,  
+            "PARCELADA":parcelaSchema , 
+            "RECORRENTE": recorrenteSchema, 
+            "ENTRADA":pontualSchema
+        }
+
+        const validate = schema[movimentacaoTipo].safeParse(data)
+        if (validate.error) {
+            throw {
+                message: `O campo ${validate.error.errors[0].path[0]} precisa ser preenchido!`
+            }
+        }
+    }
+
     const submit = async (data: FieldValues) => {
         try {
-            console.log(data)
-            // await CriarAporteRequest(data)
+            const tipo = movimentacaoTipo == "ENTRADA" ? 0 : 1 
+            validate(data)
+            await CriarMovimentacaoRequest({...data, tipo})
             onClose()
         }
         catch (err: any) {
             showToast(err.message, "error")
-            console.log(err)
         }
     }
 
-    const onSelectTipo = (mov: "PONTUAL" | "PARCELADA" | "RECORRENTE") => {
+    const onSelectTipo = (mov: TipoMovimentacaoFormulario) => {
         if (movimentacaoTipo != mov ) {
             setTipo(mov)
             reset()
@@ -59,6 +76,7 @@ export const MovimentacaoModal = () => {
 
     const forms = {
         "PONTUAL" : <FormPontual config={formConfig} categorias={categoriasPorFiltro("SAIDA")}/>,
+        "ENTRADA" : <FormPontual config={formConfig} categorias={categoriasPorFiltro("ENTRADA")} dividendos={categoriaId == 10}/>,
         "PARCELADA" : <FormParcela config={formConfig} categorias={categoriasPorFiltro("SAIDA")} />,
         "RECORRENTE" : <FormRecorrente config={formConfig} categorias={categoriasPorFiltro("SAIDA")} />
     }

@@ -19,10 +19,15 @@ public class Movimentacao {
     [Column("categoriaId")]
     public int  CategoriaId { get ; set; }
 
+    [Column("descricao")]
+    public string Descricao { get ; set; }
+
+    [Column("data")]
+    public DateTime Data { get ; set; }
+
     [Column("criadoEm")]
     public DateTime CriadoEm { get ; set; } = DateTime.Now;   
     
-    [Column("criadoEm")]
     public List<MovimentacaoParcela> MovimentacaoParcelas { get ; set; } = new List<MovimentacaoParcela> ();   
 
     [ForeignKey("CategoriaId")]
@@ -33,12 +38,16 @@ public class Movimentacao {
     public Movimentacao ( 
         decimal valor, 
         MovimentacaoTipo tipo, 
-        int categoriaId
+        int categoriaId,
+        string descricao,
+        DateTime data
         ) {
         
         Valor = valor;
         Tipo = tipo;
         CategoriaId = categoriaId;
+        Descricao = descricao;
+        Data = data;
 
     }
 

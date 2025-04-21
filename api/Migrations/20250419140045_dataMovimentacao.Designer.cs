@@ -3,6 +3,7 @@ using System;
 using Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace api.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20250419140045_dataMovimentacao")]
+    partial class dataMovimentacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.12");
@@ -113,11 +116,6 @@ namespace api.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("data");
 
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("descricao");
-
                     b.Property<string>("Tipo")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -167,91 +165,91 @@ namespace api.Migrations
                         new
                         {
                             Id = 1,
-                            CriadoEm = new DateTime(2025, 4, 21, 9, 11, 49, 0, DateTimeKind.Local).AddTicks(4509),
+                            CriadoEm = new DateTime(2025, 4, 19, 10, 0, 45, 334, DateTimeKind.Local).AddTicks(7119),
                             Nome = "Comida e Mercado",
                             Tipo = "SAIDA"
                         },
                         new
                         {
                             Id = 2,
-                            CriadoEm = new DateTime(2025, 4, 21, 9, 11, 49, 0, DateTimeKind.Local).AddTicks(4550),
+                            CriadoEm = new DateTime(2025, 4, 19, 10, 0, 45, 334, DateTimeKind.Local).AddTicks(7155),
                             Nome = "Educação e Desenvolvimento",
                             Tipo = "SAIDA"
                         },
                         new
                         {
                             Id = 3,
-                            CriadoEm = new DateTime(2025, 4, 21, 9, 11, 49, 0, DateTimeKind.Local).AddTicks(4551),
+                            CriadoEm = new DateTime(2025, 4, 19, 10, 0, 45, 334, DateTimeKind.Local).AddTicks(7156),
                             Nome = "Investimentos",
                             Tipo = "SAIDA"
                         },
                         new
                         {
                             Id = 4,
-                            CriadoEm = new DateTime(2025, 4, 21, 9, 11, 49, 0, DateTimeKind.Local).AddTicks(4552),
+                            CriadoEm = new DateTime(2025, 4, 19, 10, 0, 45, 334, DateTimeKind.Local).AddTicks(7158),
                             Nome = "Lazer e Bem-estar",
                             Tipo = "SAIDA"
                         },
                         new
                         {
                             Id = 5,
-                            CriadoEm = new DateTime(2025, 4, 21, 9, 11, 49, 0, DateTimeKind.Local).AddTicks(4554),
+                            CriadoEm = new DateTime(2025, 4, 19, 10, 0, 45, 334, DateTimeKind.Local).AddTicks(7159),
                             Nome = "Serviços",
                             Tipo = "SAIDA"
                         },
                         new
                         {
                             Id = 6,
-                            CriadoEm = new DateTime(2025, 4, 21, 9, 11, 49, 0, DateTimeKind.Local).AddTicks(4555),
+                            CriadoEm = new DateTime(2025, 4, 19, 10, 0, 45, 334, DateTimeKind.Local).AddTicks(7160),
                             Nome = "Moradia",
                             Tipo = "SAIDA"
                         },
                         new
                         {
                             Id = 7,
-                            CriadoEm = new DateTime(2025, 4, 21, 9, 11, 49, 0, DateTimeKind.Local).AddTicks(4556),
+                            CriadoEm = new DateTime(2025, 4, 19, 10, 0, 45, 334, DateTimeKind.Local).AddTicks(7161),
                             Nome = "Transporte",
                             Tipo = "SAIDA"
                         },
                         new
                         {
                             Id = 8,
-                            CriadoEm = new DateTime(2025, 4, 21, 9, 11, 49, 0, DateTimeKind.Local).AddTicks(4557),
+                            CriadoEm = new DateTime(2025, 4, 19, 10, 0, 45, 334, DateTimeKind.Local).AddTicks(7162),
                             Nome = "Saúde",
                             Tipo = "SAIDA"
                         },
                         new
                         {
                             Id = 9,
-                            CriadoEm = new DateTime(2025, 4, 21, 9, 11, 49, 0, DateTimeKind.Local).AddTicks(4558),
+                            CriadoEm = new DateTime(2025, 4, 19, 10, 0, 45, 334, DateTimeKind.Local).AddTicks(7164),
                             Nome = "Salário",
                             Tipo = "ENTRADA"
                         },
                         new
                         {
                             Id = 10,
-                            CriadoEm = new DateTime(2025, 4, 21, 9, 11, 49, 0, DateTimeKind.Local).AddTicks(4559),
+                            CriadoEm = new DateTime(2025, 4, 19, 10, 0, 45, 334, DateTimeKind.Local).AddTicks(7165),
                             Nome = "Dividendo",
                             Tipo = "ENTRADA"
                         },
                         new
                         {
                             Id = 11,
-                            CriadoEm = new DateTime(2025, 4, 21, 9, 11, 49, 0, DateTimeKind.Local).AddTicks(4561),
+                            CriadoEm = new DateTime(2025, 4, 19, 10, 0, 45, 334, DateTimeKind.Local).AddTicks(7166),
                             Nome = "Venda",
                             Tipo = "ENTRADA"
                         },
                         new
                         {
                             Id = 12,
-                            CriadoEm = new DateTime(2025, 4, 21, 9, 11, 49, 0, DateTimeKind.Local).AddTicks(4562),
+                            CriadoEm = new DateTime(2025, 4, 19, 10, 0, 45, 334, DateTimeKind.Local).AddTicks(7167),
                             Nome = "Transferências",
                             Tipo = "ENTRADA"
                         },
                         new
                         {
                             Id = 13,
-                            CriadoEm = new DateTime(2025, 4, 21, 9, 11, 49, 0, DateTimeKind.Local).AddTicks(4563),
+                            CriadoEm = new DateTime(2025, 4, 19, 10, 0, 45, 334, DateTimeKind.Local).AddTicks(7168),
                             Nome = "Outros",
                             Tipo = "ENTRADA"
                         });

@@ -1,19 +1,20 @@
 import { CurrencyField } from "@/app/components/Inputs/CurrencyField"
-import { NumberField } from "@/app/components/Inputs/NumberField"
 import { DateField } from "@/app/components/Inputs/DateField"
-import { TextField } from "@/app/components/Inputs/TextField"
 import dayjs from "dayjs"
 import { Control, Controller, FieldValues, UseFormHandleSubmit } from "react-hook-form"
 import { z } from "zod"
 import { SelectField } from "@/app/components/Inputs/SelectField"
+import { useEffect, useState } from "react"
+import { TextField } from "@/app/components/Inputs/TextField"
 
-const schema = z.object({
+export const pontualSchema = z.object({
     categoriaId: z.number(),
-    valor: z.number(),
+    valor: z.string(),
     data: z.custom<dayjs.Dayjs>(),
+    descricao: z.string()
 })
 
-export type PontualForm = z.infer<typeof schema>
+export type PontualForm = z.infer<typeof pontualSchema>
 
 type FormProps = {
     config: {
@@ -22,46 +23,78 @@ type FormProps = {
         onSubmit: (data: FieldValues) => void
     }
     categorias: MovimentacaoCategoria[]
+    dividendos?: boolean
 }
 
-export const FormPontual = ({ config: { control, handleSubmit, onSubmit }, categorias }: FormProps) => {
+export const FormPontual = ({ config: { control, handleSubmit, onSubmit }, categorias, dividendos }: FormProps) => {
+
+    const [aporteSelect, setAporteSelect] = useState<boolean>(Boolean(dividendos))
+
+    useEffect(() => {
+        setAporteSelect(Boolean(dividendos))
+    }, [dividendos])
+
     return (
 
-        <form onSubmit={() => handleSubmit(onSubmit)} className="flex flex-col md:flex-row gap-3 justify-evenly">
-        <Controller
-            name="categoriaId"
-            control={control}
-            render={({ field }) => (
-                <SelectField
-                    data={categorias}
-                    label="Categoria"
-                    {...field}
-                />
-            )}
-        />
-        <Controller
-            name="valor"
-            control={control}
-            render={({ field }) =>
-                <CurrencyField
-                    {...field}
-                    label="Valor"
-                />
-            }
-        />
-        <Controller
-            name="data"
-            control={control}
-            render={({ field }) =>
-                <DateField
-                    {...field}
-                    label="Data"
-
+        <form onSubmit={() => handleSubmit(onSubmit)} className="flex flex-col md:flex-row flex-wrap gap-3 justify-evenly">
+            <Controller
+                name="categoriaId"
+                control={control}
+                render={({ field }) => (
+                    <SelectField
+                        data={categorias}
+                        label="Categoria"
+                        {...field}
+                    />
+                )}
+            />{
+                aporteSelect &&
+                <Controller
+                    name="identificador"
+                    control={control}
+                    render={({ field }) => (
+                        <SelectField
+                            data={categorias}
+                            label="Aporte"
+                            {...field}
+                        />
+                    )}
                 />
             }
-        />
+            <Controller
+                name="valor"
+                control={control}
+                render={({ field }) =>
+                    <CurrencyField
+                        {...field}
+                        label="Valor"
+                    />
+                }
+            />
+            <Controller
+                name="data"
+                control={control}
+                render={({ field }) =>
+                    <DateField
+                        {...field}
+                        label="Data"
+                    />
+                }
+            />
+            <Controller
+                name="descricao"
+                control={control}
+                render={({ field }) =>
+                    <TextField
+                        {...field}
+                        className="w-full"
+                        label="Descricao"
+                    />
+                }
+            />
 
-    </form>
+
+        </form>
 
     )
 }

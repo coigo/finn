@@ -4,15 +4,17 @@ import dayjs from "dayjs"
 import { Control, Controller, FieldValues, UseFormHandleSubmit } from "react-hook-form"
 import { z } from "zod"
 import { SelectField } from "@/app/components/Inputs/SelectField"
+import { TextField } from "@/app/components/Inputs/TextField"
 
-const schema = z.object({
+export const recorrenteSchema = z.object({
     identificador: z.string(),
+    descricao: z.string(),
     categoriaId: z.number(),
     preco: z.number(),
     dataCompra: z.custom<dayjs.Dayjs>(),
 })
 
-export type RecorrenteForm = z.infer<typeof schema>
+export type RecorrenteForm = z.infer<typeof recorrenteSchema>
 
 type FormProps = {
     config: {
@@ -23,45 +25,56 @@ type FormProps = {
     categorias: MovimentacaoCategoria[]
 }
 
-export const FormRecorrente = ({ config: { control, handleSubmit, onSubmit }, categorias }: FormProps)  => {
+export const FormRecorrente = ({ config: { control, handleSubmit, onSubmit }, categorias }: FormProps) => {
     return (
 
         <form onSubmit={() => handleSubmit(onSubmit)} className="flex flex-col md:flex-row gap-3 justify-evenly">
 
-        <Controller
-            name="categoriaId"
-            control={control}
-            render={({ field }) => (
-                <SelectField
-                    data={categorias}
-                    label="Quantidade"
-                    {...field}
-                />
-            )}
-        />
-        <Controller
-            name="preco"
-            control={control}
-            render={({ field }) =>
-                <CurrencyField
-                    {...field}
-                    label="Preço"
-                />
-            }
-        />
-        <Controller
-            name="dataCompra"
-            control={control}
-            render={({ field }) =>
-                <DateField
-                    {...field}
-                    label="Data da Compra"
+            <Controller
+                name="categoriaId"
+                control={control}
+                render={({ field }) => (
+                    <SelectField
+                        data={categorias}
+                        label="Quantidade"
+                        {...field}
+                    />
+                )}
+            />
+            <Controller
+                name="preco"
+                control={control}
+                render={({ field }) =>
+                    <CurrencyField
+                        {...field}
+                        label="Preço"
+                    />
+                }
+            />
+            <Controller
+                name="dataCompra"
+                control={control}
+                render={({ field }) =>
+                    <DateField
+                        {...field}
+                        label="Data da Compra"
 
-                />
-            }
-        />
+                    />
+                }
+            />
+            <Controller
+                name="descricao"
+                control={control}
+                render={({ field }) =>
+                    <TextField
+                        {...field}
+                        className="w-full"
+                        label="Descricao"
+                    />
+                }
+            />
 
-    </form>
+        </form>
 
     )
 }

@@ -5,11 +5,10 @@ import { TextField as Input, TextFieldProps} from "@mui/material"
 
 export const TextField = (props: TextFieldProps) => {
     return (
-        <div className="flex flex-1">
             <Input 
+                className="flex flex-1"
                 {...props} 
                 value={props.value || ''}
             />
-        </div>
     )
 }

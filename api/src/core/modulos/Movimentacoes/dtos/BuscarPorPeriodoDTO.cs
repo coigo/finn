@@ -8,6 +8,6 @@ public record ListaMovimentacoesDTO (
     decimal valor,
     MovimentacaoTipo tipo,
     int categoria_id,
-    DateTime criadoEm,
+    DateTime data,
     DateTime? vencimento
 );
