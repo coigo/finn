@@ -4,6 +4,7 @@ import { PieChart } from "@/app/components/Charts/pie"
 import { CustomDataTable, FieldProps } from "@/app/components/DataTable"
 import Dropdown from "@/app/components/Dropdown"
 import { useAportesHook } from "@/hooks/UseBuscarAportes"
+import { useBuscarMovimentacoes } from "@/hooks/useBuscarMovimentacoes"
 import { groupBy } from "@/utils/array"
 import { useEffect, useState } from "react"
 
@@ -16,21 +17,13 @@ const fields: FieldProps[] = [
 
 export const MovimentacoesDetalhes = () => {
 
-    const { aportes, buscar, loading } = useAportesHook()
-    const [categoria, setCategoria] = useState<string>("ACAO")
+    const { movimentacoes, buscar, loading } = useBuscarMovimentacoes()
 
     const movimentacoesAgrupadas = groupBy([], 'categoria')
 
     useEffect(() => {
         buscar()
     }, [])
-
-    useEffect(() => {
-        if (aportes.length) {
-            setCategoria(aportes[0].categoria)
-        }
-
-    }, [aportes])
 
     return (
 
@@ -43,7 +36,7 @@ export const MovimentacoesDetalhes = () => {
                                 <h3>Resumo</h3>
                             </div>
                             <div className="flex justify-center w-full">
-                                <PieChart loading={loading} data={[movimentacoesAgrupadas]} />
+                                <PieChart loading={loading} data={[]} />
                             </div>
                         </div>
                     </div>
@@ -55,7 +48,7 @@ export const MovimentacoesDetalhes = () => {
             <div>
                 <div className="transparent-scrollbar p-4 rounded-2xl h-[88vh] bg-neutral-800/40 shadow-lg overflow-y-scroll scroll-smooth">
 
-                    <CustomDataTable data={[]} fields={fields} />
+                    <CustomDataTable data={movimentacoes} fields={fields} />
 
                 </div>
             </div>

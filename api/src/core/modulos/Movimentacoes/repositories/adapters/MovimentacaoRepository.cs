@@ -28,15 +28,17 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
             SELECT 
                 COALESCE(mp.valor, m.valor) AS valor,
                 m.tipo,
-                m.categoria_id,
-                m.criadoEm,
+                mc.nome as categoria,
+                m.data,
                 mp.vencimento
             FROM movimentacoes m
+            LEFT JOIN movimentacoes_categorias mc 
+                ON mc.id = m.categoriaId 
             LEFT JOIN movimentacoes_parcelas mp 
                 ON mp.movimentacao_id = m.id 
                 AND mp.vencimento BETWEEN {inicio} AND {fim}
             WHERE 
-                m.criadoEm BETWEEN {inicio} AND {fim}
+                m.data BETWEEN {inicio} AND {fim}
                 OR mp.vencimento BETWEEN {inicio} AND {fim}
             GROUP BY m.id")
         .ToListAsync();

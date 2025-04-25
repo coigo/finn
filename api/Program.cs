@@ -74,6 +74,7 @@ app.UseExceptionHandler(appError =>
 
             var exceptionType = exceptionHandler.Error;
             Console.WriteLine(exceptionHandler.Endpoint);
+            Console.WriteLine(exceptionHandler.Error);
             Console.WriteLine(exceptionHandler.Path);
             if (exceptionType is KeyNotFoundException)
             {

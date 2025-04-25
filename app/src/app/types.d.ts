@@ -18,9 +18,11 @@ type Aporte = {
     categoria: string 
 }
 
-type PieData = {
-    label: string
-    value: number
+type Movimentacao = {
+    valor: number
+    categoria: string
+    tipo: string
+    data: string
 }
 
 type MovimentacaoCategoria = {
@@ -38,3 +40,8 @@ type MovimentacaoForm<T> = {
 }
 
 type TipoMovimentacaoFormulario = "PONTUAL" | "PARCELADA" | "RECORRENTE" | "ENTRADA"
+
+type PieData = {
+    label: string
+    value: number
+}

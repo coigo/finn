@@ -4,8 +4,8 @@ export const  CriarMovimentacaoRequest = async (data: any) => {
     await api.post("/movimentacoes", data)
 }
 
-export const  BuscarMovimentacoesRequest = async () => {
-    const { data } =  await api.get("/movimentacoes")
+export const  BuscarMovimentacoesRequest = async (params: { inicio: string, fim: string }) => {
+    const { data } =  await api.get("/movimentacoes", { params })
     return data
 }
 

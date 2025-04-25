@@ -11,6 +11,8 @@ import { useTheme } from '@mui/material';
 export default function Menu() {
 
   const {palette} = useTheme()
+
+  if (!palette?.text?.primary) return null; 
   
   const itemsTempl = () => {
     return (
