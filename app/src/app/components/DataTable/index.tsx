@@ -1,8 +1,9 @@
 "use client"
 
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableCellProps } from "@mui/material";
+import { ReactNode } from "react";
 
-export type FieldProps = TableCellProps & { field: string, description: string }
+export type FieldProps = TableCellProps & { field?: string, description: string, body?: (data?: any) => string | ReactNode  }
 
 export interface ICustomDataTable {
     data: any[]
@@ -32,10 +33,10 @@ export function CustomDataTable({ data, fields }: ICustomDataTable) {
                             key={"row" + i}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                            {fields.map(({field}, j) => {
+                            {fields.map(({field, body}, j) => {
                                 return (
                                     <TableCell key={"coluna" + j + i} component="th" scope="row">
-                                        {row[field]}
+                                        {field ? row[field ] : body && body(row) }
                                     </TableCell>
                                 )
                             })}

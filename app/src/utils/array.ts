@@ -32,3 +32,21 @@ export const totalizarAportes = (aportes: Aporte[]): PieData[] => {
         }
     })
 }
+
+export const totalizarAportesPorCategoria = (aportes: Aporte[]): PieData[] => {
+    const aportesAgrupados = groupBy(aportes, "categoria") 
+
+    return Object.keys(aportesAgrupados).map(categoria => {
+        const total = aportesAgrupados[categoria].reduce((acc: number, curr: Aporte) => {
+            return acc += curr.precoAtual * curr.quantidade
+        }, 0)
+        return {
+            label: categoria,
+            value: total
+        }
+    })
+        
+            
+}
+
+

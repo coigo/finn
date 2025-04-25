@@ -6,7 +6,7 @@ public record BuscarPorPeriodoDTO (string inicio, string fim);
 
 public record ListaMovimentacoesDTO (
     decimal valor,
-    MovimentacaoTipo tipo,
+    string tipo,
     string categoria,
     DateTime data,
     DateTime? vencimento

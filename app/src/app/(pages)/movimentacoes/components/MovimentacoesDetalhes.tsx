@@ -2,18 +2,31 @@
 
 import { PieChart } from "@/app/components/Charts/pie"
 import { CustomDataTable, FieldProps } from "@/app/components/DataTable"
-import Dropdown from "@/app/components/Dropdown"
-import { useAportesHook } from "@/hooks/UseBuscarAportes"
 import { useBuscarMovimentacoes } from "@/hooks/useBuscarMovimentacoes"
 import { groupBy } from "@/utils/array"
 import { useEffect, useState } from "react"
 
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import dayjs from "dayjs"
+
+const tipoTempl = (row: any) => {
+    return row.tipo == 'SAIDA' 
+    ? <ArrowDropDownIcon color="warning"/>
+    : <ArrowDropUpIcon color="success"/>
+}
+
+const dataTmpl = (row: any) => {
+    return dayjs(row.data).format('DD/MM/YYYY') 
+}
+
 const fields: FieldProps[] = [
-    { field: "identificador", description: "Ticker" },
-    { field: "precoMedio", description: "Preço Médio" },
-    { field: "precoAtual", description: "Preço Atual" },
-    { field: "quantidade", description: "Quantidade" },
+    { body: tipoTempl, description: "" },
+    { field: "valor", description: "Valor" },
+    { field: "categoria", description: "Categoria" },
+    { body: dataTmpl, description: "Data"},
 ]
+
 
 export const MovimentacoesDetalhes = () => {
 

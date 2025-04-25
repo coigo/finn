@@ -4,7 +4,7 @@ import { CustomDataTable, FieldProps } from "@/app/components/DataTable"
 import Dropdown from "@/app/components/Dropdown"
 import { SelectField } from "@/app/components/Inputs/SelectField"
 import { useAportesHook } from "@/hooks/UseBuscarAportes"
-import { countBy, filterBy, groupBy, totalizarAportes } from "@/utils/array"
+import { countBy, filterBy, groupBy, totalizarAportes, totalizarAportesPorCategoria } from "@/utils/array"
 import { InputBase } from "@mui/material"
 import { useEffect, useState } from "react"
 
@@ -23,7 +23,7 @@ export const AportesDetalhes = () => {
 
 
     const aportesAgrupados = groupBy(aportes, "categoria")
-    const quantidadeCategoria = countBy(aportes, "categoria")
+    const quantidadeCategoria = totalizarAportesPorCategoria(aportes)
     const categoriaDetalhes = totalizarAportes(filterBy(aportes, "categoria", categoria))
 
     useEffect(() => {
