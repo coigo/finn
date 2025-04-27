@@ -1,7 +1,7 @@
 "use client"
 
 import { PieChart } from "@/app/components/Charts/pie"
-import { CustomDataTable, FieldProps } from "@/app/components/DataTable"
+import DataTable from "@/app/components/DataTable"
 import { useBuscarMovimentacoes } from "@/hooks/useBuscarMovimentacoes"
 import { groupBy } from "@/utils/array"
 import { useEffect, useState } from "react"
@@ -10,22 +10,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import dayjs from "dayjs"
 
-const tipoTempl = (row: any) => {
-    return row.tipo == 'SAIDA' 
-    ? <ArrowDropDownIcon color="warning"/>
-    : <ArrowDropUpIcon color="success"/>
-}
 
-const dataTmpl = (row: any) => {
-    return dayjs(row.data).format('DD/MM/YYYY') 
-}
-
-const fields: FieldProps[] = [
-    { body: tipoTempl, description: "" },
-    { field: "valor", description: "Valor" },
-    { field: "categoria", description: "Categoria" },
-    { body: dataTmpl, description: "Data"},
-]
 
 
 export const MovimentacoesDetalhes = () => {
@@ -37,6 +22,16 @@ export const MovimentacoesDetalhes = () => {
     useEffect(() => {
         buscar()
     }, [])
+
+    const tipoTempl = (row: any) => {
+        return row.tipo == 'SAIDA' 
+        ? <ArrowDropDownIcon color="warning"/>
+        : <ArrowDropUpIcon color="success"/>
+    }
+    
+    const dataTmpl = (row: any) => {
+        return dayjs(row.data).format('DD/MM/YYYY') 
+    }
 
     return (
 
@@ -61,7 +56,12 @@ export const MovimentacoesDetalhes = () => {
             <div>
                 <div className="transparent-scrollbar p-4 rounded-2xl h-[88vh] bg-neutral-800/40 shadow-lg overflow-y-scroll scroll-smooth">
 
-                    <CustomDataTable data={movimentacoes} fields={fields} />
+                    <DataTable.Root data={movimentacoes} >
+                        <DataTable.Column description="" body={tipoTempl}/>
+                        <DataTable.Column description="Valor" field="valor"/>
+                        <DataTable.Column description="Categoria"  field="categoria"/>
+                        <DataTable.Column description="Data" body={dataTmpl}/>
+                    </DataTable.Root>
 
                 </div>
             </div>
