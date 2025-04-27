@@ -1,20 +1,11 @@
 "use client"
 import { PieChart } from "@/app/components/Charts/pie"
-import { CustomDataTable, FieldProps } from "@/app/components/DataTable"
+import Datatable from "@/app/components/DataTable"
 import Dropdown from "@/app/components/Dropdown"
-import { SelectField } from "@/app/components/Inputs/SelectField"
 import { useAportesHook } from "@/hooks/UseBuscarAportes"
-import { countBy, filterBy, groupBy, totalizarAportes, totalizarAportesPorCategoria } from "@/utils/array"
-import { InputBase } from "@mui/material"
+import { filterBy, groupBy, totalizarAportes, totalizarAportesPorCategoria } from "@/utils/array"
 import { useEffect, useState } from "react"
 
-
-const fields: FieldProps[] = [
-    { field: "identificador", description: "Ticker" },
-    { field: "precoMedio", description: "Preço Médio" },
-    { field: "precoAtual", description: "Preço Atual" },
-    { field: "quantidade", description: "Quantidade" },
-]
 
 export const AportesDetalhes = () => {
 
@@ -91,7 +82,13 @@ export const AportesDetalhes = () => {
 
                             </div>
 
-                            <CustomDataTable data={aportesAgrupados[cat]} fields={fields} />
+                            <Datatable.Root data={aportesAgrupados[cat]} >
+                                <Datatable.Column description="Ticker" field="identificador"/>
+                                <Datatable.Column description="Preço Médio" field="precoMedio"/>
+                                <Datatable.Column description="Preço Atual" field="precoAtual"/>
+                                <Datatable.Column description="Quantidade" field="quantidade"/>
+
+                            </Datatable.Root>
                         </div>
                     })}
 
