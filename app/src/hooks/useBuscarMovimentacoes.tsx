@@ -2,6 +2,8 @@
 
 import { useToast } from "@/app/components/Toast/useToast"
 import { BuscarMovimentacoesRequest } from "@/services/movimentacoes"
+import { periodos } from "@/utils/date"
+import dayjs from "dayjs"
 import { useState } from "react"
 
 export const useBuscarMovimentacoes = () => {
@@ -11,12 +13,19 @@ export const useBuscarMovimentacoes = () => {
     const [ movimentacoes, setMovimentacoes ] = useState<Movimentacao[]>([])
     const [ loading, setLoading ] = useState(false)
     
-    const buscar = async () => {
+    const buildDate = (periodo: MovimentacoesPeriodo) => {
+        const [inicio, fim] = periodos[periodo]()
+        return {
+            inicio: dayjs(inicio).format('DD-MM-YYYY'),
+            fim: dayjs(fim).format('DD-MM-YYYY'),
+        }
+    }
+
+    const buscar = async (periodo: MovimentacoesPeriodo) => {
+        
         try {
             setLoading(true)
-
-
-            const movimentacoes = await BuscarMovimentacoesRequest({inicio: '01-01-2025', fim:'01-06-2025'})
+            const movimentacoes = await BuscarMovimentacoesRequest(buildDate(periodo))
             setMovimentacoes(movimentacoes)
             setLoading(false)
         }

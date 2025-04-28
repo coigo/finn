@@ -45,3 +45,5 @@ type PieData = {
     label: string
     value: number
 }
+
+type MovimentacoesPeriodo = 'SEMANA' | 'MES' | 'SEIS_MESES' | 'DURANTE_ANO' | 'DOZE_MESES' 
