@@ -10,31 +10,9 @@ import { useTheme } from '@mui/material';
 
 export default function Menu() {
 
-  const {palette} = useTheme()
+  const { palette } = useTheme()
 
-  if (!palette?.text?.primary) return null; 
-  
-  const itemsTempl = () => {
-    return (
-      <>
-        <Link href={"/dashboard"}>
-          <div className='menu-item md:my-10 md:mx-0 md:hover:bg-[#de983b] md:hover:p-2 hover:rounded-2xl hover:text-amber-950'>
-            <DataSaverOffIcon fontSize='large' />
-          </div>
-        </Link>
-        <Link href={"/movimentacoes"}>
-          <div className='menu-item relative md:my-10 md:mx-0 md:hover:bg-[#de983b] md:hover:p-2 hover:rounded-2xl hover:text-amber-950'>
-            <CompareArrowsIcon fontSize='large' />
-          </div>
-        </Link>
-        <Link href={"/aportes"}>
-          <div className='menu-item relative md:my-10 md:mx-0 md:hover:bg-[#de983b] md:hover:p-2 hover:rounded-2xl hover:text-amber-950'>
-            <AttachMoneyIcon fontSize='large' />
-          </div>
-        </Link>
-      </>
-    )
-  }
+  if (!palette) return null;
 
   return (
     <>
@@ -42,11 +20,25 @@ export default function Menu() {
         <div className="flex p-4 md:p-6 md:left-0 w-full h-fit md:h-full md:w-fit">
           <div className='flex md:block justify-around h-fit w-full self-center gap-4 text-gray-500'>
 
-                    {itemsTempl()}
+            <Link href={"/dashboard"}>
+              <div className='menu-item md:my-10 md:mx-0 md:hover:bg-[#de983b] md:hover:p-2 hover:rounded-2xl hover:text-amber-950'>
+                <DataSaverOffIcon fontSize='large' />
+              </div>
+            </Link>
+            <Link href={"/movimentacoes"}>
+              <div className='menu-item relative md:my-10 md:mx-0 md:hover:bg-[#de983b] md:hover:p-2 hover:rounded-2xl hover:text-amber-950'>
+                <CompareArrowsIcon fontSize='large' />
+              </div>
+            </Link>
+            <Link href={"/aportes"}>
+              <div className='menu-item relative md:my-10 md:mx-0 md:hover:bg-[#de983b] md:hover:p-2 hover:rounded-2xl hover:text-amber-950'>
+                <AttachMoneyIcon fontSize='large' />
+              </div>
+            </Link>
           </div>
         </div>
-        <span className="hidden md:block justify-self-end menu-outline" 
-        style={{backgroundImage: `linear-gradient(180deg, rgba(2,0,36,0) 10%, ${palette.text.primary} 49%, rgba(0,212,255,0) 90%)`}}></span>
+        <span className="hidden md:block justify-self-end menu-outline"
+          style={{ backgroundImage: `linear-gradient(180deg, rgba(2,0,36,0) 10%, ${palette.text.primary} 49%, rgba(0,212,255,0) 90%)` }}></span>
       </div>
     </>
   );

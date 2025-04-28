@@ -3,7 +3,7 @@
 import { PieChart } from "@/app/components/Charts/pie"
 import DataTable from "@/app/components/DataTable"
 import { useBuscarMovimentacoes } from "@/hooks/useBuscarMovimentacoes"
-import { groupBy } from "@/utils/array"
+import { groupBy, totalizarAportesPorCategoria, totalizarMovimentacoesPorCategoria } from "@/utils/array"
 import { useEffect, useState } from "react"
 
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -17,19 +17,19 @@ export const MovimentacoesDetalhes = () => {
 
     const { movimentacoes, buscar, loading } = useBuscarMovimentacoes()
 
-    const movimentacoesAgrupadas = groupBy([], 'categoria')
+    const movimentacoesAgrupadas = totalizarMovimentacoesPorCategoria(movimentacoes)
 
     useEffect(() => {
         buscar()
     }, [])
 
-    const tipoTempl = (row: any) => {
+    const tipoTempl = (row: Movimentacao) => {
         return row.tipo == 'SAIDA' 
         ? <ArrowDropDownIcon color="warning"/>
         : <ArrowDropUpIcon color="success"/>
     }
     
-    const dataTmpl = (row: any) => {
+    const dataTmpl = (row: Movimentacao) => {
         return dayjs(row.data).format('DD/MM/YYYY') 
     }
 
@@ -44,7 +44,7 @@ export const MovimentacoesDetalhes = () => {
                                 <h3>Resumo</h3>
                             </div>
                             <div className="flex justify-center w-full">
-                                <PieChart loading={loading} data={[]} />
+                                <PieChart loading={loading} data={movimentacoesAgrupadas} />
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@ export const MovimentacoesDetalhes = () => {
                 <div className="transparent-scrollbar p-4 rounded-2xl h-[88vh] bg-neutral-800/40 shadow-lg overflow-y-scroll scroll-smooth">
 
                     <DataTable.Root data={movimentacoes} >
-                        <DataTable.Column description="" body={tipoTempl}/>
+                        <DataTable.Column description="asd" body={tipoTempl}/>
                         <DataTable.Column description="Valor" field="valor"/>
                         <DataTable.Column description="Categoria"  field="categoria"/>
                         <DataTable.Column description="Data" body={dataTmpl}/>

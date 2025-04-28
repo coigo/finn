@@ -19,7 +19,7 @@ export function Root({ data, children }: ICustomDataTable) {
                         {
                             children.map(({ props }, i) => {
                                 return (
-                                    <TableCell key={"header" + i} {...props}>{props.description}</TableCell>
+                                    <TableCell key={"header" + i} >{props.description}</TableCell>
                                 )
                             })
                         }
@@ -32,9 +32,10 @@ export function Root({ data, children }: ICustomDataTable) {
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             {children.map(( {props}, j) => {
+                                const content = props.field ? row[props.field ] : props.body && props.body(row)
                                 return (
                                     <TableCell key={"coluna" + j + i} component="th" scope="row">
-                                        {props.field ? row[props.field ] : props.body && props.body(row) }
+                                        { content }
                                     </TableCell>
                                 )
                             })}
