@@ -1,5 +1,6 @@
 using Aportes.DTOS;
 using Aportes.Models;
+using Ativos.Models;
 using Infra.Repositories;
 using Infra.Shared;
 
@@ -25,7 +26,8 @@ public class BuscarAportesUseCase : IUseCase<Unity, List<BuscarAportesDTO>>
 
         foreach (var aporte in aportes)
         {
-            var ativoInfo = await this._ativos.BuscarPorTicker(aporte.Identificador);
+            var ativoInfo = await this.BuscarAtivo(aporte);
+
             listaAportes.Add(new BuscarAportesDTO(
                 aporte.Identificador,
                 ativoInfo.ShortName,
@@ -36,6 +38,13 @@ public class BuscarAportesUseCase : IUseCase<Unity, List<BuscarAportesDTO>>
             ));
         }
         return listaAportes;
+    }
+
+    private async Task<Ativo> BuscarAtivo (Aporte aporte) {
+        if ( aporte.Categoria == AporteCategoria.CRIPTOMOEDA ) {
+            return await this._ativos.BuscarCrypto(aporte.Identificador);
+        }
+        return await this._ativos.BuscarPorTicker(aporte.Identificador);
     }
 
 }

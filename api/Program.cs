@@ -21,10 +21,7 @@ builder.Services.AddScoped<IResumoRepository, ResumoRepository>();
 builder.Services.AddScoped<IAporteHistoricoRepository, AporteHistoricoRepository>();
 builder.Services.AddScoped<IAporteRepository, AporteRepository>();
 builder.Services.AddSingleton<IAtivosRepository, AtivosRepository>();
-builder.Services.AddHttpClient<IAtivosRepository, AtivosRepository>(client =>
-{
-    client.BaseAddress = new Uri("http://brapi.dev/api/");
-});
+builder.Services.AddHttpClient<IAtivosRepository, AtivosRepository>();
 
 //UseCases
 

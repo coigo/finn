@@ -49,10 +49,7 @@ export const AportesDetalhes = () => {
                                 <Dropdown 
                                     onChange={e => setCategoria(e.target.value as string)}
                                     value={categoria}
-                                    data={[
-                                        {id: "ACAO", name:"ACAO"},
-                                        {id: "FII", name:"FII"}
-                                    ]}
+                                    data={Object.keys(aportesAgrupados).map(c => { return { id: c, name: c } } )}
                                     
                                 />
 

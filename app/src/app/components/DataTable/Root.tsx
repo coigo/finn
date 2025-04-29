@@ -12,7 +12,7 @@ export function Root({ data, children }: ICustomDataTable) {
 
 
     return (
-        <TableContainer sx={{backgroundColor:"transparent", overflow:'hidden'}} component={Paper}>
+        <TableContainer sx={{backgroundColor:"transparent", overflow:'hidden', boxShadow: 'none'}} component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
