@@ -13,7 +13,7 @@ public class AtivosRepository: IAtivosRepository {
         _httpClient = httpClient;
     }
 
-    public async Task<Ativo> BuscarPorTicker (string ticker) {
+    public async Task<decimal?> BuscarPorTicker (string ticker) {
 
         var queryParams = new Dictionary<string, string?> {
             {"token", "gPEQrXS9Si6isryggoA8MM"}
@@ -23,15 +23,15 @@ public class AtivosRepository: IAtivosRepository {
         var result = await _httpClient.GetAsync(url);
 
             if (result.IsSuccessStatusCode) {
-                var parsed = await result.Content.ReadFromJsonAsync<AtivoResponse>();
+                var stream = await result.Content.ReadAsStreamAsync();
+                using var json = await JsonDocument.ParseAsync(stream);
 
-                if (parsed == null) throw new KeyNotFoundException();
-                
-                return parsed.Results[0];
+                var data = json.RootElement.GetProperty("results")[0].GetProperty("regularMarketPrice").GetDecimal();
+                return data;
             }
-            return new Ativo();
+            return null;
         }
-    public async Task<Ativo> BuscarCrypto (string crypto) {
+    public async Task<decimal?> BuscarCrypto (string crypto) {
 
         var queryParams = new Dictionary<string, string?> {
             {"x_cg_demo_api_key", "CG-Z1cRPeuHd6rfjiefyYYzDxMW"},
@@ -50,15 +50,11 @@ public class AtivosRepository: IAtivosRepository {
                 var stream = await result.Content.ReadAsStreamAsync();
                 using var json = await JsonDocument.ParseAsync(stream);
 
-                var data = json.RootElement.GetProperty(crypto.ToLower());
-                Console.WriteLine("--------------------------------------------------------------------");
-                Console.WriteLine(data);
-                Console.WriteLine("--------------------------------------------------------------------");
+                var data = json.RootElement.GetProperty(crypto.ToLower()).GetProperty("brl").GetDecimal();
+                return data;
 
-                throw new KeyNotFoundException();
-                
             }
-            return new Ativo();
+            return null;
         }
 
 

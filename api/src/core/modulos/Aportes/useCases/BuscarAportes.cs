@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Aportes.DTOS;
 using Aportes.Models;
 using Ativos.Models;
@@ -26,13 +27,15 @@ public class BuscarAportesUseCase : IUseCase<Unity, List<BuscarAportesDTO>>
 
         foreach (var aporte in aportes)
         {
-            var ativoInfo = await this.BuscarAtivo(aporte);
-
+            var precoAtual = await this.BuscarPrecoAtual(aporte);
+            
+            if (!precoAtual.HasValue) {
+                throw new BusinessError("Ativo não encontrado!");
+            }
             listaAportes.Add(new BuscarAportesDTO(
                 aporte.Identificador,
-                ativoInfo.ShortName,
                 aporte.PrecoMedio,
-                ativoInfo.RegularMarketPrice,
+                precoAtual.Value,
                 aporte.Quantidade,
                 aporte.Categoria.ToString()
             ));
@@ -40,11 +43,15 @@ public class BuscarAportesUseCase : IUseCase<Unity, List<BuscarAportesDTO>>
         return listaAportes;
     }
 
-    private async Task<Ativo> BuscarAtivo (Aporte aporte) {
+    private async Task<decimal?> BuscarPrecoAtual (Aporte aporte) {
         if ( aporte.Categoria == AporteCategoria.CRIPTOMOEDA ) {
-            return await this._ativos.BuscarCrypto(aporte.Identificador);
+            decimal? result = await this._ativos.BuscarCrypto(aporte.Identificador);
+            return this.CalcularCrypto(result, aporte.Quantidade);
         }
         return await this._ativos.BuscarPorTicker(aporte.Identificador);
     }
 
+    private decimal? CalcularCrypto ( decimal? preco, decimal quantidade) {
+        return preco.HasValue ? preco.Value * quantidade : null;
+    }
 }
