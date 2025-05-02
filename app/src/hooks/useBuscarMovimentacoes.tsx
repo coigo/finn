@@ -22,10 +22,13 @@ export const useBuscarMovimentacoes = () => {
     }
 
     const buscar = async (periodo: MovimentacoesPeriodo) => {
+
+        const data = buildDate(periodo)
+        console.log(data)
         
         try {
             setLoading(true)
-            const movimentacoes = await BuscarMovimentacoesRequest(buildDate(periodo))
+            const movimentacoes = await BuscarMovimentacoesRequest(data)
             setMovimentacoes(movimentacoes)
             setLoading(false)
         }
