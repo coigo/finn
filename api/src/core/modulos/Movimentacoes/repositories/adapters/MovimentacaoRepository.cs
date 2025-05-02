@@ -40,7 +40,9 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
             WHERE 
                 m.data BETWEEN {inicio} AND {fim}
                 OR mp.vencimento BETWEEN {inicio} AND {fim}
-            GROUP BY m.id")
+            GROUP BY m.id
+            ORDER by mp.vencimento, m.data desc
+            ")
         .ToListAsync();
     }
     public async Task<Movimentacao> AtualizarMovimentacao(int id, Movimentacao data) {
