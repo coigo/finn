@@ -1,9 +1,13 @@
-export const groupBy = function (arr: any[], key: any) {
-    return arr.reduce(function (acc: any, curr: any) {
-        (acc[curr[key]] = acc[curr[key]] || []).push(curr);
-        return acc;
+export function groupBy<T extends Record<string, any>, K extends keyof T>(
+    arr: T[],
+    key: K
+  ): Record<string, T[]> {
+    return arr.reduce((acc: Record<string, T[]>, curr: T) => {
+      const groupKey = String(curr[key]);
+      (acc[groupKey] = acc[groupKey] || []).push(curr);
+      return acc;
     }, {});
-};
+  }
 
 export const countBy = (arr: any[], key: string) => {
     return arr.reduce((acc: any[], curr: any) => {
@@ -65,4 +69,23 @@ export const totalizarMovimentacoesPorCategoria = (movimentacoes: Movimentacao[]
             
 }
 
+export function sortBy (arr: any[], key: string): any[] {
+    console.log(arr)
+    if ( arr.length <= 1) {
+        return arr
+    }
 
+    let pivot = arr[0]
+    // let pivot = Math.floor(Math.random() * arr.length)
+    let leftArry = []
+    let rightArry = []
+
+    console.log(pivot)
+
+    for (let i = 1; i < arr.length; i++) { 
+        arr[i][key] < pivot[key] 
+            ? leftArry.push(arr[i]) 
+            : rightArry.push(arr[i])
+    }
+    return [...sortBy(leftArry, key), pivot, ...sortBy(rightArry, key) ]
+}
