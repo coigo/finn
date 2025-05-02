@@ -1,12 +1,18 @@
 using Aportes.UseCases;
 using Infra.Database;
+using Infra.Env;
 using Infra.Repositories;
 using Infra.Repositories.Adapters;
 using Microsoft.AspNetCore.Diagnostics;
 using Movimentacoes.UseCases;
 
+LoadEnv.Load();
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseUrls($"http://localhost:{Environment.GetEnvironmentVariable("PORT")}");
+
 var allowLocal = "allowLocal";
+
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -47,7 +53,7 @@ builder.Services.AddCors(opt =>
     opt.AddPolicy(name: allowLocal,
  policy =>
     {
-        policy.WithOrigins("http://localhost:3000")
+        policy.WithOrigins($"{Environment.GetEnvironmentVariable("WEB_URL")}")
               .AllowAnyHeader();
     });
 });
