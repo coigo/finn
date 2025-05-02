@@ -90,7 +90,7 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimen
             tipo,
             categoriaId,
             descricao,
-            date = primeiroVencimento ?? date 
+            primeiroVencimento ?? date 
         );
 
         Movimentacao mov = await this._movimentacoes.CriarMovimentacao(movimentacao);

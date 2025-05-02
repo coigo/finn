@@ -51,13 +51,19 @@ export const MovimentacaoModal = () => {
     }
 
     const submit = async (data: FieldValues) => {
+        console.log(data)
         try {
-            const tipo = movimentacaoTipo == "ENTRADA" ? 0 : 1 
+            const tipo = movimentacaoTipo == "ENTRADA"
+                ? 0
+                : data.categoriaId == 3
+                    ? 2
+                    : 1;
             validate(data)
             await CriarMovimentacaoRequest({...data, tipo})
             onClose()
         }
         catch (err: any) {
+            onClose()
             showToast(err.message, "error")
         }
     }
