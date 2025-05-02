@@ -35,7 +35,6 @@ export const MovimentacaoModal = () => {
     }, [])
 
     const validate = (data: any) => {
-        console.log(data)
         const schema = {
             "PONTUAL": pontualSchema,  
             "PARCELADA":parcelaSchema , 
@@ -85,16 +84,19 @@ export const MovimentacaoModal = () => {
     return (
         <>
             <ModalHeader title="Movimentações" >
+                <div className="flex overflow-x-scroll md:overflow-x-hidden">
+
                 {MovimentacooesTipos.map(mov => {
                     return (
-
+                        
                         <Chips
-                            key={"chip_" + mov}
-                            onClick={() => onSelectTipo(mov)}
-                            active={mov == movimentacaoTipo}
-                            label={mov.charAt(0).toUpperCase() + mov.slice(1).toLowerCase()} />
+                        key={"chip_" + mov}
+                        onClick={() => onSelectTipo(mov)}
+                        active={mov == movimentacaoTipo}
+                        label={mov.charAt(0).toUpperCase() + mov.slice(1).toLowerCase()} />
                     )
                 })}
+                </div>
             </ModalHeader>
             <ModalContent  >
                 {
