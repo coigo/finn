@@ -3,7 +3,7 @@
 import { PieChart } from "@/app/components/Charts/pie"
 import DataTable from "@/app/components/DataTable"
 import { useBuscarMovimentacoes } from "@/hooks/useBuscarMovimentacoes"
-import { totalizarMovimentacoesPorCategoria } from "@/utils/array"
+import { sortBy, totalizarMovimentacoesPorCategoria } from "@/utils/array"
 import { useEffect, useState } from "react"
 
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -21,6 +21,7 @@ export const MovimentacoesDetalhes = () => {
     const movimentacoesAgrupadas = totalizarMovimentacoesPorCategoria(movimentacoes)
 
     useEffect(() => {
+        console.log(periodo)
         buscar(periodo)
     }, [periodo])
 
@@ -33,6 +34,10 @@ export const MovimentacoesDetalhes = () => {
 
     const dataTmpl = (row: Movimentacao) => {
         return dayjs(row.data).format('DD/MM/YYYY')
+    }
+
+    const valorTempl = (row: Movimentacao) => {
+        return `R$ ${row.valor.toFixed(2)}`
     }
 
     const SelectDate: SelectValues[] = [
@@ -69,7 +74,7 @@ export const MovimentacoesDetalhes = () => {
                     </div>
                 </div>
                 <div className="card p-4 rounded-2xl h-full md:h-1/2 bg-neutral-800/40 shadow-lg">
-
+                    {JSON.stringify(sortBy(movimentacoes, 'valor'))}
                 </div>
             </div>
             <div>
@@ -77,7 +82,7 @@ export const MovimentacoesDetalhes = () => {
 
                     <DataTable.Root data={movimentacoes} >
                         <DataTable.Column description="asd" body={tipoTempl} />
-                        <DataTable.Column description="Valor" field="valor" />
+                        <DataTable.Column description="Valor" body={valorTempl} />
                         <DataTable.Column description="Categoria" field="categoria" />
                         <DataTable.Column description="Data" body={dataTmpl} />
                     </DataTable.Root>

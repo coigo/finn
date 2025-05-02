@@ -3,7 +3,7 @@ import { PieChart } from "@/app/components/Charts/pie"
 import Datatable from "@/app/components/DataTable"
 import Dropdown from "@/app/components/Dropdown"
 import { useAportesHook } from "@/hooks/UseBuscarAportes"
-import { filterBy, groupBy, totalizarAportes, totalizarAportesPorCategoria } from "@/utils/array"
+import { filterBy, groupBy, sortBy, totalizarAportes, totalizarAportesPorCategoria } from "@/utils/array"
 import { useEffect, useState } from "react"
 
 
@@ -27,6 +27,14 @@ export const AportesDetalhes = () => {
         }
 
     }, [aportes])
+
+    const precoMedioTempl = (row:Aporte) => {
+        return `R$ ${row.precoMedio.toFixed(2)}`
+    }
+
+    const precoAtualTempl = (row:Aporte) => {
+        return `R$ ${row.precoAtual.toFixed(2)}`
+    }
 
     return (
 
@@ -79,10 +87,10 @@ export const AportesDetalhes = () => {
 
                             </div>
 
-                            <Datatable.Root data={aportesAgrupados[cat]} >
+                            <Datatable.Root data={sortBy(aportesAgrupados[cat], 'precoMedio')} >
                                 <Datatable.Column description="Ticker" field="identificador"/>
-                                <Datatable.Column description="Preço Médio" field="precoMedio"/>
-                                <Datatable.Column description="Preço Atual" field="precoAtual"/>
+                                <Datatable.Column description="Preço Médio" body={precoMedioTempl}/>
+                                <Datatable.Column description="Preço Atual" body={precoAtualTempl}/>
                                 <Datatable.Column description="Quantidade" field="quantidade"/>
 
                             </Datatable.Root>
