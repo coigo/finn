@@ -21,7 +21,6 @@ export const MovimentacoesDetalhes = () => {
     const movimentacoesAgrupadas = totalizarMovimentacoesPorCategoria(movimentacoes)
 
     useEffect(() => {
-        console.log(periodo)
         buscar(periodo)
     }, [periodo])
 
@@ -74,7 +73,6 @@ export const MovimentacoesDetalhes = () => {
                     </div>
                 </div>
                 <div className="card p-4 rounded-2xl h-full md:h-1/2 bg-neutral-800/40 shadow-lg">
-                    {JSON.stringify(sortBy(movimentacoes, 'valor'))}
                 </div>
             </div>
             <div>

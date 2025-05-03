@@ -2,6 +2,7 @@
 
 import { useToast } from "@/app/components/Toast/useToast"
 import { BuscarAportesRequest } from "@/services/aportes"
+import { sortBy } from "@/utils/array"
 import { createContext, ReactNode, useContext, useState } from "react"
 
 type AporteContextProps = {
@@ -10,29 +11,38 @@ type AporteContextProps = {
     aportes: Aporte[]
 }
 
-const AporteContext = createContext< AporteContextProps| undefined>(undefined)
+const AporteContext = createContext<AporteContextProps | undefined>(undefined)
 
-export const AportesProvider = ({children}: {children: ReactNode}) => {
-    
-        const { showToast } = useToast()
-        const [ aportes, setAportes ] = useState<Aporte[]>([])
-        const [ loading, setLoading ] = useState(false)
-        
-        const buscar = async () => {
-            try {
-                setLoading(true)
-                const aportes = await BuscarAportesRequest()
-                setAportes(aportes)
-                setLoading(false)
-            }
-            catch ( err: any ) {
-                showToast(err.message, "error")
-                setLoading(false)
-            }
+export const AportesProvider = ({ children }: { children: ReactNode }) => {
+
+    const { showToast } = useToast()
+    const [aportes, setAportes] = useState<AporteTotalizado[]>([])
+    const [loading, setLoading] = useState(false)
+
+    const buscar = async () => {
+        try {
+            setLoading(true)
+            const aportes = await BuscarAportesRequest()
+
+            const aportescoisados = sortBy(aportes.map((aporte) => {
+                return {
+                    ...aporte,
+                    total: aporte.precoAtual * aporte.quantidade
+                }
+            })
+            , "total")
+
+            setAportes(aportescoisados)
+            setLoading(false)
         }
-    
+        catch (err: any) {
+            showToast(err.message, "error")
+            setLoading(false)
+        }
+    }
 
-    return <AporteContext.Provider value={{buscar, aportes, loading}} >
+
+    return <AporteContext.Provider value={{ buscar, aportes, loading }} >
         {children}
     </AporteContext.Provider>
 }

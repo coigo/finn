@@ -28,12 +28,16 @@ export const AportesDetalhes = () => {
 
     }, [aportes])
 
-    const precoMedioTempl = (row:Aporte) => {
+    const precoMedioTempl = (row:AporteTotalizado) => {
         return `R$ ${row.precoMedio.toFixed(2)}`
     }
 
-    const precoAtualTempl = (row:Aporte) => {
+    const precoAtualTempl = (row:AporteTotalizado) => {
         return `R$ ${row.precoAtual.toFixed(2)}`
+    }
+
+    const totalTempl = (row:AporteTotalizado) => {
+        return `R$ ${row.total.toFixed(2)}`
     }
 
     return (
@@ -87,10 +91,15 @@ export const AportesDetalhes = () => {
 
                             </div>
 
-                            <Datatable.Root data={sortBy(aportesAgrupados[cat], 'precoMedio')} >
+                            <Datatable.Root data={aportesAgrupados[cat].reverse()} >
                                 <Datatable.Column description="Ticker" field="identificador"/>
+                                <Datatable.Column description="Total" body={totalTempl}/>
                                 <Datatable.Column description="Preço Médio" body={precoMedioTempl}/>
-                                <Datatable.Column description="Preço Atual" body={precoAtualTempl}/>
+                                {
+                                    cat != "CRIPTOMOEDA" 
+                                        ? <Datatable.Column description="Preço Atual" body={precoAtualTempl}/> 
+                                        : <></>
+                                }
                                 <Datatable.Column description="Quantidade" field="quantidade"/>
 
                             </Datatable.Root>

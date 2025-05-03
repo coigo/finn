@@ -11,7 +11,15 @@ type SelectValues = {
 
 type Aporte = {
     identificador: string 
-    nomeCurto: string 
+    precoMedio: number 
+    precoAtual: number 
+    quantidade: number 
+    categoria: string 
+}
+
+type AporteTotalizado = {
+    identificador: string 
+    total: number
     precoMedio: number 
     precoAtual: number 
     quantidade: number 

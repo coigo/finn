@@ -45,13 +45,10 @@ public class BuscarAportesUseCase : IUseCase<Unity, List<BuscarAportesDTO>>
 
     private async Task<decimal?> BuscarPrecoAtual (Aporte aporte) {
         if ( aporte.Categoria == AporteCategoria.CRIPTOMOEDA ) {
-            decimal? result = await this._ativos.BuscarCrypto(aporte.Identificador);
-            return this.CalcularCrypto(result, aporte.Quantidade);
+            var result = await this._ativos.BuscarCrypto(aporte.Identificador);
+            return result;
         }
         return await this._ativos.BuscarPorTicker(aporte.Identificador);
     }
 
-    private decimal? CalcularCrypto ( decimal? preco, decimal quantidade) {
-        return preco.HasValue ? preco.Value * quantidade : null;
-    }
 }
