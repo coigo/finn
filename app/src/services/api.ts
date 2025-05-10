@@ -4,7 +4,7 @@ import axios, { AxiosError } from "axios";
 console.log(config.baseUrl)
 
 export const api = axios.create({
-    baseURL: config.baseUrl,
+    baseURL: config.baseUrl + "/api",
     headers: {
         "Content-Type": 'application/json'
     },

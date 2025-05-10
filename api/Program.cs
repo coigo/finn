@@ -1,6 +1,7 @@
 using Aportes.UseCases;
 using Infra.Database;
 using Infra.Env;
+using Infra.Http.Middlewares;
 using Infra.Repositories;
 using Infra.Repositories.Adapters;
 using Microsoft.AspNetCore.Diagnostics;
@@ -58,12 +59,16 @@ builder.Services.AddCors(opt =>
     });
 });
 
+
 var app = builder.Build();
 
 // Configure the HTTP equest pipeline.
 
 
-app.UseCors(allowLocal);
+app.UseCors(allowLocal);    
+
+app.UseMiddleware<BasePathEnforcer>("/api");
+app.UsePathBase("/api");
 app.UseRouting();
 
 app.UseExceptionHandler(appError =>
