@@ -10,6 +10,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import dayjs from "dayjs"
 import Dropdown from "@/app/components/Dropdown"
+import { useBuscarSaldo } from "@/hooks/useBuscarSaldo"
 
 
 
@@ -17,11 +18,13 @@ import Dropdown from "@/app/components/Dropdown"
 export const MovimentacoesDetalhes = () => {
 
     const { movimentacoes, buscar, loading } = useBuscarMovimentacoes()
+    const { saldo, buscar:buscarSaldo, loading: loadingSaldo } = useBuscarSaldo()
     const [periodo, setPeriodo] = useState<MovimentacoesPeriodo>('MES')
     const movimentacoesAgrupadas = totalizarMovimentacoesPorCategoria(movimentacoes)
 
     useEffect(() => {
         buscar(periodo)
+        buscarSaldo("Corrente")
     }, [periodo])
 
 
@@ -79,7 +82,7 @@ export const MovimentacoesDetalhes = () => {
                 <div className="transparent-scrollbar p-4 rounded-2xl h-[88vh] bg-neutral-800/40 shadow-lg overflow-y-scroll scroll-smooth">
 
                     <DataTable.Root data={movimentacoes} >
-                        <DataTable.Column description="asd" body={tipoTempl} />
+                        <DataTable.Column description="" body={tipoTempl} />
                         <DataTable.Column description="Valor" body={valorTempl} />
                         <DataTable.Column description="Categoria" field="categoria" />
                         <DataTable.Column description="Data" body={dataTmpl} />

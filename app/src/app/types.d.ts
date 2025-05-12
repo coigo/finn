@@ -54,4 +54,9 @@ type PieData = {
     value: number
 }
 
+type Saldo = {
+    valor: number
+    nome: string
+}
+
 type MovimentacoesPeriodo = 'SEMANA' | 'MES' | 'SEIS_MESES' | 'DURANTE_ANO' | 'DOZE_MESES' 

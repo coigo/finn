@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Movimentacoes.DTOS;
-using Movimentacoes.Models;
 using Movimentacoes.UseCases;
 
 namespace Movimentacoes.Routes ;

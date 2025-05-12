@@ -62,7 +62,6 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimen
         Movimentacao mov = await this.CriarMovimentacao(data);
 
         await this._resumos.AtualizarSaldo("Corrente", -data.valor);
-        await this._resumos.AtualizarSaldo("Investimentos", data.valor);
     }
 
     private async Task CriarTipoEntrada(CriarMovimentacao data)
@@ -71,10 +70,7 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimen
 
         int[] categorias = { (int)MovimentacaoCategoriaDTO.DIVIDENDO, (int)MovimentacaoCategoriaDTO.VENDA };
 
-        if (categorias.Contains(categoriaId)) {
-            await this._resumos.AtualizarSaldo("Investimentos", valor);
-        }
-        else {
+        if (!categorias.Contains(categoriaId)) {
             await this._resumos.AtualizarSaldo("Corrente", valor);
         }
         await this.CriarMovimentacao(data);

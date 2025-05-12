@@ -31,7 +31,6 @@ public class MovimentarAportesUseCase : IUseCase<MovimentarAporteDTO, Aporte>
         
         var tipo = Quantidade < 0 ? AporteTipo.VENDA : AporteTipo.COMPRA; 
         await this._historico.CriarRegistro(new AporteHistorico(Preco, Identificador, tipo, Categoria, DataCompra));
-        await this._resumo.AtualizarSaldo("Investimentos", Quantidade *  Preco);
 
         return aporte == null 
         ? await this.CriarAporte(data)
@@ -40,7 +39,6 @@ public class MovimentarAportesUseCase : IUseCase<MovimentarAporteDTO, Aporte>
     }
 
     private async Task<Aporte> CriarAporte(MovimentarAporteDTO data) {
-        Console.WriteLine(data.Quantidade);
         Aporte novoAporte = new ( data.Preco, data.Identificador, data.Quantidade, data.Categoria );
         return await this._aportes.CriarAporte(novoAporte);
     }
