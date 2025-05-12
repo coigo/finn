@@ -54,7 +54,10 @@ export const MovimentacoesDetalhes = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 h-full gap-4">
             <div className=" flex w-full flex-col gap-4">
-                <div className="card p-4 pt-2 rounded-2xl h-[82vh] md:h-1/2 bg-neutral-800/40 shadow-lg">
+                <div className="card p-4 rounded-2xl h-full md:h-1/12 bg-neutral-800/40 shadow-lg">
+                    <div className="flex px-5 justify-between text-lg">Saldo <span>R$ {saldo?.valor.toFixed(2) || 0}</span></div>
+                </div>
+                <div className="card p-4 pt-2 rounded-2xl h-[82vh] md:h-2/3 bg-neutral-800/40 shadow-lg">
                     <div className="block md:flex">
                         <div className=" mb-20 md:mb-0 flex flex-col justify-center w-full ">
                             <div className="m-4 flex font-semibold w-full md:mb-12">
@@ -69,13 +72,12 @@ export const MovimentacoesDetalhes = () => {
                                 </div>
                             </div>
                             <div className="flex justify-center w-full">
-
                                 <PieChart loading={loading} data={movimentacoesAgrupadas} />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="card p-4 rounded-2xl h-full md:h-1/2 bg-neutral-800/40 shadow-lg">
+                <div className="card p-4 rounded-2xl h-full md:h-3/5 bg-neutral-800/40 shadow-lg">
                 </div>
             </div>
             <div>

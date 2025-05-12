@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Movimentacoes.DTOS;
 using Movimentacoes.Models;
 using Resumos.Models;
+using Salarios.Models;
 
 namespace Infra.Database  {
 public class Context : DbContext {
@@ -16,6 +17,8 @@ public class Context : DbContext {
 
         public required DbSet<Aporte> Aportes { get; set; }
         public required DbSet<AporteHistorico> AportesHistoricos { get; set; }
+
+        public required DbSet<Salario> Salarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

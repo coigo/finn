@@ -1,5 +1,4 @@
 "use client"
-import {useEffect} from 'react';
 import { IconButton, useColorScheme } from '@mui/material';
 import { useModal } from '@/app/components/Modal/useModal';
 
@@ -10,18 +9,12 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import { AporteModal } from './components/AporteModal';
 import { MovimentacaoModal } from './components/MovimentacaoModal';
-import { useBuscarSaldo } from '@/hooks/useBuscarSaldo';
 
 
 export default function NavBar() {
   const { mode, setMode } = useColorScheme();
   const { openModal } = useModal()
 
-  const {buscar, loading, saldo} = useBuscarSaldo()
-
-  useEffect(() => {
-    buscar('Corrente')
-  }, [])
 
   const handleChangeTheme = () => {
     setMode(mode == "dark" ? "light" : "dark")
@@ -40,9 +33,6 @@ export default function NavBar() {
             </div>
           </span>
           <div className=' mx-1 h-full w-fit content-evenly'>
-            <span className='mr-3'>
-              {saldo && saldo.valor}
-            </span>
             <IconButton onClick={handleChangeTheme}>
               {
                 mode == "dark"
