@@ -1,0 +1,28 @@
+using Infra.Shared;
+using Movimentacoes.Models;
+using Movimentacoes.DTOS;
+using Infra.Repositories;
+using Resumos.Models;
+using Salarios.Models;
+
+namespace Salarios.UseCases;
+
+public class CriarSalarioUseCase : IUseCase<CriarSalarioDto, Salario>
+{
+
+    private readonly ISalarioRepository _salario;
+
+    public CriarSalarioUseCase(ISalarioRepository salario)
+    {
+        _salario = salario;
+    }
+
+    public async Task<Salario> Execute(CriarSalarioDto salario)
+    {
+        if (salario.valor < 0 ) {
+            throw new BusinessError("Use um valor positivo");
+        }
+        return await this._salario.CriarSalario(new Salario(salario.valor));
+    }
+
+}
