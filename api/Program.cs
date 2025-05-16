@@ -8,6 +8,7 @@ using Infra.Repositories.Adapters;
 using Microsoft.AspNetCore.Diagnostics;
 using Movimentacoes.UseCases;
 using Resumos.UseCases;
+using Salarios.UseCases;
 
 LoadEnv.Load();
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +30,7 @@ builder.Services.AddScoped<IMovimentacaoRepository, MovimentacaoRepository>();
 builder.Services.AddScoped<IResumoRepository, ResumoRepository>();
 builder.Services.AddScoped<IAporteHistoricoRepository, AporteHistoricoRepository>();
 builder.Services.AddScoped<IAporteRepository, AporteRepository>();
+builder.Services.AddScoped<ISalarioRepository, SalarioRepository>();
 builder.Services.AddSingleton<IAtivosRepository, AtivosRepository>();
 builder.Services.AddHttpClient<IAtivosRepository, AtivosRepository>();
 
@@ -44,6 +46,9 @@ builder.Services.AddScoped<BuscarMovimentacoesCategoriasUseCase>();
 
 builder.Services.AddScoped<MovimentarAportesUseCase>();
 builder.Services.AddScoped<BuscarSaldoUseCase>();
+
+builder.Services.AddScoped<BuscarSalarioAtualUseCase>();
+builder.Services.AddScoped<CriarSalarioUseCase>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

@@ -6,7 +6,7 @@ import { useState } from "react"
 export const useBuscarSalarioAtual = () => {
 
     const [ loading, setLoading ] = useState<boolean>(false)
-    const [ salario, setSalarios ] = useState<MovimentacaoCategoria[]>([])
+    const [ salario, setSalarios ] = useState<Salario>()
     
     const buscar = async () => {
         try {

@@ -1,5 +1,5 @@
 "use client"
-import { IconButton, useColorScheme } from '@mui/material';
+import { IconButton, TextField, useColorScheme } from '@mui/material';
 import { useModal } from '@/app/components/Modal/useModal';
 
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
@@ -9,12 +9,20 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import { AporteModal } from './components/AporteModal';
 import { MovimentacaoModal } from './components/MovimentacaoModal';
+import CustomPopover from '../../Popover';
+import { useBuscarSalarioAtual } from '@/hooks/useBuscarSalarioAtual';
+import { useEffect } from 'react';
 
 
 export default function NavBar() {
   const { mode, setMode } = useColorScheme();
   const { openModal } = useModal()
 
+  const {buscar, salario} = useBuscarSalarioAtual()
+
+  useEffect(() => {
+    buscar()
+  }, [])
 
   const handleChangeTheme = () => {
     setMode(mode == "dark" ? "light" : "dark")
@@ -33,6 +41,18 @@ export default function NavBar() {
             </div>
           </span>
           <div className=' mx-1 h-full w-fit content-evenly'>
+            <CustomPopover >
+              <div className='text-neutral-400'>
+                <div className='w-full p-2 text-center'>
+                  Configurações
+                </div>
+                <hr />
+                <div className='flex content-end text-end mt-2'>
+                  Salario: <TextField className='w-fit' id="standard-basic" placeholder={`${salario?.valor.toFixed(2)}` || '0'} variant="standard" />
+
+                </div>
+              </div>
+            </CustomPopover>
             <IconButton onClick={handleChangeTheme}>
               {
                 mode == "dark"

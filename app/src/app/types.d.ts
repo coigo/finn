@@ -59,4 +59,10 @@ type Saldo = {
     nome: string
 }
 
+type Salario = {
+    id: number
+    valor: number
+    criadoEm: Date
+}
+
 type MovimentacoesPeriodo = 'SEMANA' | 'MES' | 'SEIS_MESES' | 'DURANTE_ANO' | 'DOZE_MESES' 
