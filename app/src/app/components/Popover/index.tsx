@@ -36,8 +36,9 @@ export default function CustomPopover({children}: PopoverProps) {
                     vertical: 'bottom',
                     horizontal: 'left',
                 }}
+                
             >
-                <div className="p-4 rounded-4xl">
+                <div className="p-4 " style={{borderRadius:'16px'}}>
                     {children}
                 </div>
             </Popover></>

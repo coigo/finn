@@ -11,14 +11,18 @@ import { AporteModal } from './components/AporteModal';
 import { MovimentacaoModal } from './components/MovimentacaoModal';
 import CustomPopover from '../../Popover';
 import { useBuscarSalarioAtual } from '@/hooks/useBuscarSalarioAtual';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { CurrencyField } from '../../Inputs/CurrencyField';
+import { CriarSalarioRequest } from '@/services/salario';
+import { useToast } from '../../Toast/useToast';
 
 
 export default function NavBar() {
   const { mode, setMode } = useColorScheme();
   const { openModal } = useModal()
-
-  const {buscar, salario} = useBuscarSalarioAtual()
+  const { showToast } = useToast()
+  const [value, setValue] = useState<string>("")
+  const { buscar, salario, criar } = useBuscarSalarioAtual()
 
   useEffect(() => {
     buscar()
@@ -27,6 +31,16 @@ export default function NavBar() {
   const handleChangeTheme = () => {
     setMode(mode == "dark" ? "light" : "dark")
   };
+
+  const handleSalario = async (e: string) => {
+    try {
+      criar(e)
+      setValue("")
+    }
+    catch (err: any) {
+      showToast(err.message, 'error')
+    }
+  }
 
   return (
     <>
@@ -48,7 +62,16 @@ export default function NavBar() {
                 </div>
                 <hr />
                 <div className='flex content-end text-end mt-2'>
-                  Salario: <TextField className='w-fit' id="standard-basic" placeholder={`${salario?.valor.toFixed(2)}` || '0'} variant="standard" />
+                  Salario:
+                  <CurrencyField
+                    className='w-fit'
+                    id="standard-basic"
+                    placeholder={`${salario?.valor.toFixed(2)}` || '0'}
+                    variant="standard"
+                    value={value}
+                    onChange={(e)=> setValue(e.target.value)}
+                    onBlur={(e) => handleSalario(e.target.value)}
+                  />
 
                 </div>
               </div>

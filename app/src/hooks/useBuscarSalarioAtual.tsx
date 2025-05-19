@@ -1,6 +1,6 @@
 "use client"
 
-import { BuscarSalarioAtualRequest } from "@/services/salario"
+import { BuscarSalarioAtualRequest, CriarSalarioRequest } from "@/services/salario"
 import { useState } from "react"
 
 export const useBuscarSalarioAtual = () => {
@@ -21,7 +21,21 @@ export const useBuscarSalarioAtual = () => {
         }
     }
 
+    const criar = async (valor: string) => {
+        try {
+            setLoading(true)
+            const salario = await CriarSalarioRequest({valor: Number(valor)})
+            setSalarios(salario)
+            setLoading(false)
+        }
+        catch (err: any) {
+            setLoading(false)
+            
+        }
+    }
+
     return {
+        criar,
         buscar,
         loading, 
         salario

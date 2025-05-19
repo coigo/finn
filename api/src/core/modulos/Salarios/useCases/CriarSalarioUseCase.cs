@@ -19,7 +19,9 @@ public class CriarSalarioUseCase : IUseCase<CriarSalarioDto, Salario>
 
     public async Task<Salario> Execute(CriarSalarioDto salario)
     {
-        if (salario.valor < 0 ) {
+        Console.WriteLine(salario);
+        if (salario.valor < 0)
+        {
             throw new BusinessError("Use um valor positivo");
         }
         return await this._salario.CriarSalario(new Salario(salario.valor));

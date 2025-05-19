@@ -17,7 +17,7 @@ public class CriarSalarioController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<Salario> handle([FromQuery] CriarSalarioDto salario)
+    public async Task<Salario> handle([FromBody] CriarSalarioDto salario)
     {
         return await UseCase.Execute(salario);
     }

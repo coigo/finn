@@ -5,6 +5,7 @@ export const BuscarSalarioAtualRequest = async () => {
     return data
 }
 
-export const CriarSalarioRequest = async (data: { valor: number }) => {
-    await api.post('/salario', data)
+export const CriarSalarioRequest = async (salario: { valor: number }) => {
+    const { data } = await api.post('/salario', salario)
+    return data
 }
