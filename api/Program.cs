@@ -49,6 +49,7 @@ builder.Services.AddScoped<BuscarSaldoUseCase>();
 
 builder.Services.AddScoped<BuscarSalarioAtualUseCase>();
 builder.Services.AddScoped<CriarSalarioUseCase>();
+builder.Services.AddScoped<AdicionarSalarioAtualUseCase>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

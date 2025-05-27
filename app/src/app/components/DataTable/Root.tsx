@@ -6,18 +6,22 @@ import { FieldProps } from "./Column";
 export interface ICustomDataTable {
     data: any[]
     children: ReactElement<FieldProps | FieldProps>[]
+    classname?: string
 }
 
-export function Root({ data, children }: ICustomDataTable) {
+export function Root({ data, children, classname }: ICustomDataTable) {
 
 
     return (
         <TableContainer 
             sx={{
                 backgroundColor: "transparent",
-                overflow: 'auto',
+                overflow:'auto',
                 boxShadow: 'none',
-                minWidth: 650
+                minWidth: 650,
+                maxHeight:'100%',
+                display:'flex'
+                
             }}
             component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">

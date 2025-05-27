@@ -37,15 +37,15 @@ input[type=number] {
   -moz-appearance:textfield;
 }
 
-.nav-bar-item {
-  background-color: transparent;
+.custom-buttom {
   text-align: center;
   padding: 8px;
   width: fit-content;
   min-width: 36px;
-  border-radius: 50%;
+  border-radius: 8px;
+  transition: background-color 200ms linear;
 }
-.nav-bar-item-round {
+.custom-buttom-round {
   background-color: transparent;
   text-align: center;
   padding: 8px;
@@ -60,8 +60,11 @@ input[type=number] {
 }
 
 
-.nav-bar-item:hover, .nav-bar-item-round:hover {
+.custom-buttom-round:hover {
   background-color: rgba(10, 10, 10, 0.2);
+}
+.custom-buttom:hover {
+  background-color: #a06b27;
 }
 
 .menu {

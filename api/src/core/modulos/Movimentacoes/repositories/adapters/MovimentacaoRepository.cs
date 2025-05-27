@@ -24,6 +24,9 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
         return data;
     }
     public async Task<List<ListaMovimentacoesDTO>> BuscarPorPeriodo(DateTime inicio, DateTime fim) {
+        var dataInicio = inicio.ToShortDateString();
+        var dataFim = fim.ToShortDateString();
+        Console.WriteLine(fim.ToString());
         return await _context.Database.SqlQuery<ListaMovimentacoesDTO>($@"
             SELECT 
                 COALESCE(mp.valor, m.valor) AS valor,
@@ -36,10 +39,10 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
                 ON mc.id = m.categoriaId 
             LEFT JOIN movimentacoes_parcelas mp 
                 ON mp.movimentacao_id = m.id 
-                AND mp.vencimento BETWEEN {inicio} AND {fim}
+                AND mp.vencimento >= {dataInicio} AND mp.vencimento <= {dataFim}
             WHERE 
-                m.data BETWEEN {inicio} AND {fim}
-                OR mp.vencimento BETWEEN {inicio} AND {fim}
+                (m.data >= {dataInicio} AND m.data <=  {dataFim})
+                OR (mp.vencimento >= {dataInicio} AND mp.vencimento <= {dataFim})
             GROUP BY m.id
             ORDER by mp.vencimento, m.data desc
             ")

@@ -47,10 +47,10 @@ export default function NavBar() {
       <div className='w-full md:flex md:justify-center mb-8 '>
         <div className='flex justify-between w-full md:w-3/4 p-2 bg-[#de983b] rounded-b-2xl'>
           <span className='flex gap-2 ml-4'>
-            <div onClick={() => openModal(<MovimentacaoModal />)} className='nav-bar-item-round'>
+            <div onClick={() => openModal(<MovimentacaoModal />)} className='custom-buttom-round'>
               <CompareArrowsIcon className='text-yellow-950' />
             </div>
-            <div onClick={() => openModal(<AporteModal />)} className='nav-bar-item-round'>
+            <div onClick={() => openModal(<AporteModal />)} className='custom-buttom-round'>
               <AttachMoneyIcon className='text-yellow-950' />
             </div>
           </span>
@@ -69,7 +69,7 @@ export default function NavBar() {
                     placeholder={`${salario?.valor.toFixed(2)}` || '0'}
                     variant="standard"
                     value={value}
-                    onChange={(e)=> setValue(e.target.value)}
+                    onChange={(e) => setValue(e.target.value)}
                     onBlur={(e) => handleSalario(e.target.value)}
                   />
 

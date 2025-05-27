@@ -53,8 +53,11 @@ export const totalizarAportesPorCategoria = (aportes: Aporte[]): PieData[] => {
             
 }
 
-export const totalizarMovimentacoesPorCategoria = (movimentacoes: Movimentacao[]): PieData[] => {
-    const movimentacoesAgrupadas = groupBy(movimentacoes, "categoria") 
+export const totalizarMovimentacoesPorCategoria = (movimentacoes: Movimentacao[], tipo: "ENTRADA" | "SAIDA"): PieData[] => {
+    const movimentacoesAgrupadas = groupBy(
+        movimentacoes.filter(m => m.tipo == tipo)
+        , "categoria"
+    ) 
 
     return Object.keys(movimentacoesAgrupadas).map(categoria => {
         const total = movimentacoesAgrupadas[categoria].reduce((acc: number, curr: Movimentacao) => {
