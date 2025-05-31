@@ -10,17 +10,14 @@ public class MovimentacaoParcela {
     [Column("id")]
     public int Id { get; private set; }
 
-    [Column("movimentacao_id")]
-    public int MovimentacaoId { get; private set; }
-
-    [ForeignKey("MovimentacaoId")]
-    public Movimentacao Movimentacao { get; private set; }  
-
     [Column("valor")]
     public decimal Valor { get; private set; }
 
     [Column("numero")]
     public int Numero { get; private set; }
+
+    [Column("descricao")]
+    public string Descricao { get; private set; }
     
     [DataType(DataType.Date)]
     [Column("vencimento")]
@@ -29,11 +26,13 @@ public class MovimentacaoParcela {
     [Column("criadoEm")]
     public DateTime CriadoEm { get; private set; } = DateTime.Now;
 
+    [Column("paga")]
+    public bool Paga { get; private set; } = false;
+
     protected MovimentacaoParcela() { }
 
-    public MovimentacaoParcela(Movimentacao movimentacao, decimal valor, int numero, DateTime vencimento) {
-        Movimentacao = movimentacao ?? throw new ArgumentNullException(nameof(movimentacao));
-        MovimentacaoId = movimentacao.Id;
+    public MovimentacaoParcela(string descricao, decimal valor, int numero, DateTime vencimento) {
+        Descricao = descricao;
         Valor = valor;
         Numero = numero;
         Vencimento = vencimento;

@@ -5,7 +5,7 @@ using Infra.Repositories;
 
 namespace Movimentacoes.UseCases;
 
-public class BuscarMovimentacoesUseCase  : IUseCase<BuscarPorPeriodoDTO, List<ListaMovimentacoesDTO>> {
+public class BuscarMovimentacoesUseCase : IUseCase<BuscarPorPeriodoDTO, List<ListaMovimentacoesDTO>> {
 
     private readonly IMovimentacaoRepository _movimentacoes;
     public BuscarMovimentacoesUseCase  ( IMovimentacaoRepository movimentacoes ) {
@@ -16,7 +16,6 @@ public class BuscarMovimentacoesUseCase  : IUseCase<BuscarPorPeriodoDTO, List<Li
         var (inicio, fim) = data;
 
         var mov = await this._movimentacoes.BuscarPorPeriodo(DateTime.Parse(inicio), DateTime.Parse(fim));
-        Console.WriteLine(mov);
         return mov;
     }
 

@@ -10,6 +10,8 @@ public record CriarMovimentacao (
     DateTime data,
 
     int? quantidadeParcelas,
-    DateTime? primeiroVencimento
+    DateTime? primeiroVencimento,
+
+    bool? persistente
 
 ) {}

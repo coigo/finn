@@ -23,28 +23,49 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
         await _context.SaveChangesAsync();
         return data;
     }
-    public async Task<List<ListaMovimentacoesDTO>> BuscarPorPeriodo(DateTime inicio, DateTime fim) {
+    
+    public async Task<MovimentacaoPersistente> CriarMovimentacaoPersistente(MovimentacaoPersistente data)
+    {
+
+        if (data == null)
+        {
+            throw new ArgumentNullException(nameof(data));
+        }
+
+        await _context.MovimentacoesPersistentes.AddAsync(data);
+        await _context.SaveChangesAsync();
+        return data;
+    }
+    
+    public async Task CriarMovimentacaoParcela(List<MovimentacaoParcela> data)
+    {
+
+        if (data == null)
+        {
+            throw new ArgumentNullException(nameof(data));
+        }
+
+        await _context.MovimentacoesParcelas.AddRangeAsync(data);
+        await _context.SaveChangesAsync();
+    }
+    
+    public async Task<List<ListaMovimentacoesDTO>> BuscarPorPeriodo(DateTime inicio, DateTime fim)
+    {
         var dataInicio = inicio.ToShortDateString();
         var dataFim = fim.ToShortDateString();
-        Console.WriteLine(fim.ToString());
         return await _context.Database.SqlQuery<ListaMovimentacoesDTO>($@"
             SELECT 
-                COALESCE(mp.valor, m.valor) AS valor,
+                m.valor AS valor,
                 m.tipo,
                 mc.nome as categoria,
-                m.data,
-                mp.vencimento
+                m.data
             FROM movimentacoes m
             LEFT JOIN movimentacoes_categorias mc 
                 ON mc.id = m.categoriaId 
-            LEFT JOIN movimentacoes_parcelas mp 
-                ON mp.movimentacao_id = m.id 
-                AND mp.vencimento >= {dataInicio} AND mp.vencimento <= {dataFim}
             WHERE 
-                (m.data >= {dataInicio} AND m.data <=  {dataFim})
-                OR (mp.vencimento >= {dataInicio} AND mp.vencimento <= {dataFim})
+                m.data >= {dataInicio} AND m.data <=  {dataFim}
             GROUP BY m.id
-            ORDER by mp.vencimento, m.data desc
+            ORDER by m.data desc
             ")
         .ToListAsync();
     }
@@ -65,14 +86,21 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
             throw new ArgumentNullException(nameof(data));
         }
         
-        await _context.MovimentacaoParcelas.AddRangeAsync(data);
+        await _context.MovimentacoesParcelas.AddRangeAsync(data);
         await _context.SaveChangesAsync();
         return data.ToList();
     }
 
     public async Task<List<MovimentacaoParcela>> BuscarParcelasPorId(int[] parcelas) {
-        return await this._context.MovimentacaoParcelas
+        return await this._context.MovimentacoesParcelas
             .Where(p => parcelas.Contains(p.Id))
+            .ToListAsync();
+    }
+    
+    public async Task<List<MovimentacaoParcela>> BuscarParcelasDoMes( DateTime hoje)
+    {
+        return await this._context.MovimentacoesParcelas
+            .Where(p => p.Vencimento.Month == hoje.Month && p.Vencimento.Year == hoje.Year )
             .ToListAsync();
     }
 

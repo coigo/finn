@@ -2,95 +2,83 @@ using Infra.Shared;
 using Movimentacoes.Models;
 using Movimentacoes.DTOS;
 using Infra.Repositories;
-using Resumos.Models;
+using Movimentacoes.Factories;
 
 namespace Movimentacoes.UseCases;
 
 public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimentacao>
 {
 
+    private readonly IMovimentacaoFactory _movFactory;
     private readonly IMovimentacaoRepository _movimentacoes;
     private readonly IResumoRepository _resumos;
 
-    public CriarMovimentacaoUseCase(IMovimentacaoRepository movimentacoes, IResumoRepository resumos)
+    public CriarMovimentacaoUseCase(IMovimentacaoRepository movimentacoes, IResumoRepository resumos, IMovimentacaoFactory factory)
     {
         _movimentacoes = movimentacoes;
+        _movFactory = factory;
         _resumos = resumos;
     }
 
     public async Task<CriarMovimentacao> Execute(CriarMovimentacao data)
     {
-        var (valor, tipo, categoriaId, descricao, date, quantidadeParcelas, primeiroVencimento) = data;
-        Console.WriteLine(data.ToString());
-        var SalvarPorTipo = new Dictionary<MovimentacaoTipo, Func<CriarMovimentacao, Task>>{
-            {MovimentacaoTipo.INVESTIMENTOS, CriarTipoInvestimento},
-            {MovimentacaoTipo.ENTRADA, CriarTipoEntrada},
-            {MovimentacaoTipo.SAIDA, CriarTipoSaida}
-        };
-        await SalvarPorTipo[tipo](data);
 
+        var derivadosMovimentacao = this._movFactory.Execute(data);
+
+        var coisa = new Dictionary<MovimentacoesDerivadosDTO, Func<Task>>
+        {
+            {MovimentacoesDerivadosDTO.MOVIMENTACAO, () => CriarMovimentacao(derivadosMovimentacao.Movimentacao) },
+            {MovimentacoesDerivadosDTO.PERSISTENTE, () => CriarPersistente(derivadosMovimentacao.Persistente) },
+            {MovimentacoesDerivadosDTO.PARCELAS, () => CriarParcela(derivadosMovimentacao.Parcela) }
+        };
+        Console.WriteLine();
+        await coisa[derivadosMovimentacao.derivado]();
         return data;
     }
 
-    private async Task CriarTipoSaida(CriarMovimentacao data)
+    private async Task CriarPersistente(MovimentacaoPersistente? data)
     {
-        var (valor, tipo, categoriaId, descricao, date, quantidadeParcelas, primeiroVencimento) = data;
+        if (data == null) return;
+
+        await this._movimentacoes.CriarMovimentacaoPersistente(data);
         
-        Movimentacao movimentacao = await this.CriarMovimentacao(data);
+    }
+    
+    private async Task CriarParcela(List<MovimentacaoParcela>? data)
+    {
+        if (data == null) return;
+        await this._movimentacoes.CriarMovimentacaoParcela(data);
+    }
+    
+    private async Task CriarMovimentacao(Movimentacao? data) {
 
-        if (quantidadeParcelas != null && primeiroVencimento != null)
-        {
-            int quantidade = quantidadeParcelas.Value;
-            DateTime vencimento = primeiroVencimento.Value;
-
-            var parcelas = Enumerable.Range(0, quantidade).Select(i => 
-                new MovimentacaoParcela(
-                    movimentacao,
-                    movimentacao.Valor / quantidade,
-                    i + 1,
-                    vencimento.AddMonths(i))
-            );
-            await this._movimentacoes.CriarParcelas(parcelas);
-        }
-        else {
-            await this._resumos.AtualizarSaldo("Corrente", -valor);
-        }
+        if (data == null) return; 
+        
+        var SalvarPorTipo = new Dictionary<MovimentacaoTipo, Func<Movimentacao, Task>>{
+            { MovimentacaoTipo.INVESTIMENTOS, CriarTipoInvestimento },
+            { MovimentacaoTipo.ENTRADA, CriarTipoEntrada },
+            { MovimentacaoTipo.SAIDA, CriarTipoSaida }
+        };
+        await SalvarPorTipo[data.Tipo](data);
+        await this._movimentacoes.CriarMovimentacao(data);
     }
 
-    private async Task CriarTipoInvestimento(CriarMovimentacao data)
+    private async Task CriarTipoEntrada(Movimentacao data)
     {
-        Movimentacao mov = await this.CriarMovimentacao(data);
-
-        await this._resumos.AtualizarSaldo("Corrente", -data.valor);
-    }
-
-    private async Task CriarTipoEntrada(CriarMovimentacao data)
-    {
-        var (valor, tipo, categoriaId, descricao, date, quantidadeParcelas, primeiroVencimento) = data;
-
         int[] categorias = { (int)MovimentacaoCategoriaDTO.DIVIDENDO, (int)MovimentacaoCategoriaDTO.VENDA };
 
-        if (!categorias.Contains(categoriaId)) {
-            await this._resumos.AtualizarSaldo("Corrente", valor);
+        if (!categorias.Contains(data.CategoriaId))
+        {
+            await this._resumos.AtualizarSaldo("Corrente", data.Valor);
         }
-        await this.CriarMovimentacao(data);
-
     }
-
-    private async Task<Movimentacao> CriarMovimentacao(CriarMovimentacao data)
+    
+    private async Task CriarTipoInvestimento(Movimentacao data)
     {
-        var (valor, tipo, categoriaId, descricao, date, quantidadeParcelas, primeiroVencimento ) = data;
-
-        Movimentacao movimentacao = new(
-            valor,
-            tipo,
-            categoriaId,
-            descricao,
-            primeiroVencimento ?? date 
-        );
-
-        Movimentacao mov = await this._movimentacoes.CriarMovimentacao(movimentacao);
-        return mov;
+        await this._resumos.AtualizarSaldo("Corrente", -data.Valor);
+    }
+    private async Task CriarTipoSaida(Movimentacao data) {
+        await this._resumos.AtualizarSaldo("Corrente", -data.Valor);
     }
 
 }

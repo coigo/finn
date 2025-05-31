@@ -28,8 +28,6 @@ public class Movimentacao {
     [Column("criadoEm")]
     public DateTime CriadoEm { get ; set; } = DateTime.Now;   
     
-    public List<MovimentacaoParcela> MovimentacaoParcelas { get ; set; } = new List<MovimentacaoParcela> ();   
-
     [ForeignKey("CategoriaId")]
     public MovimentacaoCategoria Categoria { get ; set; }
 

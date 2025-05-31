@@ -8,6 +8,10 @@ export const  BuscarMovimentacoesRequest = async (params: { inicio: string, fim:
     const { data } =  await api.get("/movimentacoes", { params })
     return data
 }
+export const  BuscarMovimentacoesPendentesRequest = async () => {
+    const { data } =  await api.get("/movimentacoes/pendentes")
+    return data
+}
 
 export const  BuscarCategoriasRequest = async () => {
     const { data } =  await api.get("/movimentacoes/categorias")

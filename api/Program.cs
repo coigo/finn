@@ -6,6 +6,7 @@ using Infra.Http.Middlewares;
 using Infra.Repositories;
 using Infra.Repositories.Adapters;
 using Microsoft.AspNetCore.Diagnostics;
+using Movimentacoes.Factories;
 using Movimentacoes.UseCases;
 using Resumos.UseCases;
 using Salarios.UseCases;
@@ -43,6 +44,7 @@ builder.Services.AddScoped<SubtrairParcelasUseCase>();
 builder.Services.AddScoped<BuscarCategoriasUseCase>();
 builder.Services.AddScoped<BuscarAportesUseCase>();
 builder.Services.AddScoped<BuscarMovimentacoesCategoriasUseCase>();
+builder.Services.AddScoped<BuscarPendentesDoMesUseCase>();
 
 builder.Services.AddScoped<MovimentarAportesUseCase>();
 builder.Services.AddScoped<BuscarSaldoUseCase>();
@@ -50,6 +52,10 @@ builder.Services.AddScoped<BuscarSaldoUseCase>();
 builder.Services.AddScoped<BuscarSalarioAtualUseCase>();
 builder.Services.AddScoped<CriarSalarioUseCase>();
 builder.Services.AddScoped<AdicionarSalarioAtualUseCase>();
+
+//Factories
+
+builder.Services.AddScoped<IMovimentacaoFactory, MovimentacaoFactory>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

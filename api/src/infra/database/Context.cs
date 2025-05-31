@@ -11,7 +11,8 @@ public class Context : DbContext {
     
         public required DbSet<Movimentacao> Movimentacoes { get; set; }
         public required DbSet<MovimentacaoCategoria> MovimentacoesCategorias { get; set; }
-        public required DbSet<MovimentacaoParcela> MovimentacaoParcelas { get; set; }
+        public required DbSet<MovimentacaoParcela> MovimentacoesParcelas { get; set; }
+        public required DbSet<MovimentacaoPersistente> MovimentacoesPersistentes { get; set; }
 
         public required DbSet<Resumo> Resumos { get; set; }
         public required DbSet<ResumoHistorico> ResumoHistoricos { get; set; }

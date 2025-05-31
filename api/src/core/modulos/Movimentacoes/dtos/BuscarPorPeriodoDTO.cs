@@ -8,6 +8,5 @@ public record ListaMovimentacoesDTO (
     decimal valor,
     string tipo,
     string categoria,
-    DateTime data,
-    DateTime? vencimento
+    DateTime data
 );

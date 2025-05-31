@@ -14,6 +14,7 @@ import { useBuscarSaldo } from "@/hooks/useBuscarSaldo"
 import { Button } from "@/app/components/Button"
 import { AdicionarSalarioRequest } from "@/services/salario"
 import { useToast } from "@/app/components/Toast/useToast"
+import { useBuscarMovimentacoesPendetes } from "@/hooks/useBuscarMovimentacoesPendetes"
 
 
 
@@ -22,6 +23,7 @@ export const MovimentacoesDetalhes = () => {
 
     const { showToast } = useToast()
     const { movimentacoes, buscar, loading } = useBuscarMovimentacoes()
+    const { pendentes, buscar: buscarPendentes } = useBuscarMovimentacoesPendetes()
     const { saldo, buscar: buscarSaldo, loading: loadingSaldo } = useBuscarSaldo()
     const [periodo, setPeriodo] = useState<MovimentacoesPeriodo>('MES')
     const movimentacoesAgrupadas = totalizarMovimentacoesPorCategoria(movimentacoes, "SAIDA")
@@ -29,6 +31,7 @@ export const MovimentacoesDetalhes = () => {
 
     useEffect(() => {
         buscar(periodo)
+        buscarPendentes()
         buscarSaldo("Corrente")
     }, [periodo])
 
@@ -96,7 +99,7 @@ export const MovimentacoesDetalhes = () => {
                                 <Button> Sim </Button>
                             </div>
                                 <div className="h-[30vh] scroll-smooth transparent-scrollbar">
-                                    <DataTable.Root data={movimentacoes}>
+                                    <DataTable.Root data={pendentes}>
                                         <DataTable.Column description="Valor" body={valorTempl} />
                                         <DataTable.Column description="Categoria" field="categoria" />
                                         <DataTable.Column description="Data" body={dataTmpl} />
