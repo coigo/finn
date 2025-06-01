@@ -39,7 +39,7 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimen
     private async Task CriarPersistente(MovimentacaoPersistente? data)
     {
         if (data == null) return;
-
+    
         await this._movimentacoes.CriarMovimentacaoPersistente(data);
         
     }

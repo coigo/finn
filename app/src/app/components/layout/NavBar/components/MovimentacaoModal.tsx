@@ -2,26 +2,26 @@ import { ModalContent } from "@/app/components/Modal/ModalContent"
 import { ModalFooter } from "@/app/components/Modal/ModalFooter"
 import { ModalHeader } from "@/app/components/Modal/ModalHeader"
 import { Button } from "@mui/material"
-import {  FieldValues, useForm, useWatch } from "react-hook-form"
+import { FieldValues, useForm, useWatch } from "react-hook-form"
 import CheckIcon from '@mui/icons-material/Check';
 import { useToast } from "@/app/components/Toast/useToast"
 import { useEffect, useState } from "react"
 import { useAportesHook } from "@/hooks/UseBuscarAportes"
 import { Chips } from "@/app/components/Chips"
 import { FormPontual, pontualSchema } from "./movimentacoes/FormPontual"
-import { FormRecorrente, recorrenteSchema } from "./movimentacoes/FormRecorrente"
+import { FormPersistente, persistenteSchema } from "./movimentacoes/FormPersistente"
 import { FormParcela, parcelaSchema } from "./movimentacoes/FormParcela"
 import { useBuscarMovimentacoesCategoria } from "@/hooks/useBuscarMovimentacoesCategorias"
 import { CriarMovimentacaoRequest } from "@/services/movimentacoes"
 
-const MovimentacooesTipos: ["PONTUAL",  "PARCELADA" , "RECORRENTE", "ENTRADA"] = ["PONTUAL", "PARCELADA", "RECORRENTE", "ENTRADA"]
+const MovimentacooesTipos: ["PONTUAL", "PARCELADA", "PERSISTENTE", "ENTRADA"] = ["PONTUAL", "PARCELADA", "PERSISTENTE", "ENTRADA"]
 
 export const MovimentacaoModal = () => {
 
     const [movimentacaoTipo, setTipo] = useState<TipoMovimentacaoFormulario>("PONTUAL")
 
     const { control, handleSubmit, reset } = useForm<FieldValues>()
-    const categoriaId =  useWatch({control, name: "categoriaId"})
+    const categoriaId = useWatch({ control, name: "categoriaId" })
     const { showToast } = useToast()
     const { buscar, categorias } = useBuscarMovimentacoesCategoria()
     const { buscar: onClose } = useAportesHook()
@@ -36,12 +36,12 @@ export const MovimentacaoModal = () => {
 
     const validate = (data: any) => {
         const schema = {
-            "PONTUAL": pontualSchema,  
-            "PARCELADA":parcelaSchema , 
-            "RECORRENTE": recorrenteSchema, 
-            "ENTRADA":pontualSchema
+            "PONTUAL": pontualSchema,
+            "PARCELADA": parcelaSchema,
+            "PERSISTENTE": persistenteSchema,
+            "ENTRADA": pontualSchema
         }
-
+        console.log(data)
         const validate = schema[movimentacaoTipo].safeParse(data)
         if (validate.error) {
             throw {
@@ -51,15 +51,17 @@ export const MovimentacaoModal = () => {
     }
 
     const submit = async (data: FieldValues) => {
-        console.log(data)
         try {
             const tipo = movimentacaoTipo == "ENTRADA"
                 ? 0
                 : data.categoriaId == 3
                     ? 2
                     : 1;
+
+            const persistente = movimentacaoTipo == "PERSISTENTE" 
+
             validate(data)
-            await CriarMovimentacaoRequest({...data, tipo})
+            await CriarMovimentacaoRequest({ ...data, tipo, persistente })
             onClose()
         }
         catch (err: any) {
@@ -69,21 +71,21 @@ export const MovimentacaoModal = () => {
     }
 
     const onSelectTipo = (mov: TipoMovimentacaoFormulario) => {
-        if (movimentacaoTipo != mov ) {
+        if (movimentacaoTipo != mov) {
             setTipo(mov)
             reset()
         }
     }
-    
+
     const formConfig = {
         control, handleSubmit, onSubmit: submit
-    }  
+    }
 
     const forms = {
-        "PONTUAL" : <FormPontual config={formConfig} categorias={categoriasPorFiltro("SAIDA")}/>,
-        "ENTRADA" : <FormPontual config={formConfig} categorias={categoriasPorFiltro("ENTRADA")} dividendos={categoriaId == 10}/>,
-        "PARCELADA" : <FormParcela config={formConfig} categorias={categoriasPorFiltro("SAIDA")} />,
-        "RECORRENTE" : <FormRecorrente config={formConfig} categorias={categoriasPorFiltro("SAIDA")} />
+        "PONTUAL": <FormPontual config={formConfig} categorias={categoriasPorFiltro("SAIDA")} />,
+        "ENTRADA": <FormPontual config={formConfig} categorias={categoriasPorFiltro("ENTRADA")} dividendos={categoriaId == 10} />,
+        "PARCELADA": <FormParcela config={formConfig} categorias={categoriasPorFiltro("SAIDA")} />,
+        "PERSISTENTE": <FormPersistente config={formConfig} categorias={categoriasPorFiltro("SAIDA")} />
     }
 
 
@@ -92,16 +94,16 @@ export const MovimentacaoModal = () => {
             <ModalHeader title="Movimentações" >
                 <div className="flex overflow-x-scroll md:overflow-x-hidden">
 
-                {MovimentacooesTipos.map(mov => {
-                    return (
-                        
-                        <Chips
-                        key={"chip_" + mov}
-                        onClick={() => onSelectTipo(mov)}
-                        active={mov == movimentacaoTipo}
-                        label={mov.charAt(0).toUpperCase() + mov.slice(1).toLowerCase()} />
-                    )
-                })}
+                    {MovimentacooesTipos.map(mov => {
+                        return (
+
+                            <Chips
+                                key={"chip_" + mov}
+                                onClick={() => onSelectTipo(mov)}
+                                active={mov == movimentacaoTipo}
+                                label={mov.charAt(0).toUpperCase() + mov.slice(1).toLowerCase()} />
+                        )
+                    })}
                 </div>
             </ModalHeader>
             <ModalContent  >

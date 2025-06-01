@@ -47,7 +47,7 @@ type MovimentacaoForm<T> = {
     onSubmit: (data: T) => void
 }
 
-type TipoMovimentacaoFormulario = "PONTUAL" | "PARCELADA" | "RECORRENTE" | "ENTRADA"
+type TipoMovimentacaoFormulario = "PONTUAL" | "PARCELADA" | "PERSISTENTE" | "ENTRADA"
 
 type PieData = {
     label: string

@@ -6,15 +6,14 @@ import { z } from "zod"
 import { SelectField } from "@/app/components/Inputs/SelectField"
 import { TextField } from "@/app/components/Inputs/TextField"
 
-export const recorrenteSchema = z.object({
-    identificador: z.string(),
+export const persistenteSchema = z.object({
     descricao: z.string(),
     categoriaId: z.number(),
-    preco: z.number(),
+    valor: z.string(),
     dataCompra: z.custom<dayjs.Dayjs>(),
 })
 
-export type RecorrenteForm = z.infer<typeof recorrenteSchema>
+export type PersistenteForm = z.infer<typeof persistenteSchema>
 
 type FormProps = {
     config: {
@@ -25,7 +24,7 @@ type FormProps = {
     categorias: MovimentacaoCategoria[]
 }
 
-export const FormRecorrente = ({ config: { control, handleSubmit, onSubmit }, categorias }: FormProps) => {
+export const FormPersistente = ({ config: { control, handleSubmit, onSubmit }, categorias }: FormProps) => {
     return (
 
         <form onSubmit={() => handleSubmit(onSubmit)} className="flex flex-col md:flex-row flex-wrap gap-3 justify-evenly">
@@ -36,18 +35,18 @@ export const FormRecorrente = ({ config: { control, handleSubmit, onSubmit }, ca
                 render={({ field }) => (
                     <SelectField
                         data={categorias}
-                        label="Quantidade"
+                        label="Categoria"
                         {...field}
                     />
                 )}
             />
             <Controller
-                name="preco"
+                name="valor"
                 control={control}
                 render={({ field }) =>
                     <CurrencyField
                         {...field}
-                        label="Preço"
+                        label="Valor"
                     />
                 }
             />

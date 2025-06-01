@@ -51,8 +51,6 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
     
     public async Task<List<ListaMovimentacoesDTO>> BuscarPorPeriodo(DateTime inicio, DateTime fim)
     {
-        var dataInicio = inicio.ToShortDateString();
-        var dataFim = fim.ToShortDateString();
         return await _context.Database.SqlQuery<ListaMovimentacoesDTO>($@"
             SELECT 
                 m.valor AS valor,
@@ -63,7 +61,7 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
             LEFT JOIN movimentacoes_categorias mc 
                 ON mc.id = m.categoriaId 
             WHERE 
-                m.data >= {dataInicio} AND m.data <=  {dataFim}
+                m.data >= {inicio} AND m.data <=  {fim}
             GROUP BY m.id
             ORDER by m.data desc
             ")
