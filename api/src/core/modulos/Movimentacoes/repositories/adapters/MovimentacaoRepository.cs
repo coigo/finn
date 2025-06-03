@@ -107,8 +107,8 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
         LEFT JOIN movimentacoes_categorias mc 
             ON mc.id = mp.categoriaId
         WHERE 
-            strftime('%m', mp.vencimento) = '06' AND
-            strftime('%Y', mp.vencimento) = '2025'
+            strftime('%m', mp.vencimento) = {hoje.Month.ToString("D2")} AND
+            strftime('%Y', mp.vencimento) = {hoje.Year.ToString()}
         union
         select 
             mp.valor,
@@ -121,8 +121,8 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
             select persistenteId 
             from movimentacoes 
             where persistenteId is not null 
-            and strftime('%m', data) = '06' 
-            AND strftime('%Y', data) = '2025' 
+            and strftime('%m', data) = {hoje.Month.ToString("D2")}
+            AND strftime('%Y', data) = {hoje.Year.ToString()}
         )").ToListAsync();
         return result;
         
