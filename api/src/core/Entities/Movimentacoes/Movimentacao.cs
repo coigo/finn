@@ -25,13 +25,25 @@ public class Movimentacao {
     [Column("data")]
     public DateTime Data { get ; set; }
 
+    [Column("parcelaId")]
+    public int? ParcelaId { get; set; }
+
+    [Column("persistenteId")]
+    public int? PersistenteId { get; set; }
+
     [Column("criadoEm")]
     public DateTime CriadoEm { get ; set; } = DateTime.Now;   
     
     [ForeignKey("CategoriaId")]
     public MovimentacaoCategoria Categoria { get ; set; }
+    
+    [ForeignKey("ParcelaId")]
+    public MovimentacaoParcela? Parcela { get; set; }
 
-    protected Movimentacao () {}
+    [ForeignKey("PersistenteId")]
+    public MovimentacaoPersistente? Persistente { get; set; }
+
+    protected Movimentacao() { }
 
     public Movimentacao ( 
         decimal valor, 

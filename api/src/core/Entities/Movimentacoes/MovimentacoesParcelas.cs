@@ -16,6 +16,12 @@ public class MovimentacaoParcela {
     [Column("numero")]
     public int Numero { get; private set; }
 
+    [Column("tipo")]
+    public MovimentacaoTipo Tipo { get ; set; }
+
+    [Column("categoriaId")]
+    public int  CategoriaId { get ; set; }
+
     [Column("descricao")]
     public string Descricao { get; private set; }
     
@@ -31,10 +37,12 @@ public class MovimentacaoParcela {
 
     protected MovimentacaoParcela() { }
 
-    public MovimentacaoParcela(string descricao, decimal valor, int numero, DateTime vencimento) {
+    public MovimentacaoParcela(string descricao, decimal valor, int numero, int categoriaId, MovimentacaoTipo tipo, DateTime vencimento) {
         Descricao = descricao;
         Valor = valor;
         Numero = numero;
+        CategoriaId = categoriaId;
+        Tipo = tipo;
         Vencimento = vencimento;
     }
 }

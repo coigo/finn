@@ -57,12 +57,11 @@ public class MovimentacaoFactory : IMovimentacaoFactory
                 descricao,
                 valor / quantidade,
                 i + 1,
+                categoriaId,
+                tipo,
                 vencimento.AddMonths(i))
         ).ToList();
         this.derivado = MovimentacoesDerivadosDTO.PARCELAS;
-
-        Console.WriteLine(this.Parcela);
-        Console.WriteLine(this.derivado);
 
     }
 

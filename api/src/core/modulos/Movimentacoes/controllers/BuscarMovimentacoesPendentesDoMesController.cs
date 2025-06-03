@@ -1,5 +1,6 @@
 using Infra.Shared;
 using Microsoft.AspNetCore.Mvc;
+using Movimentacoes.DTOS;
 using Movimentacoes.Models;
 using Movimentacoes.UseCases;
 
@@ -18,7 +19,7 @@ public class BuscarMovimentacoesPendentesDoMesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<List<MovimentacaoParcela>> handle()
+    public async Task<List<ListaPendentesDTO>> handle()
     {
         var mov = await UseCase.Execute(Unity.Value);
         return mov;

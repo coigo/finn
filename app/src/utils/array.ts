@@ -73,7 +73,6 @@ export const totalizarMovimentacoesPorCategoria = (movimentacoes: Movimentacao[]
 }
 
 export function sortBy (arr: any[], key: string): any[] {
-    console.log(arr)
     if ( arr.length <= 1) {
         return arr
     }

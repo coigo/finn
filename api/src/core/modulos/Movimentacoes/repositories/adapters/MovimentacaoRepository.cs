@@ -94,12 +94,38 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
             .Where(p => parcelas.Contains(p.Id))
             .ToListAsync();
     }
-    
-    public async Task<List<MovimentacaoParcela>> BuscarParcelasDoMes( DateTime hoje)
+
+    public async Task<List<ListaPendentesDTO>> BuscarPendentesDoMes(DateTime hoje)
     {
-        return await this._context.MovimentacoesParcelas
-            .Where(p => p.Vencimento.Month == hoje.Month && p.Vencimento.Year == hoje.Year )
-            .ToListAsync();
+        var result = await _context.Database.SqlQuery<ListaPendentesDTO>($@"
+        SELECT 
+            mp.valor,
+            mc.nome AS categoria,
+            mp.vencimento,
+            'PARCELA' as tipo
+        FROM movimentacoes_parcelas mp
+        LEFT JOIN movimentacoes_categorias mc 
+            ON mc.id = mp.categoriaId
+        WHERE 
+            strftime('%m', mp.vencimento) = '06' AND
+            strftime('%Y', mp.vencimento) = '2025'
+        union
+        select 
+            mp.valor,
+            mc.nome as categoria,
+            null as vencimento,
+            'PERSISTENTE' as tipo
+        from movimentacoes_persistentes mp 
+        left join movimentacoes_categorias mc on mc.id = mp.categoriaId 
+        where mp.id not in (
+            select persistenteId 
+            from movimentacoes 
+            where persistenteId is not null 
+            and strftime('%m', data) = '06' 
+            AND strftime('%Y', data) = '2025' 
+        )").ToListAsync();
+        return result;
+        
     }
 
     public async Task<MovimentacaoCategoria> BuscarCategoriaPorNome(string nome ) {

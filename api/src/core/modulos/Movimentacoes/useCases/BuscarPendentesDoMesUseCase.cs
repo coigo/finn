@@ -1,21 +1,21 @@
 using Infra.Shared;
-using Movimentacoes.Models;
-using Movimentacoes.DTOS;
 using Infra.Repositories;
+using Movimentacoes.DTOS;
 
 namespace Movimentacoes.UseCases;
 
-public class BuscarPendentesDoMesUseCase : IUseCase<Unity, List<MovimentacaoParcela>> {
+public class BuscarPendentesDoMesUseCase : IUseCase<Unity, List<ListaPendentesDTO>> {
 
     private readonly IMovimentacaoRepository _movimentacoes;
     public BuscarPendentesDoMesUseCase  ( IMovimentacaoRepository movimentacoes ) {
         _movimentacoes = movimentacoes;
     }
 
-    public async Task<List<MovimentacaoParcela>> Execute(Unity _)
+    public async Task<List<ListaPendentesDTO>> Execute(Unity _)
     {
         var hoje = DateTime.Now;
-        var parcelas = await this._movimentacoes.BuscarParcelasDoMes(hoje);
+        var parcelas = await this._movimentacoes.BuscarPendentesDoMes(hoje);
+        Console.WriteLine(parcelas.Count);
         return parcelas;
     }
 

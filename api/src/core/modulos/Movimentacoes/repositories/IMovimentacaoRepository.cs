@@ -15,7 +15,7 @@ public interface IMovimentacaoRepository {
 
     public Task<List<MovimentacaoParcela>> CriarParcelas(IEnumerable<MovimentacaoParcela> data);
     public Task<List<MovimentacaoParcela>> BuscarParcelasPorId( int[] parcelas );
-    public Task<List<MovimentacaoParcela>> BuscarParcelasDoMes( DateTime hoje );
+    public Task<List<ListaPendentesDTO>> BuscarPendentesDoMes( DateTime hoje );
 
     public Task<MovimentacaoCategoria> BuscarCategoriaPorNome(string nome);
     public Task<List<BuscarMovimentacaoCategoriaDTO>> BuscarCategorias();
