@@ -17,3 +17,7 @@ export const  BuscarCategoriasRequest = async () => {
     const { data } =  await api.get("/movimentacoes/categorias")
     return data
 }
+
+export const ProcessarMovimentacoesPendentesRequest = async () => {
+    return api.post("/movimentacoes/pendentes")
+}

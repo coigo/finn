@@ -10,6 +10,7 @@ import utc from 'dayjs/plugin/utc';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { ToastProvider } from "./components/Toast/ToastProvider";
 import { AportesProvider } from "@/hooks/UseBuscarAportes";
+import { MovimentacoesProvider } from "@/hooks/useBuscarMovimentacoes";
 
 
 export default function Providers({ children }: { children: React.ReactNode }) {
@@ -87,12 +88,14 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         <CssBaseline />
         <ToastProvider >
           <AportesProvider>
+          <MovimentacoesProvider>
             <ModalProvider>
 
 
               {children}
               <Modal />
             </ModalProvider>
+          </MovimentacoesProvider>
           </AportesProvider>
         </ToastProvider>
       </ThemeProvider>

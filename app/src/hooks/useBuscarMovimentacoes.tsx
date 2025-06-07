@@ -1,18 +1,35 @@
 "use client"
 
 import { useToast } from "@/app/components/Toast/useToast"
-import { BuscarMovimentacoesRequest } from "@/services/movimentacoes"
+import { BuscarMovimentacoesPendentesRequest, BuscarMovimentacoesRequest } from "@/services/movimentacoes"
 import { periodos } from "@/utils/date"
 import dayjs from "dayjs"
-import { useState } from "react"
+import { createContext, ReactNode, useContext, useState } from "react"
 
-export const useBuscarMovimentacoes = () => {
+type MovimentacoesContextProps = {
+    buscar: () => void
+    definirPeriodo: (periodo: MovimentacoesPeriodo) => void
+    loading: boolean
+    movimentacoes: Movimentacao[]
+    periodo: MovimentacoesPeriodo
+    pendentes: MovimentacoesPendentes[]
+}
+
+const MovimentacoesContext = createContext<MovimentacoesContextProps | undefined>(undefined)
+
+export const MovimentacoesProvider = ({ children }: { children: ReactNode }) => {
 
     const {showToast} = useToast()
 
     const [ movimentacoes, setMovimentacoes ] = useState<Movimentacao[]>([])
+    const [ pendentes, setPendentes ] = useState<MovimentacoesPendentes[]>([])
     const [ loading, setLoading ] = useState(false)
+    const [ periodo, setPeriodo ] = useState<MovimentacoesPeriodo>("MES")
     
+    const definirPeriodo = (novoPeriodo: MovimentacoesPeriodo) => {
+        setPeriodo(novoPeriodo)
+    }
+
     const buildDate = (periodo: MovimentacoesPeriodo) => {
         const [inicio, fim] = periodos[periodo]()
         return {
@@ -21,15 +38,19 @@ export const useBuscarMovimentacoes = () => {
         }
     }
 
-    const buscar = async (periodo: MovimentacoesPeriodo) => {
+    const buscar = async () => {
 
         const data = buildDate(periodo)
         console.log(data)
         
         try {
             setLoading(true)
-            const movimentacoes = await BuscarMovimentacoesRequest(data)
+            const [movimentacoes, pendentes] = await Promise.all([
+                BuscarMovimentacoesRequest(data),
+                BuscarMovimentacoesPendentesRequest()
+            ]) 
             setMovimentacoes(movimentacoes)
+            setPendentes(pendentes)
             setLoading(false)
         }
         catch ( err: any ) {
@@ -39,10 +60,19 @@ export const useBuscarMovimentacoes = () => {
         }
     }
 
-    return {
-        buscar, 
-        movimentacoes, 
-        loading
+
+    return <MovimentacoesContext.Provider value={{ buscar, definirPeriodo ,movimentacoes, pendentes, loading, periodo }} >
+        {children}
+    </MovimentacoesContext.Provider>
+}
+
+export const useMovimentacoesHook = () => {
+    const context = useContext(MovimentacoesContext)
+    if (!context) {
+        throw new Error('useMovimentacoesHook deve user usado dentro de MovimentacoesProvider')
     }
+    return context
 
 }
+
+

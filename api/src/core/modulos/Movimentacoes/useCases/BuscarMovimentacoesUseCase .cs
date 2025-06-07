@@ -12,10 +12,14 @@ public class BuscarMovimentacoesUseCase : IUseCase<BuscarPorPeriodoDTO, List<Lis
         _movimentacoes = movimentacoes;
     }
 
-    public async Task<List<ListaMovimentacoesDTO>> Execute (BuscarPorPeriodoDTO data) {
+    public async Task<List<ListaMovimentacoesDTO>> Execute (BuscarPorPeriodoDTO data)
+    {
         var (inicio, fim) = data;
 
-        var mov = await this._movimentacoes.BuscarPorPeriodo(DateTime.Parse(inicio), DateTime.Parse(fim));
+        var inicioDate = DateTime.Parse(inicio).Date;
+        var fimDate = DateTime.Parse(fim).AddDays(1).AddMicroseconds(-1);
+        
+        var mov = await this._movimentacoes.BuscarPorPeriodo(inicioDate, fimDate);
         return mov;
     }
 

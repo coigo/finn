@@ -13,6 +13,8 @@ import { FormPersistente, persistenteSchema } from "./movimentacoes/FormPersiste
 import { FormParcela, parcelaSchema } from "./movimentacoes/FormParcela"
 import { useBuscarMovimentacoesCategoria } from "@/hooks/useBuscarMovimentacoesCategorias"
 import { CriarMovimentacaoRequest } from "@/services/movimentacoes"
+import { useMovimentacoesHook } from "@/hooks/useBuscarMovimentacoes"
+import { useModal } from "@/app/components/Modal/useModal"
 
 const MovimentacooesTipos: ["PONTUAL", "PARCELADA", "PERSISTENTE", "ENTRADA"] = ["PONTUAL", "PARCELADA", "PERSISTENTE", "ENTRADA"]
 
@@ -23,15 +25,16 @@ export const MovimentacaoModal = () => {
     const { control, handleSubmit, reset } = useForm<FieldValues>()
     const categoriaId = useWatch({ control, name: "categoriaId" })
     const { showToast } = useToast()
-    const { buscar, categorias } = useBuscarMovimentacoesCategoria()
+    const { closeModal } = useModal()
+    const { buscar } = useMovimentacoesHook()
+    const { buscar: buscarCategorias, categorias } = useBuscarMovimentacoesCategoria()
     const { buscar: onClose } = useAportesHook()
-
     const categoriasPorFiltro = (tipo: MovimentacaoTipo) => {
         return categorias.filter(categoria => categoria.tipo == tipo) || [] as MovimentacaoCategoria[]
     }
 
     useEffect(() => {
-        buscar()
+        buscarCategorias()
     }, [])
 
     const validate = (data: any) => {
@@ -41,7 +44,7 @@ export const MovimentacaoModal = () => {
             "PERSISTENTE": persistenteSchema,
             "ENTRADA": pontualSchema
         }
-        console.log(data)
+
         const validate = schema[movimentacaoTipo].safeParse(data)
         if (validate.error) {
             throw {
@@ -62,11 +65,14 @@ export const MovimentacaoModal = () => {
 
             validate(data)
             await CriarMovimentacaoRequest({ ...data, tipo, persistente })
+            await buscar()
             onClose()
         }
         catch (err: any) {
             onClose()
             showToast(err.message, "error")
+        }finally {
+            closeModal()
         }
     }
 

@@ -88,6 +88,19 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
         await _context.SaveChangesAsync();
         return data.ToList();
     }
+    
+    public async Task MarcarParcelaComoPaga(int id)
+    {
+        var parcela = await this._context.MovimentacoesParcelas.FindAsync(id);
+        Console.WriteLine(parcela.Id);
+        if (parcela == null) {
+            return;
+        }
+        parcela.Paga = true;
+
+        _context.Entry(parcela).CurrentValues.SetValues(parcela);
+        await _context.SaveChangesAsync();
+    }
 
     public async Task<List<MovimentacaoParcela>> BuscarParcelasPorId(int[] parcelas) {
         return await this._context.MovimentacoesParcelas
@@ -99,22 +112,31 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
     {
         var result = await _context.Database.SqlQuery<ListaPendentesDTO>($@"
         SELECT 
+            mp.id,
             mp.valor,
+            mp.descricao,
             mc.nome AS categoria,
+            mc.id AS categoriaId,
             mp.vencimento,
-            'PARCELA' as tipo
+            mp.tipo,
+            'PARCELA' as tipoDerivado
         FROM movimentacoes_parcelas mp
         LEFT JOIN movimentacoes_categorias mc 
             ON mc.id = mp.categoriaId
         WHERE 
+            mp.paga = false and
             strftime('%m', mp.vencimento) = {hoje.Month.ToString("D2")} AND
             strftime('%Y', mp.vencimento) = {hoje.Year.ToString()}
         union
         select 
+            mp.id,
             mp.valor,
+            mp.descricao,
             mc.nome as categoria,
+            mc.id AS categoriaId,
             null as vencimento,
-            'PERSISTENTE' as tipo
+            mp.tipo as tipo,
+            'PERSISTENTE' as tipoDerivado
         from movimentacoes_persistentes mp 
         left join movimentacoes_categorias mc on mc.id = mp.categoriaId 
         where mp.id not in (
@@ -125,7 +147,6 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
             AND strftime('%Y', data) = {hoje.Year.ToString()}
         )").ToListAsync();
         return result;
-        
     }
 
     public async Task<MovimentacaoCategoria> BuscarCategoriaPorNome(string nome ) {

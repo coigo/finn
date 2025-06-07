@@ -33,7 +33,7 @@ public class MovimentacaoParcela {
     public DateTime CriadoEm { get; private set; } = DateTime.Now;
 
     [Column("paga")]
-    public bool Paga { get; private set; } = false;
+    public bool Paga { get; set; } = false;
 
     protected MovimentacaoParcela() { }
 

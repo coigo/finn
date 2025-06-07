@@ -20,6 +20,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   };
 
   const closeModal = () => {
+    console.log("e pra fechar")
     setIsOpen(false);
     setContent(null);
   };

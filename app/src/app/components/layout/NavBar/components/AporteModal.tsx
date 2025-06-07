@@ -16,6 +16,7 @@ import { useEffect } from "react"
 import { useAportesHook } from "@/hooks/UseBuscarAportes"
 import { z } from 'zod'
 import dayjs from "dayjs"
+import { useModal } from "@/app/components/Modal/useModal"
 
 const schema = z.object({
     identificador: z.string(),
@@ -31,6 +32,7 @@ export const AporteModal = () => {
 
     const { control, handleSubmit } = useForm<AporteForm>()
     const { showToast } = useToast()
+    const { closeModal } = useModal()
 
     const { buscar, categorias } = useBuscarAporteCategorias()
     const { buscar: onClose } = useAportesHook()
@@ -47,6 +49,8 @@ export const AporteModal = () => {
         catch (err: any) {
             showToast(err.message, "error")
             console.log(err)
+        }finally {
+            closeModal()
         }
     }
 

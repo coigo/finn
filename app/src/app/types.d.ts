@@ -33,6 +33,15 @@ type Movimentacao = {
     data: string
 }
 
+type MovimentacoesPendentes = {
+    valor: number
+    categoria: string
+    tipo: string
+    tipoDerivado: string
+    vencimento: Date
+    descricao: string
+}
+
 type MovimentacaoCategoria = {
     id: number
     name: string

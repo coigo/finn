@@ -2,7 +2,7 @@
 
 import { PieChart } from "@/app/components/Charts/pie"
 import DataTable from "@/app/components/DataTable"
-import { useBuscarMovimentacoes } from "@/hooks/useBuscarMovimentacoes"
+import { useMovimentacoesHook } from "@/hooks/useBuscarMovimentacoes"
 import { sortBy, totalizarMovimentacoesPorCategoria } from "@/utils/array"
 import { useEffect, useState } from "react"
 
@@ -15,6 +15,7 @@ import { Button } from "@/app/components/Button"
 import { AdicionarSalarioRequest } from "@/services/salario"
 import { useToast } from "@/app/components/Toast/useToast"
 import { useBuscarMovimentacoesPendetes } from "@/hooks/useBuscarMovimentacoesPendetes"
+import { ProcessarMovimentacoesPendentesRequest } from "@/services/movimentacoes"
 
 
 
@@ -22,19 +23,46 @@ import { useBuscarMovimentacoesPendetes } from "@/hooks/useBuscarMovimentacoesPe
 export const MovimentacoesDetalhes = () => {
 
     const { showToast } = useToast()
-    const { movimentacoes, buscar, loading } = useBuscarMovimentacoes()
-    const { pendentes, buscar: buscarPendentes } = useBuscarMovimentacoesPendetes()
+    const { movimentacoes, pendentes, buscar, loading, definirPeriodo, periodo } = useMovimentacoesHook()
     const { saldo, buscar: buscarSaldo, loading: loadingSaldo } = useBuscarSaldo()
-    const [periodo, setPeriodo] = useState<MovimentacoesPeriodo>('MES')
     const movimentacoesAgrupadas = totalizarMovimentacoesPorCategoria(movimentacoes, "SAIDA")
+
+    const [pendentesLoading, setPendentesLoadgind] = useState(false)
+    const [salarioLoading, setSalarioLoadgind] = useState(false)
 
 
     useEffect(() => {
-        buscar(periodo)
-        buscarPendentes()
+        buscar()
         buscarSaldo("Corrente")
     }, [periodo])
 
+    const processarMovimentacoesPendentes = async () => {
+        try {
+            setPendentesLoadgind(true)
+            await ProcessarMovimentacoesPendentesRequest()
+            await buscar()
+        }
+        catch(err: any) {
+            showToast(err.message || "Algo deu errado!", "error")
+        }
+        finally {
+            setPendentesLoadgind(false)
+        }
+    }
+    
+    const onAdicionarSalario = async () => {
+        try {
+            setSalarioLoadgind(true)
+            await AdicionarSalarioRequest()
+            await buscarSaldo("Corrente")
+        }
+        catch (err: any) {
+            showToast(err.message || "Não foi possível adicionar o salário", "error")
+        }
+        finally {
+            setSalarioLoadgind(false)
+        }
+    }
 
     const tipoTempl = (row: Movimentacao) => {
         return row.tipo == 'SAIDA'
@@ -58,15 +86,7 @@ export const MovimentacoesDetalhes = () => {
         { id: 'DOZE_MESES', name: 'Últimos 12 Mêses' }
     ]
 
-    const onAdicionarSalario = async () => {
-        try {
-            await AdicionarSalarioRequest()
-            await buscarSaldo("Corrente")
-        }
-        catch (err: any) {
-            showToast(err.message || "Não foi possível adicionar o salário", "error")
-        }
-    }
+
 
     return (
 
@@ -74,7 +94,7 @@ export const MovimentacoesDetalhes = () => {
             <div className=" flex w-full flex-col gap-4">
                 <div className="align-center items-center card flex p-4 rounded-2xl h-[8vh] bg-neutral-800/40 shadow-lg">
                     <div className="flex w-4/5 px-5 justify-between text-lg">Saldo <span>R$ {saldo?.valor.toFixed(2) || 0}</span></div>
-                    <Button onClick={onAdicionarSalario} > + Salario </Button>
+                    <Button disabled={salarioLoading} onClick={onAdicionarSalario} > + Salario </Button>
                 </div>
                 <div className="card p-4 pt-2 rounded-2xl h-[78.3vh] bg-neutral-800/40 shadow-lg">
                     <div className="block md:flex">
@@ -84,7 +104,7 @@ export const MovimentacoesDetalhes = () => {
                                 <div className="mx-4 pr-4 font-semibold w-full ">
 
                                     <Dropdown
-                                        onChange={e => setPeriodo(e.target.value as MovimentacoesPeriodo)}
+                                        onChange={e => definirPeriodo(e.target.value as MovimentacoesPeriodo)}
                                         value={periodo}
                                         data={SelectDate}
                                     />
@@ -96,7 +116,7 @@ export const MovimentacoesDetalhes = () => {
                             <div className="mt-6 flex flex-col">
                             <div className="flex justify-between p-4 ">
                                 <span className="w-4/5">Pendentes</span>
-                                <Button> Sim </Button>
+                                <Button disabled={pendentesLoading} onClick={processarMovimentacoesPendentes}> Pagar </Button>
                             </div>
                                 <div className="h-[30vh] scroll-smooth transparent-scrollbar">
                                     <DataTable.Root data={pendentes}>
