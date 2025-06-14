@@ -66,7 +66,7 @@ export default function NavBar() {
                   <CurrencyField
                     className='w-fit'
                     id="standard-basic"
-                    placeholder={`${salario?.valor.toFixed(2)}` || '0'}
+                    placeholder={salario? salario.valor?.toFixed(2) : '0,00' }
                     variant="standard"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}

@@ -116,7 +116,7 @@ export const MovimentacoesDetalhes = () => {
                             <div className="mt-6 flex flex-col">
                             <div className="flex justify-between p-4 ">
                                 <span className="w-4/5">Pendentes</span>
-                                <Button disabled={pendentesLoading} onClick={processarMovimentacoesPendentes}> Pagar </Button>
+                                <Button disabled={pendentesLoading || pendentes.length ==0 } onClick={processarMovimentacoesPendentes}> Pagar </Button>
                             </div>
                                 <div className="h-[30vh] scroll-smooth transparent-scrollbar">
                                     <DataTable.Root data={pendentes}>

@@ -78,49 +78,15 @@ builder.Services.AddCors(opt =>
 
 var app = builder.Build();
 
-// Configure the HTTP equest pipeline.
-
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.UseCors(allowLocal);    
 
 app.UseMiddleware<BasePathEnforcer>("/api");
+
 app.UsePathBase("/api");
+
 app.UseRouting();
-
-app.UseExceptionHandler(appError =>
-{
-
-    appError.Run(async context =>
-    {
-        var exceptionHandler = context.Features.Get<IExceptionHandlerFeature>();
-        if (exceptionHandler != null)
-        {
-
-            var exceptionType = exceptionHandler.Error;
-            Console.WriteLine(exceptionHandler.Endpoint);
-            Console.WriteLine(exceptionHandler.Error);
-            Console.WriteLine(exceptionHandler.Path);
-            if (exceptionType is KeyNotFoundException)
-            {
-                context.Response.StatusCode = StatusCodes.Status404NotFound;
-                await context.Response.WriteAsync("O que você estava buscando não encontrado.");
-            }
-            if (exceptionType is ArgumentException)
-            {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                await context.Response.WriteAsync("Argumento inválido.");
-            }
-            else
-            {
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                await context.Response.WriteAsync("Erro Interno.");
-            }
-
-        }
-    });
-
-});
-
 app.MapControllers();
 
 Console.WriteLine("> Ligando.");

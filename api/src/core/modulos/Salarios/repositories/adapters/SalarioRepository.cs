@@ -20,8 +20,8 @@ public class SalarioRepository : ISalarioRepository {
         return data;
     }
 
-    public async Task<Salario> BuscarUltimo () {
-        var result = await _context.Salarios.OrderByDescending(s => s.Id).FirstAsync();
+    public async Task<Salario?> BuscarUltimo () {
+        var result = await _context.Salarios.OrderByDescending(s => s.Id).FirstOrDefaultAsync();
         return result;
     }
 

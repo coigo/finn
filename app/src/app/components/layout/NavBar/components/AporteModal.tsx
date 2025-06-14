@@ -42,7 +42,6 @@ export const AporteModal = () => {
 
     const submit = async (data: AporteForm) => {
         try {
-            console.log(data)
             await CriarAporteRequest(data)
             onClose()
         }

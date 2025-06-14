@@ -19,7 +19,13 @@ public class BuscarSalarioAtualUseCase : IUseCase<Unity, Salario>
 
     public async Task<Salario> Execute(Unity _)
     {
-        return await this._salario.BuscarUltimo();
+        var salario = await this._salario.BuscarUltimo();
+        if (salario == null)
+        {
+            Console.WriteLine("asdasda");
+            throw new KeyNotFoundException("Salãrio não cadastrado");
+        }
+        return salario;
     }
 
 }

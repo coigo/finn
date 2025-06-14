@@ -64,9 +64,14 @@ input[type=number] {
   background-color: rgba(10, 10, 10, 0.2);
 }
 .custom-buttom:hover {
+  cursor:pointer;
   background-color: #a06b27;
 }
 
+.custom-buttom:disabled {
+  cursor:default;
+  background-color: #a06b27;
+}
 .menu {
   
 }
