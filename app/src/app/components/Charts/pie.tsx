@@ -2,7 +2,7 @@ import { PieChart as Pie } from "@mui/x-charts"
 
 type PieChartProps = {
     data: {
-        label: string, 
+        label: string,
         value: number
     }[]
     loading: boolean
@@ -10,12 +10,17 @@ type PieChartProps = {
 
 export function PieChart({ data, loading }: PieChartProps) {
 
-    
+
     return (
         <Pie
             loading={loading}
             width={220}
             height={220}
+            sx={{
+                '& path': {
+                    stroke: 'none !important',
+                },
+            }}
             colors={
                 ['#e0aa3e', '#de983b', '#f0903a', '#ee7630', '#d86120']
 
@@ -31,7 +36,6 @@ export function PieChart({ data, loading }: PieChartProps) {
                     endAngle: 250,
                     cx: 110,
                     cy: 110,
-
                 },
 
             ]}

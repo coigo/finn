@@ -22,9 +22,10 @@
 }
 
 body {
+  background: #1b191d;
   overflow: hidden;
-  color: var(--foreground);
   font-family: var(--font-sans);
+  color:#eee
 }
 
 input::-webkit-outer-spin-button,

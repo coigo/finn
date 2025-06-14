@@ -11,15 +11,21 @@ type DropdownProps = SelectProps & {
 
 export default function Dropdown({data, input, onChange, value}: DropdownProps) {
     return (
-        <Select
+        <Select 
+            
             onChange={onChange}
             className="w-full pl-4 p-1 outline-0 border-0 bg-neutral-500/10 rounded-lg"
             input={input || <InputBase />}
+            sx= {{
+                color:"#eee",
+            }}
             MenuProps={{
                 PaperProps: {
                     sx: {
                         mt: 1,
                         borderRadius: 1,
+                        background:"#262626",
+                        color:"#eee",
                     },
                 },
             }}

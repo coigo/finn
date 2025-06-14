@@ -1,4 +1,3 @@
-"use cliente"
 import Menu from "./components/layout/Menu";
 import NavBar from "./components/layout/NavBar";
 import { Box } from "@mui/material";

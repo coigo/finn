@@ -6,10 +6,9 @@ import { FieldProps } from "./Column";
 export interface ICustomDataTable {
     data: any[]
     children: ReactElement<FieldProps | FieldProps>[]
-    classname?: string
 }
 
-export function Root({ data, children, classname }: ICustomDataTable) {
+export function Root({ data, children }: ICustomDataTable) {
 
 
     return (
@@ -20,7 +19,7 @@ export function Root({ data, children, classname }: ICustomDataTable) {
                 boxShadow: 'none',
                 minWidth: 650,
                 maxHeight:'100%',
-                display:'flex'
+                display:'flex',
                 
             }}
             component={Paper}>
@@ -30,7 +29,7 @@ export function Root({ data, children, classname }: ICustomDataTable) {
                         {
                             children.map(({ props }, i) => {
                                 return (
-                                    <TableCell key={"header" + i} >{props.description}</TableCell>
+                                    <TableCell sx={{borderBottom: '1px solid #444', color: "#eee"}} key={"header" + i} >{props.description}</TableCell>
                                 )
                             })
                         }
@@ -45,7 +44,7 @@ export function Root({ data, children, classname }: ICustomDataTable) {
                             {children.map(( {props}, j) => {
                                 const content = props.field ? row[props.field ] : props.body && props.body(row)
                                 return (
-                                    <TableCell key={"coluna" + j + i} component="th" scope="row">
+                                    <TableCell sx={{borderBottom: '1px solid #444', color: "#eee"}} key={"coluna" + j + i} component="th" scope="row">
                                         { content }
                                     </TableCell>
                                 )

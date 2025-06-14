@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import { CssBaseline, useColorScheme } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { ModalProvider } from "./components/Modal/ModalProvider";
@@ -48,57 +47,20 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     },
   });
 
-  const lightTheme = createTheme({
-    colorSchemes: {
-      dark: true,
-      light: true
-    },
-    palette: {
-      mode: "light",
-      background: {
-        default: "#f0f0f0",
-        paper: "#f0f0f0",
-      },
-      primary: {
-        main: "#777",
-      },
-      text: {
-        primary: "#222",
-        secondary: "#432004"
-      },
-    },
-    components: {
-      MuiPaper: {
-        styleOverrides: {
-          root: {
-            backgroundImage: "none",
-          },
-        },
-      },
-    },
-  });
-
-
-
   dayjs.extend(utc);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <ThemeProvider theme={mode === "dark" ? darkTheme : lightTheme}>
-        <CssBaseline />
         <ToastProvider >
           <AportesProvider>
           <MovimentacoesProvider>
             <ModalProvider>
-
-
               {children}
               <Modal />
             </ModalProvider>
           </MovimentacoesProvider>
           </AportesProvider>
         </ToastProvider>
-      </ThemeProvider>
     </LocalizationProvider>
   );
 }

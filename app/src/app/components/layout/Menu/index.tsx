@@ -12,7 +12,6 @@ export default function Menu() {
 
   const { palette } = useTheme()
 
-  if (!palette) return null;
 
   return (
     <>
