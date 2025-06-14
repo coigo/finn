@@ -1,7 +1,6 @@
 using Infra.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Movimentacoes.DTOS;
-using Movimentacoes.Models;
 using Movimentacoes.UseCases;
 
 namespace Infra.Http.Controllers.Movimentacoes;

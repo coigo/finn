@@ -41,7 +41,6 @@ export const MovimentacoesProvider = ({ children }: { children: ReactNode }) => 
     const buscar = async () => {
 
         const data = buildDate(periodo)
-        console.log(data)
         
         try {
             setLoading(true)
@@ -55,7 +54,6 @@ export const MovimentacoesProvider = ({ children }: { children: ReactNode }) => 
         }
         catch ( err: any ) {
             showToast(err.message, "error")
-            console.log(err)
             setLoading(false)
         }
     }

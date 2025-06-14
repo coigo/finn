@@ -21,7 +21,6 @@ export const useBuscarMovimentacoesPendetes = () => {
         }
         catch ( err: any ) {
             showToast(err.message, "error")
-            console.log(err)
             setLoading(false)
         }
     }

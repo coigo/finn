@@ -2,8 +2,6 @@ using Aportes.DTOS;
 using Aportes.Models;
 using Infra.Database;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using SQLitePCL;
 
 namespace Infra.Repositories.Adapters;
 

@@ -1,5 +1,4 @@
 using Aportes.DTOS;
-using Aportes.Models;
 using Aportes.UseCases;
 using Infra.Shared;
 using Microsoft.AspNetCore.Mvc;

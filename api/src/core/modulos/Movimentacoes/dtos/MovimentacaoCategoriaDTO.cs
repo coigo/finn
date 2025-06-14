@@ -1,4 +1,3 @@
-using Movimentacoes.Models;
 
 namespace Movimentacoes.DTOS;
 

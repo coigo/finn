@@ -1,8 +1,5 @@
 using Infra.Shared;
-using Movimentacoes.Models;
-using Movimentacoes.DTOS;
 using Infra.Repositories;
-using Resumos.Models;
 using Salarios.Models;
 
 namespace Salarios.UseCases;

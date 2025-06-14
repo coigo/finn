@@ -82,7 +82,6 @@ export function sortBy (arr: any[], key: string): any[] {
     let leftArry = []
     let rightArry = []
 
-    console.log(pivot)
 
     for (let i = 1; i < arr.length; i++) { 
         arr[i][key] < pivot[key] 

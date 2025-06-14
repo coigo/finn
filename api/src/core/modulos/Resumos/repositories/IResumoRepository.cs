@@ -1,4 +1,3 @@
-using Movimentacoes.Models;
 using Resumos.Models;
 
 namespace Infra.Repositories;

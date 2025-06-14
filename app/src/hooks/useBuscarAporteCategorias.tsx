@@ -16,7 +16,6 @@ export const useBuscarAporteCategorias = () => {
             setLoading(true)
             const categorias = await BuscarCategoriasRequest()
             setCategorias(categorias)
-            console.log(categorias)
             setLoading(false)
         }
         catch ( err: any ) {

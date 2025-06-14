@@ -1,5 +1,4 @@
 using Infra.Shared;
-using Movimentacoes.Models;
 using Movimentacoes.DTOS;
 using Infra.Repositories;
 

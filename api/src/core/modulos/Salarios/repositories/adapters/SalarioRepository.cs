@@ -1,5 +1,4 @@
 using Infra.Database;
-using Infra.Shared;
 using Microsoft.EntityFrameworkCore;
 using Salarios.Models;
 

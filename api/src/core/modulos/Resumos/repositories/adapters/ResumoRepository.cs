@@ -1,5 +1,4 @@
 using Infra.Database;
-using Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Resumos.Models;
 

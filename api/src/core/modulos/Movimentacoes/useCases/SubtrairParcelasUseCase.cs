@@ -1,9 +1,5 @@
 using Infra.Shared;
-using Movimentacoes.Models;
-using Movimentacoes.DTOS;
 using Infra.Repositories;
-using System.Numerics;
-using api.Migrations;
 
 namespace Movimentacoes.UseCases;
 

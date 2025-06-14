@@ -1,6 +1,4 @@
 using System.Text.Json;
-using System.Web;
-using Ativos.Models;
 using Microsoft.AspNetCore.WebUtilities;
 
 namespace Infra.Repositories.Adapters;
