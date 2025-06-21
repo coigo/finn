@@ -1,12 +1,11 @@
 "use client"
 
-import { useToast } from "@/app/components/Toast/useToast"
 import { BuscarMovimentacoesPendentesRequest } from "@/services/movimentacoes"
 import { useState } from "react"
+import { toast } from "sonner"
 
 export const useBuscarMovimentacoesPendetes = () => {
 
-    const {showToast} = useToast()
 
     const [ pendentes, setPendentes ] = useState<Movimentacao[]>([])
     const [ loading, setLoading ] = useState(false)
@@ -20,7 +19,7 @@ export const useBuscarMovimentacoesPendetes = () => {
             setLoading(false)
         }
         catch ( err: any ) {
-            showToast(err.message, "error")
+            toast(err.message)
             setLoading(false)
         }
     }

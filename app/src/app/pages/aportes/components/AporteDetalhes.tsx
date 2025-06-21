@@ -2,6 +2,7 @@
 import { PieChart } from "@/app/components/Charts/pie"
 import Datatable from "@/app/components/DataTable"
 import Dropdown from "@/app/components/Dropdown"
+import { SelectField } from "@/app/components/Inputs/SelectField"
 import { useAportesHook } from "@/hooks/UseBuscarAportes"
 import { filterBy, groupBy, sortBy, totalizarAportes, totalizarAportesPorCategoria } from "@/utils/array"
 import { useEffect, useState } from "react"
@@ -58,8 +59,9 @@ export const AportesDetalhes = () => {
                         <div className=" mb-20 md:mb-0 flex flex-col justify-center w-full md:w-1/2">
                             <div className="m-4 pr-4 font-semibold w-full md:mb-12">
 
-                                <Dropdown 
-                                    onChange={e => setCategoria(e.target.value as string)}
+                                <SelectField
+                                    placeholder="Tipo de Aporte" 
+                                    onChange={e => setCategoria(e)}
                                     value={categoria}
                                     data={Object.keys(aportesAgrupados).map(c => { return { id: c, name: c } } )}
                                     

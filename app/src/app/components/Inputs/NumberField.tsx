@@ -1,9 +1,10 @@
-import { TextField, TextFieldProps } from "@mui/material"
+import { Input } from "@/components/ui/input"
+import { ComponentProps } from "react"
 
-export const NumberField = ({ ...props }: TextFieldProps) => {
+export const NumberField = ({ ...props }: ComponentProps<"input">) => {
 
     return (
-        <TextField
+        <Input
             className="flex flex-1"
             {...props}
             value={props.value || ""}

@@ -1,9 +1,9 @@
 "use client"
 
-import { useToast } from "@/app/components/Toast/useToast"
 import { BuscarAportesRequest } from "@/services/aportes"
 import { sortBy } from "@/utils/array"
 import { createContext, ReactNode, useContext, useState } from "react"
+import { toast } from "sonner"
 
 type AporteContextProps = {
     buscar: () => void
@@ -15,7 +15,6 @@ const AporteContext = createContext<AporteContextProps | undefined>(undefined)
 
 export const AportesProvider = ({ children }: { children: ReactNode }) => {
 
-    const { showToast } = useToast()
     const [aportes, setAportes] = useState<AporteTotalizado[]>([])
     const [loading, setLoading] = useState(false)
 
@@ -36,7 +35,7 @@ export const AportesProvider = ({ children }: { children: ReactNode }) => {
             setLoading(false)
         }
         catch (err: any) {
-            showToast(err.message, "error")
+            toast(err.message)
             setLoading(false)
         }
     }

@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { useModal } from "./useModal"
-import CloseIcon from '@mui/icons-material/Close';
+import { IoClose } from "react-icons/io5";
+
 
 type ModalHeaderProps = {
     title: string,
@@ -21,7 +22,7 @@ export const ModalHeader = ({ title, children }: ModalHeaderProps) => {
         <span className="fixed top-3 right-5"
             onClick={closeModal}
         >
-            <CloseIcon />
+            <IoClose />
         </span>
     </div>
 

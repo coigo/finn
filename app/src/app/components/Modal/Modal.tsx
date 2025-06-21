@@ -2,11 +2,9 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useModal } from "./useModal";
-import { useTheme } from "@mui/material";
 
 const Modal: React.FC = () => {
     const { isOpen, content, closeModal } = useModal();
-    const {palette} = useTheme()
 
     
     useEffect(() => {
@@ -25,11 +23,11 @@ const Modal: React.FC = () => {
         >   
                     
                     <div className="modal-border fixed z-[-1] border border-white"
-                style={{background:`radial-gradient(circle, color-mix(in srgb, ${palette.text.primary} 70%, transparent) 0%, ${palette.background.default} 100%)`}}
+                style={{background:`radial-gradient(circle, color-mix(in srgb, #eee 70%, transparent) 0%, #1b191d 100%)`}}
                      />
                 <div className=" shadow-sm shadow-gray-700 h-full md:h-fit md:rounded-lg overflow-hidden"
                     style={{
-                        backgroundColor: `${[palette.background.default]}`,
+                        backgroundColor: "#1b191d",
                     }}
                 >
                     { content }

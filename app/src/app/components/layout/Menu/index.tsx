@@ -1,16 +1,13 @@
 "use client"
 import * as React from 'react';
-import Link from 'next/link';
 
-import DataSaverOffIcon from '@mui/icons-material/DataSaverOff';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
-import { useTheme } from '@mui/material';
+import { FaChartPie } from "react-icons/fa";
+import { FaDollarSign } from "react-icons/fa";
+import { GoArrowSwitch } from "react-icons/go";
+
 
 
 export default function Menu() {
-
-  const { palette } = useTheme()
 
 
   return (
@@ -19,25 +16,25 @@ export default function Menu() {
         <div className="flex p-4 md:p-6 md:left-0 w-full h-fit md:h-full md:w-fit">
           <div className='flex md:block justify-around h-fit w-full self-center gap-4 text-gray-500'>
 
-            <Link href={"/dashboard"}>
+            <a href={"/dashboard"}>
               <div className='menu-item md:my-10 md:mx-0 md:hover:bg-[#de983b] md:hover:p-2 hover:rounded-2xl hover:text-amber-950'>
-                <DataSaverOffIcon fontSize='large' />
+                <FaChartPie fontSize='large' />
               </div>
-            </Link>
-            <Link href={"/movimentacoes"}>
+            </a>
+            <a href={"/movimentacoes"}>
               <div className='menu-item relative md:my-10 md:mx-0 md:hover:bg-[#de983b] md:hover:p-2 hover:rounded-2xl hover:text-amber-950'>
-                <CompareArrowsIcon fontSize='large' />
+                <GoArrowSwitch fontSize='large' />
               </div>
-            </Link>
-            <Link href={"/aportes"}>
+            </a>
+            <a href={"/aportes"}>
               <div className='menu-item relative md:my-10 md:mx-0 md:hover:bg-[#de983b] md:hover:p-2 hover:rounded-2xl hover:text-amber-950'>
-                <AttachMoneyIcon fontSize='large' />
+                <FaDollarSign  />
               </div>
-            </Link>
+            </a>
           </div>
         </div>
-        <span className="hidden md:block justify-self-end menu-outline"
-          style={{ backgroundImage: `linear-gradient(180deg, rgba(2,0,36,0) 10%, ${palette.text.primary} 49%, rgba(0,212,255,0) 90%)` }}></span>
+        {/* <span className="hidden md:block justify-self-end menu-outline"
+          style={{ backgroundImage: `linear-gradient(180deg, rgba(2,0,36,0) 10%, ${palette.text.primary} 49%, rgba(0,212,255,0) 90%)` }}></span> */}
       </div>
     </>
   );

@@ -1,11 +1,21 @@
+import { Input } from "@/components/ui/input";
 import { formatCurrency } from "@/utils/string"
-import { InputAdornment, TextField, TextFieldProps } from "@mui/material"
 
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { Form,  } from "radix-ui";
+
+type InputProps = {
+  value?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  className?: string
+  formatValue?: (value: string) => string
+  [key: string]: any
+}
+
+export function CurrencyField (props: InputProps) {
 
 
-export function CurrencyField (props: TextFieldProps) {
-    return <TextField
+
+    return <Input
             className="flex flex-1"
             {...props}
             value={props.value || ""}
@@ -16,11 +26,6 @@ export function CurrencyField (props: TextFieldProps) {
                   }
             }}
 
-            slotProps={{
-                input: {
-                    startAdornment: <InputAdornment position="start"><AttachMoneyIcon /></InputAdornment>,
-                },
-            }}
         />
     
 }

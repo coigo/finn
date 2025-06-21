@@ -1,10 +1,10 @@
 "use client"
 
-import { useToast } from "@/app/components/Toast/useToast"
 import { BuscarMovimentacoesPendentesRequest, BuscarMovimentacoesRequest } from "@/services/movimentacoes"
 import { periodos } from "@/utils/date"
 import dayjs from "dayjs"
 import { createContext, ReactNode, useContext, useState } from "react"
+import { toast } from "sonner"
 
 type MovimentacoesContextProps = {
     buscar: () => void
@@ -19,7 +19,6 @@ const MovimentacoesContext = createContext<MovimentacoesContextProps | undefined
 
 export const MovimentacoesProvider = ({ children }: { children: ReactNode }) => {
 
-    const {showToast} = useToast()
 
     const [ movimentacoes, setMovimentacoes ] = useState<Movimentacao[]>([])
     const [ pendentes, setPendentes ] = useState<MovimentacoesPendentes[]>([])
@@ -41,19 +40,20 @@ export const MovimentacoesProvider = ({ children }: { children: ReactNode }) => 
     const buscar = async () => {
 
         const data = buildDate(periodo)
-        
+        console.log('apareceu aqui o ')
         try {
             setLoading(true)
             const [movimentacoes, pendentes] = await Promise.all([
                 BuscarMovimentacoesRequest(data),
                 BuscarMovimentacoesPendentesRequest()
             ]) 
+            console.log(movimentacoes)
             setMovimentacoes(movimentacoes)
             setPendentes(pendentes)
             setLoading(false)
         }
         catch ( err: any ) {
-            showToast(err.message, "error")
+            toast(err.message)
             setLoading(false)
         }
     }

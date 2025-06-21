@@ -34,8 +34,8 @@ export const FormPersistente = ({ config: { control, handleSubmit, onSubmit }, c
                 control={control}
                 render={({ field }) => (
                     <SelectField
+                        placeholder="Categoria"
                         data={categorias}
-                        label="Categoria"
                         {...field}
                     />
                 )}
@@ -46,7 +46,7 @@ export const FormPersistente = ({ config: { control, handleSubmit, onSubmit }, c
                 render={({ field }) =>
                     <CurrencyField
                         {...field}
-                        label="Valor"
+                        placeholder="valor"
                     />
                 }
             />
@@ -68,7 +68,6 @@ export const FormPersistente = ({ config: { control, handleSubmit, onSubmit }, c
                     <TextField
                         {...field}
                         className="w-full"
-                        label="Descricao"
                     />
                 }
             />

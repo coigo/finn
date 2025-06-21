@@ -1,9 +1,8 @@
-import { config } from "@/app/config";
 import axios, { AxiosError } from "axios";
 
 
 export const api = axios.create({
-    baseURL: config.baseUrl + "/api",
+    baseURL: "http://localhost:5000/api",
     headers: {
         "Content-Type": 'application/json'
     },

@@ -1,27 +1,38 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectProps } from "@mui/material"
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
 
-type SelectFieldProps = SelectProps & {
-    controlClass?: string
-    data: SelectValues[]
-}
+type SelectValues = {
+  id: string | number;
+  name: string;
+};
 
-export const SelectField = ({ data, label, value, controlClass,...props }: SelectFieldProps) => {
-    return (
-        <FormControl className={controlClass || " flex flex-1 w-full  px-2" } >
-            {label && <InputLabel id="demo-simple-select-label">{label}</InputLabel>}
-            <Select
-                style={{outline:'none', border:'none'}}
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={value ?? ""}
-                {...props}
-            >
-                {data.map((i) => (
-                    <MenuItem key={i.id} value={i.id}>
-                        {i.name}
-                    </MenuItem>
-                ))}
-            </Select>
-        </FormControl>
-    );
+type SelectFieldProps = {
+  classname?: string;
+  data: SelectValues[];
+  onChange: (value: string) => void;
+  placeholder: string;
+  value?: string | number;
+  fieldSize?: string
+};
+
+export const SelectField = ({ data, placeholder, classname, onChange, value }: SelectFieldProps) => {
+  return (
+    <Select value={value} onValueChange={onChange}>
+      <SelectTrigger className={classname || "w-[180px]"}>
+        <SelectValue placeholder={placeholder} />
+      </SelectTrigger>
+      <SelectContent>
+        {data.map((x) => (
+          <SelectItem key={x.id} value={String(x.id)}>
+            {x.name}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
 };

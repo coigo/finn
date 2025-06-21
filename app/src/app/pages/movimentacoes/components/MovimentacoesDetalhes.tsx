@@ -1,28 +1,27 @@
 "use client"
 
-import { PieChart } from "@/app/components/Charts/pie"
 import DataTable from "@/app/components/DataTable"
 import { useMovimentacoesHook } from "@/hooks/useBuscarMovimentacoes"
 import { sortBy, totalizarMovimentacoesPorCategoria } from "@/utils/array"
 import { useEffect, useState } from "react"
 
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
+import { IoMdArrowUp } from "react-icons/io";
+
 import dayjs from "dayjs"
-import Dropdown from "@/app/components/Dropdown"
 import { useBuscarSaldo } from "@/hooks/useBuscarSaldo"
 import { Button } from "@/app/components/Button"
 import { AdicionarSalarioRequest } from "@/services/salario"
-import { useToast } from "@/app/components/Toast/useToast"
-import { useBuscarMovimentacoesPendetes } from "@/hooks/useBuscarMovimentacoesPendetes"
 import { ProcessarMovimentacoesPendentesRequest } from "@/services/movimentacoes"
+import { toast } from "sonner"
+import { SelectField } from "@/app/components/Inputs/SelectField"
+import { PieChart } from "@/app/components/Charts/pie"
 
 
 
 
 export const MovimentacoesDetalhes = () => {
 
-    const { showToast } = useToast()
     const { movimentacoes, pendentes, buscar, loading, definirPeriodo, periodo } = useMovimentacoesHook()
     const { saldo, buscar: buscarSaldo, loading: loadingSaldo } = useBuscarSaldo()
     const movimentacoesAgrupadas = totalizarMovimentacoesPorCategoria(movimentacoes, "SAIDA")
@@ -43,7 +42,7 @@ export const MovimentacoesDetalhes = () => {
             await buscar()
         }
         catch(err: any) {
-            showToast(err.message || "Algo deu errado!", "error")
+            toast(err.message)
         }
         finally {
             setPendentesLoadgind(false)
@@ -57,7 +56,7 @@ export const MovimentacoesDetalhes = () => {
             await buscarSaldo("Corrente")
         }
         catch (err: any) {
-            showToast(err.message || "Não foi possível adicionar o salário", "error")
+            toast(err.message)
         }
         finally {
             setSalarioLoadgind(false)
@@ -66,8 +65,8 @@ export const MovimentacoesDetalhes = () => {
 
     const tipoTempl = (row: Movimentacao) => {
         return row.tipo == 'SAIDA'
-            ? <ArrowDropDownIcon color="warning" />
-            : <ArrowDropUpIcon color="success" />
+            ? <IoMdArrowDropdown color="warning" className="text-bold text-[#ec9b30]" />
+            : <IoMdArrowDropup color="success" className="text-[#39c429]"/>
     }
 
     const dataTmpl = (row: Movimentacao) => {
@@ -96,22 +95,24 @@ export const MovimentacoesDetalhes = () => {
                     <div className="flex w-4/5 px-5 justify-between text-lg">Saldo <span>R$ {saldo?.valor.toFixed(2) || 0}</span></div>
                     <Button disabled={salarioLoading} onClick={onAdicionarSalario} > + Salario </Button>
                 </div>
-                <div className="card p-4 pt-2 rounded-2xl h-[78.3vh] bg-neutral-800/40 shadow-lg">
+                <div className="card border-1 border-neutral-600/70 p-4 pt-2 rounded-2xl h-[78.3vh] bg-neutral-800/40 shadow-lg">
                     <div className="block md:flex">
                         <div className=" mb-20 md:mb-0 flex flex-col justify-center w-full ">
                             <div className="m-4 flex font-semibold w-full md:mb-12">
                                 <h3 className="mt-2">Resumo</h3>
                                 <div className="mx-4 pr-4 font-semibold w-full ">
+                                    <SelectField
+                                            classname="bg-neutral-700/50 border-none focus:outline-none focus:border-none"
+                                            onChange={(e) => definirPeriodo(e as MovimentacoesPeriodo)}
+                                            value={periodo}
+                                            data={SelectDate}
+                                            placeholder="Tipo de Movimentação "
 
-                                    <Dropdown
-                                        onChange={e => definirPeriodo(e.target.value as MovimentacoesPeriodo)}
-                                        value={periodo}
-                                        data={SelectDate}
                                     />
                                 </div>
                             </div>
-                            <div className="flex justify-center w-full h-">
-                                <PieChart loading={loading} data={movimentacoesAgrupadas} />
+                            <div className="flex justify-center w-full h-80">
+                               <PieChart loading={loading} data={movimentacoesAgrupadas} />
                             </div>
                             <div className="mt-6 flex flex-col">
                             <div className="flex justify-between p-4 ">
@@ -131,7 +132,7 @@ export const MovimentacoesDetalhes = () => {
                 </div>
             </div>
             <div>
-                <div className=" p-4 rounded-2xl h-[88vh] bg-neutral-800/40 shadow-lg overflow-y-scroll scroll-smooth transparent-scrollbar">
+                <div className="card p-4 rounded-2xl h-[88vh] bg-neutral-800/40 shadow-lg overflow-y-scroll scroll-smooth transparent-scrollbar">
 
                     <DataTable.Root data={movimentacoes} >
                         <DataTable.Column description="" body={tipoTempl} />

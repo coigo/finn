@@ -1,10 +1,7 @@
 import { ModalContent } from "@/app/components/Modal/ModalContent"
 import { ModalFooter } from "@/app/components/Modal/ModalFooter"
 import { ModalHeader } from "@/app/components/Modal/ModalHeader"
-import { Button } from "@mui/material"
 import { FieldValues, useForm, useWatch } from "react-hook-form"
-import CheckIcon from '@mui/icons-material/Check';
-import { useToast } from "@/app/components/Toast/useToast"
 import { useEffect, useState } from "react"
 import { useAportesHook } from "@/hooks/UseBuscarAportes"
 import { Chips } from "@/app/components/Chips"
@@ -15,6 +12,7 @@ import { useBuscarMovimentacoesCategoria } from "@/hooks/useBuscarMovimentacoesC
 import { CriarMovimentacaoRequest } from "@/services/movimentacoes"
 import { useMovimentacoesHook } from "@/hooks/useBuscarMovimentacoes"
 import { useModal } from "@/app/components/Modal/useModal"
+import { toast } from "sonner"
 
 const MovimentacooesTipos: ["PONTUAL", "PARCELADA", "PERSISTENTE", "ENTRADA"] = ["PONTUAL", "PARCELADA", "PERSISTENTE", "ENTRADA"]
 
@@ -24,7 +22,6 @@ export const MovimentacaoModal = () => {
 
     const { control, handleSubmit, reset } = useForm<FieldValues>()
     const categoriaId = useWatch({ control, name: "categoriaId" })
-    const { showToast } = useToast()
     const { closeModal } = useModal()
     const { buscar } = useMovimentacoesHook()
     const { buscar: buscarCategorias, categorias } = useBuscarMovimentacoesCategoria()
@@ -70,7 +67,7 @@ export const MovimentacaoModal = () => {
         }
         catch (err: any) {
             onClose()
-            showToast(err.message, "error")
+            toast(err.message)
         }finally {
             closeModal()
         }
@@ -118,7 +115,8 @@ export const MovimentacaoModal = () => {
                 }
             </ModalContent>
             <ModalFooter>
-                <Button startIcon={<CheckIcon />} variant="contained" type="submit" onClick={handleSubmit(submit)} color="warning"  > Enviar </Button>
+                <></>
+                {/* <Button startIcon={<CheckIcon />} variant="contained" type="submit" onClick={handleSubmit(submit)} color="warning"  > Enviar </Button> */}
             </ModalFooter>
         </>
     )

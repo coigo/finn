@@ -6,24 +6,23 @@ import { TextField } from "@/app/components/Inputs/TextField"
 import { ModalContent } from "@/app/components/Modal/ModalContent"
 import { ModalFooter } from "@/app/components/Modal/ModalFooter"
 import { ModalHeader } from "@/app/components/Modal/ModalHeader"
-import { Button } from "@mui/material"
 import { Controller, useForm } from "react-hook-form"
-import CheckIcon from '@mui/icons-material/Check';
 import { CriarAporteRequest } from "@/services/aportes"
-import { useToast } from "@/app/components/Toast/useToast"
 import { useBuscarAporteCategorias } from "@/hooks/useBuscarAporteCategorias"
 import { useEffect } from "react"
 import { useAportesHook } from "@/hooks/UseBuscarAportes"
 import { z } from 'zod'
 import dayjs from "dayjs"
 import { useModal } from "@/app/components/Modal/useModal"
+import { toast } from "sonner"
+import { Button } from "@/components/ui/button"
 
 const schema = z.object({
     identificador: z.string(),
     quantidade: z.number(),
-    preco: z.number(),
+    preco: z.string(),
     categoria: z.number(),
-    dataCompra: z.custom<dayjs.Dayjs>(),
+    dataCompra: z.custom<Date>(),
 })
 
 type AporteForm = z.infer<typeof schema>
@@ -31,7 +30,6 @@ type AporteForm = z.infer<typeof schema>
 export const AporteModal = () => {
 
     const { control, handleSubmit } = useForm<AporteForm>()
-    const { showToast } = useToast()
     const { closeModal } = useModal()
 
     const { buscar, categorias } = useBuscarAporteCategorias()
@@ -46,7 +44,7 @@ export const AporteModal = () => {
             onClose()
         }
         catch (err: any) {
-            showToast(err.message, "error")
+            toast(err.message)
         }finally {
             closeModal()
         }
@@ -62,8 +60,8 @@ export const AporteModal = () => {
                         control={control}
                         render={({ field }) =>
                             <TextField
+                                placeholder="Identificador"
                                 {...field}
-                                label="Identificador"
                             />
                         }
                     />
@@ -72,8 +70,8 @@ export const AporteModal = () => {
                         control={control}
                         render={({ field }) =>
                             <SelectField
+                                placeholder="Categoria"
                                 data={categorias}
-                                label="Categoria"
                                 {...field}
                             />
                         }
@@ -83,7 +81,7 @@ export const AporteModal = () => {
                         control={control}
                         render={({ field }) => (
                             <NumberField
-                                label="Quantidade"
+                                placeholder="Quantidade"
                                 {...field}
                             />
                         )}
@@ -93,8 +91,9 @@ export const AporteModal = () => {
                         control={control}
                         render={({ field }) =>
                             <CurrencyField
+                                placeholder="Preço"
                                 {...field}
-                                label="Preço"
+                                
                             />
                         }
                     />
@@ -113,7 +112,7 @@ export const AporteModal = () => {
                 </form>
             </ModalContent>
             <ModalFooter>
-                <Button startIcon={<CheckIcon />} variant="contained" type="submit" onClick={handleSubmit(submit)} color="warning"  > Enviar </Button>
+                <Button  type="submit" onClick={handleSubmit(submit)} color="warning"  > Enviar </Button>
             </ModalFooter>
         </>
     )
