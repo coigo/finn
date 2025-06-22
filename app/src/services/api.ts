@@ -1,4 +1,5 @@
-import axios, { AxiosError } from "axios";
+import { convertStringsToNumbers } from "@/utils/object";
+import axios, { AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 
 
 export const api = axios.create({
@@ -7,6 +8,16 @@ export const api = axios.create({
         "Content-Type": 'application/json'
     },
 
+})
+
+api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+
+    if (config.method == "post") {
+        config.data = convertStringsToNumbers(config.data)
+    }
+
+    console.log(config.data)
+    return config
 })
 
 api.interceptors.response.use(

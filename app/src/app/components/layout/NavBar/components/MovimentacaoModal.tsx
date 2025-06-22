@@ -13,6 +13,7 @@ import { CriarMovimentacaoRequest } from "@/services/movimentacoes"
 import { useMovimentacoesHook } from "@/hooks/useBuscarMovimentacoes"
 import { useModal } from "@/app/components/Modal/useModal"
 import { toast } from "sonner"
+import { Button } from "@/app/components/Button"
 
 const MovimentacooesTipos: ["PONTUAL", "PARCELADA", "PERSISTENTE", "ENTRADA"] = ["PONTUAL", "PARCELADA", "PERSISTENTE", "ENTRADA"]
 
@@ -116,7 +117,7 @@ export const MovimentacaoModal = () => {
             </ModalContent>
             <ModalFooter>
                 <></>
-                {/* <Button startIcon={<CheckIcon />} variant="contained" type="submit" onClick={handleSubmit(submit)} color="warning"  > Enviar </Button> */}
+                <Button  type="submit" onClick={handleSubmit(submit)}  > Enviar </Button>
             </ModalFooter>
         </>
     )

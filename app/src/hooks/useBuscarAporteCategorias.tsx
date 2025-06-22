@@ -2,6 +2,7 @@
 
 import { BuscarCategoriasRequest } from "@/services/aportes"
 import { useState } from "react"
+import { toast } from "sonner"
 
 export const useBuscarAporteCategorias = () => {
 
@@ -17,7 +18,7 @@ export const useBuscarAporteCategorias = () => {
             setLoading(false)
         }
         catch ( err: any ) {
-            showToast(err.message, "error")
+            toast(err.message)
             setLoading(false)
         }
     }

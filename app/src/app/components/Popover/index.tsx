@@ -30,44 +30,15 @@ export default function CustomPopover({ children }: PopoverProps) {
 
 	<Popover.Root>
 		<Popover.Trigger asChild>
-			<button className="IconButton" aria-label="Update dimensions">
-				<FaBars />
+			<button className="custom-buttom-round" aria-label="Update dimensions">
+				<FaBars className="text-bold text-yellow-950"/>
 			</button>
 		</Popover.Trigger>
 		<Popover.Portal>
-			<Popover.Content className="PopoverContent" sideOffset={5}>
+			<Popover.Content className="bg-neutral-800 border border-neutral-700 rounded-lg p-4 " sideOffset={5}>
 				<div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-					<p className="Text" style={{ marginBottom: 10 }}>
-						Dimensions
-					</p>
-					<fieldset className="Fieldset">
-						<label className="Label" htmlFor="width">
-							Width
-						</label>
-						<input className="Input" id="width" defaultValue="100%" />
-					</fieldset>
-					<fieldset className="Fieldset">
-						<label className="Label" htmlFor="maxWidth">
-							Max. width
-						</label>
-						<input className="Input" id="maxWidth" defaultValue="300px" />
-					</fieldset>
-					<fieldset className="Fieldset">
-						<label className="Label" htmlFor="height">
-							Height
-						</label>
-						<input className="Input" id="height" defaultValue="25px" />
-					</fieldset>
-					<fieldset className="Fieldset">
-						<label className="Label" htmlFor="maxHeight">
-							Max. height
-						</label>
-						<input className="Input" id="maxHeight" defaultValue="none" />
-					</fieldset>
+                    {children}
 				</div>
-				<Popover.Close className="PopoverClose" aria-label="Close">
-					<IoClose />
-				</Popover.Close>
 				<Popover.Arrow className="PopoverArrow" />
 			</Popover.Content>
 		</Popover.Portal>

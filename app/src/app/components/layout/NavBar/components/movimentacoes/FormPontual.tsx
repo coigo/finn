@@ -43,7 +43,7 @@ export const FormPontual = ({ config: { control, handleSubmit, onSubmit }, categ
                 render={({ field }) => (
                     <SelectField
                         data={categorias}
-                        label="Categoria"
+                        placeholder="Categoria"
                         {...field}
                     />
                 )}
@@ -55,7 +55,7 @@ export const FormPontual = ({ config: { control, handleSubmit, onSubmit }, categ
                     render={({ field }) => (
                         <SelectField
                             data={categorias}
-                            label="Aporte"
+                            placeholder="Aporte"
                             {...field}
                         />
                     )}
@@ -67,7 +67,7 @@ export const FormPontual = ({ config: { control, handleSubmit, onSubmit }, categ
                 render={({ field }) =>
                     <CurrencyField
                         {...field}
-                        label="Valor"
+                        placeholder="Valor"
                     />
                 }
             />
@@ -88,7 +88,8 @@ export const FormPontual = ({ config: { control, handleSubmit, onSubmit }, categ
                     <TextField
                         {...field}
                         className="w-full"
-                        label="Descricao"
+                        placeholder="Descrição"
+
                     />
                 }
             />

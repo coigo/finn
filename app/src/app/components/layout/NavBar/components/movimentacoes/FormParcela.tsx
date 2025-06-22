@@ -36,7 +36,7 @@ export const FormParcela = ({ config: { control, handleSubmit, onSubmit }, categ
                 render={({ field }) => (
                     <SelectField
                         data={categorias}
-                        label="Categoria"
+                        placeholder="Categoria"
                         {...field}
                     />
                 )}
@@ -47,7 +47,7 @@ export const FormParcela = ({ config: { control, handleSubmit, onSubmit }, categ
                 render={({ field }) =>
                     <CurrencyField
                         {...field}
-                        label="Valor Total"
+                        placeholder="Valor Total"
                     />
                 }
             />
@@ -58,7 +58,7 @@ export const FormParcela = ({ config: { control, handleSubmit, onSubmit }, categ
                     <NumberField
                         {...field}
                         onChange={(e) => field.onChange(Number(e.target.value))}
-                        label="Quantidade de Parcelas"
+                        placeholder="Quantidade de Parcelas"
                     />
                 }
             />
@@ -80,7 +80,8 @@ export const FormParcela = ({ config: { control, handleSubmit, onSubmit }, categ
                     <TextField
                         {...field}
                         className="w-full"
-                        label="Descricao"
+                                                placeholder="Descrição"
+
                     />
                 }
             />

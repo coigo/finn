@@ -16,7 +16,7 @@ type SelectFieldProps = {
   data: SelectValues[];
   onChange: (value: string) => void;
   placeholder: string;
-  value?: string | number;
+  value?: string;
   fieldSize?: string
 };
 

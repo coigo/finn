@@ -6,22 +6,21 @@ import { TextField } from "@/app/components/Inputs/TextField"
 import { ModalContent } from "@/app/components/Modal/ModalContent"
 import { ModalFooter } from "@/app/components/Modal/ModalFooter"
 import { ModalHeader } from "@/app/components/Modal/ModalHeader"
-import { Controller, useForm } from "react-hook-form"
 import { CriarAporteRequest } from "@/services/aportes"
 import { useBuscarAporteCategorias } from "@/hooks/useBuscarAporteCategorias"
 import { useEffect } from "react"
 import { useAportesHook } from "@/hooks/UseBuscarAportes"
 import { z } from 'zod'
-import dayjs from "dayjs"
 import { useModal } from "@/app/components/Modal/useModal"
 import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { Controller, useForm } from "react-hook-form"
+import { Button } from "@/app/components/Button"
 
 const schema = z.object({
     identificador: z.string(),
     quantidade: z.number(),
     preco: z.string(),
-    categoria: z.number(),
+    categoria: z.string(),
     dataCompra: z.custom<Date>(),
 })
 
@@ -112,7 +111,7 @@ export const AporteModal = () => {
                 </form>
             </ModalContent>
             <ModalFooter>
-                <Button  type="submit" onClick={handleSubmit(submit)} color="warning"  > Enviar </Button>
+                <Button type="submit" onClick={handleSubmit(submit)} > Enviar </Button>
             </ModalFooter>
         </>
     )

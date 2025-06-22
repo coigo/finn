@@ -68,6 +68,7 @@ export const FormPersistente = ({ config: { control, handleSubmit, onSubmit }, c
                     <TextField
                         {...field}
                         className="w-full"
+                        placeholder="Descrição"
                     />
                 }
             />
