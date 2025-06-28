@@ -5,7 +5,7 @@ using Movimentacoes.UseCases;
 namespace Movimentacoes.Routes ;
 
 [ApiController]
-[Route("movimentacoes")]
+[Route("api/movimentacoes")]
 public class CriarMovimentacaoController : ControllerBase {
 
     private readonly CriarMovimentacaoUseCase UseCase;

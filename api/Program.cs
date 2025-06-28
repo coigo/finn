@@ -80,14 +80,16 @@ var app = builder.Build();
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseCors(allowLocal);    
 
-app.UseMiddleware<BasePathEnforcer>("/api");
-
-app.UsePathBase("/api");
 
 app.UseRouting();
 app.MapControllers();
+
+app.MapFallbackToFile("index.html");
 
 Console.WriteLine("> Ligando.");
 app.Run();

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Infra.Http.Controllers.Aportes;
 
 [ApiController]
-[Route("aportes")]
+[Route("api/aportes")]
 public class BuscarAportes
 {
 
@@ -20,6 +20,7 @@ public class BuscarAportes
     [HttpGet]
     public async Task<List<BuscarAportesDTO>> Handle()
     {
+        Console.WriteLine("uiuiuiu");
         return await this._useCase.Execute(Unity.Value);
     }
 

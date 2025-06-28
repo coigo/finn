@@ -5,7 +5,7 @@ using Resumos.UseCases;
 namespace Infra.Http.Controllers.Movimentacoes;
 
  [ApiController]
-[Route("saldos")]
+[Route("api/saldos")]
 public class BuscarSaldoController : ControllerBase
 {
 

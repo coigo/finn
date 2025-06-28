@@ -5,7 +5,7 @@ using Salarios.Models;
 namespace Infra.Http.Controllers.Salarios;
 
 [ApiController]
-[Route("salario")]
+[Route("api/salario")]
 public class CriarSalarioController : ControllerBase
 {
 

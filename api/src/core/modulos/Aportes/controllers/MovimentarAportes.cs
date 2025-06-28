@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Infra.Http.Controllers.Aportes;
 
 [ApiController]
-[Route("aportes")]
+[Route("api/aportes")]
 public class MovimentarAportes {
     
     private readonly MovimentarAportesUseCase _useCase;

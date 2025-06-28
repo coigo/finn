@@ -6,7 +6,7 @@ using Movimentacoes.UseCases;
 namespace Infra.Http.Controllers.Movimentacoes;
 
 [ApiController]
-[Route("movimentacoes/categorias")]
+[Route("api/movimentacoes/categorias")]
 public class BuscarMovimentacoesCategoriasController : ControllerBase
 {
 

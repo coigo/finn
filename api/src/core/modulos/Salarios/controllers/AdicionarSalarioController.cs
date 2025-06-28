@@ -6,7 +6,7 @@ using Infra.Shared;
 namespace Infra.Http.Controllers.Salarios;
 
 [ApiController]
-[Route("salario")]
+[Route("api/salario")]
 public class AdicionarSalarioController : ControllerBase
 {
 

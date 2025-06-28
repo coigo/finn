@@ -5,7 +5,7 @@ using Movimentacoes.UseCases;
 namespace Infra.Http.Controllers.Movimentacoes;
 
 [ApiController]
-[Route("movimentacoes")]
+[Route("api/movimentacoes")]
 public class BuscarMovimentacoesPorPeriodoController : ControllerBase {
 
     private readonly BuscarMovimentacoesUseCase UseCase;

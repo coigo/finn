@@ -4,7 +4,7 @@ using Movimentacoes.UseCases;
 namespace Movimentacoes.Routes ;
 
 [ApiController]
-[Route("movimentacoes")]
+[Route("api/movimentacoes")]
 public class ProcessarMovimentacoesPendentesController : ControllerBase {
 
     private readonly ProcessarMovimentacoesPendentesUseCase UseCase;
