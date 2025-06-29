@@ -1,0 +1,35 @@
+# Diretórios comuns do .NET
+bin/
+obj/
+out/
+
+**/wwwroot/*
+
+# Configurações do Rider/JetBrains
+.idea/
+*.sln.iml
+
+# Arquivos temporários e de sistema
+*.log
+*.tmp
+*.bak
+*.swp
+*~
+
+# Diretórios do Git
+.git/
+.gitignore
+
+# Diretórios do sistema
+.vs/
+.vscode/
+
+# Pacotes
+**/packages/
+*.nupkg
+*.snupkg
+
+# Outros
+Dockerfile.*
+docker-compose.*
+

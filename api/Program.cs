@@ -11,7 +11,8 @@ using Movimentacoes.UseCases;
 using Resumos.UseCases;
 using Salarios.UseCases;
 
-LoadEnv.Load();
+
+// LoadEnv.Load();
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls($"http://localhost:{Environment.GetEnvironmentVariable("PORT")}");
 

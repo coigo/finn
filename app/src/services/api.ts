@@ -1,9 +1,10 @@
 import { convertStringsToNumbers } from "@/utils/object";
-import axios, { AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
+import { BaseUrl } from "../../vite.env";
 
 
 export const api = axios.create({
-    baseURL: "http://localhost:5000/api",
+    baseURL: BaseUrl || "http://localhost:5000/apia",
     headers: {
         "Content-Type": 'application/json'
     },
