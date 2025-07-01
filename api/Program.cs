@@ -1,11 +1,8 @@
 using Aportes.UseCases;
 using Infra.Database;
-using Infra.Env;
-using Infra.Http.Controllers.Movimentacoes;
 using Infra.Http.Middlewares;
 using Infra.Repositories;
 using Infra.Repositories.Adapters;
-using Microsoft.AspNetCore.Diagnostics;
 using Movimentacoes.Factories;
 using Movimentacoes.UseCases;
 using Resumos.UseCases;

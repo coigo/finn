@@ -12,8 +12,7 @@ COPY --chown=node:node /app .
 
 RUN yarn build --debug
 
-
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS api-build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine3.22 AS api-build
 
 WORKDIR /app
 COPY /api/ ./
@@ -23,16 +22,17 @@ COPY --from=app-build /app/dist/ ./src/wwwroot/
 RUN dotnet restore
 RUN dotnet publish -c Release -o ./publish
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runnable
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine3.22 AS runnable
 
 WORKDIR /app
 
-RUN addgroup --system -gid 1001 finn \
-    && adduser --system -uid 1001 finn-user --ingroup finn 
+RUN addgroup -S finn \
+    && adduser -S -G finn finn-user
+
+RUN apk add curl
     
 COPY --from=api-build /app/publish ./
 USER finn-user
-
 
 EXPOSE 5000
 

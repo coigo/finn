@@ -25,7 +25,8 @@ public class ErrorHandlerMiddleware
         {
             int statusCode;
             string message;
-
+            Console.WriteLine(ex.Message);
+            Console.WriteLine(ex.StackTrace);
             switch (ex)
             {
                 case KeyNotFoundException:
