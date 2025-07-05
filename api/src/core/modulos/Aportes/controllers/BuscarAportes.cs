@@ -20,7 +20,6 @@ public class BuscarAportes
     [HttpGet]
     public async Task<List<BuscarAportesDTO>> Handle()
     {
-        Console.WriteLine("uiuiuiu");
         return await this._useCase.Execute(Unity.Value);
     }
 

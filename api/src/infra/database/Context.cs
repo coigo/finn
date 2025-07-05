@@ -68,7 +68,7 @@ public class Context : DbContext {
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=finndb.sqlite");
+            optionsBuilder.UseSqlite("Data Source=data/finndb.sqlite");
             base.OnConfiguring(optionsBuilder);
         }
 

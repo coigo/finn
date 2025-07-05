@@ -26,14 +26,17 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine3.22 AS runnable
 
 WORKDIR /app
 
-RUN addgroup -S finn \
-    && adduser -S -G finn finn-user
+RUN addgroup -S --gid 1000 finn \
+    && adduser -S -G finn --uid 1000 finn-user
 
 RUN apk add curl
     
 COPY --from=api-build /app/publish ./
+RUN mkdir -p /app/data && chown -R finn-user:finn /app/data
+
 USER finn-user
 
 EXPOSE 5000
+
 
 CMD [ "dotnet", "api.dll" ]

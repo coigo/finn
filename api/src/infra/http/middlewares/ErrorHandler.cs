@@ -25,6 +25,7 @@ public class ErrorHandlerMiddleware
         {
             int statusCode;
             string message;
+            Console.WriteLine(ex.Source );
             Console.WriteLine(ex.Message);
             Console.WriteLine(ex.StackTrace);
             switch (ex)
