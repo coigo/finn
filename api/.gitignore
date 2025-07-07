@@ -1,6 +1,6 @@
 /bin/
 /obj/
 /out/
-./finnbf.sqlite-shm
-./finnbf.sqlite*
+**/finnbf.sqlite-shm
+**/finnbf.sqlite*
 .env
