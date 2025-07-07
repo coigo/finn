@@ -1,0 +1,19 @@
+name: release
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    permissions: write-all
+    outputs:
+      outputTag: ${{steps.tag.outputs.tag}}
+
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name : Set tag
+        run: echo "tag=123" >> "$GITHUB_OUTPUT"
+      
