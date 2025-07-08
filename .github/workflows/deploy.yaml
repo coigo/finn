@@ -5,7 +5,7 @@ on:
 
 jobs:
   release:
-    runs-on: ubuntu-24.04
+    runs-on: self-hosted
     permissions: write-all
     outputs:
       outputTag: ${{steps.tag.outputs.tag}}
