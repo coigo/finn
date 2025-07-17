@@ -5,10 +5,11 @@ on:
 
 env:
   IMAGE_NAME: finn
+  REGISTRY: localhost:32000
 
 jobs:
   release:
-    runs-on: ubuntu-24.04
+    runs-on: self-hosted
     permissions: write-all
     outputs:
       outputTag: ${{steps.tag.outputs.tag}}
@@ -28,8 +29,9 @@ jobs:
       - name: Build 
         uses: docker/build-push-action@v4
         with:
+          push: true
           file: ./Dockerfile
-          tags: ${{env.IMAGE_NAME}}:${{steps.changelog.outputs.tag}}
+          tags: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{steps.changelog.outputs.tag}}
           labels: ${{steps.changelog.outputs.tag}}
 
       - name: Push Release
@@ -42,4 +44,4 @@ jobs:
           release_name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
         
-    
+      
