@@ -42,6 +42,4 @@ jobs:
           release_name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
         
-      - name: Update Deployment
-        run: |
-          microk8s kubectl set image app=localhost:32000/${{env.IMAGE_NAME}}:${{steps.changelog.outputs.tag}}      
+    
