@@ -29,7 +29,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           file: ./Dockerfile
-          tags: ${{env.IMAGE_NAME}}
+          tags: ${{env.IMAGE_NAME}}:${{steps.changelog.outputs.tag}}
+          labels: ${{steps.changelog.outputs.tag}}
 
       - name: Push Release
         uses: actions/create-release@v1
@@ -41,4 +42,6 @@ jobs:
           release_name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
         
-      
+      - name: Update Deployment
+        run: |
+          microk8s kubectl set image app=localhost:32000/${{env.IMAGE_NAME}}:${{steps.changelog.outputs.tag}}      
