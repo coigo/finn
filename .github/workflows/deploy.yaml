@@ -10,7 +10,7 @@ env:
 
 jobs:
   release:
-    runs-on: ubuntu-24.04
+    runs-on: self-hosted
     permissions: write-all
     outputs:
       outputTag: ${{ steps.changelog.outputs.tag }}
