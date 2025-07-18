@@ -10,7 +10,7 @@ env:
 
 jobs:
   release:
-    runs-on: self-hosted
+    runs-on: ubuntu-24.04
     permissions: write-all
     outputs:
       outputTag: ${{ steps.changelog.outputs.tag }}
@@ -33,14 +33,12 @@ jobs:
           push: true
           file: ./Dockerfile
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.changelog.outputs.tag }}
-          labels: |
-            org.opencontainers.image.version=${{ steps.changelog.outputs.tag }}
 
       - name: Push Release
         uses: actions/create-release@v1
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
           tag_name: ${{ steps.changelog.outputs.tag }}
           release_name: ${{ steps.changelog.outputs.tag }}
