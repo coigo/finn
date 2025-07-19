@@ -46,4 +46,4 @@ jobs:
           body: ${{ steps.changelog.outputs.clean_changelog }}
 
       - name: Update Kubernetes Pod
-        runs: microk8s kubectl set image deployment/finn-deployment app=localhost:32000/finn:${{steps.changelog.outputs.tag}} -n finn
+        run: microk8s kubectl set image deployment/finn-deployment app=localhost:32000/finn:${{steps.changelog.outputs.tag}} -n finn
