@@ -34,6 +34,7 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.changelog.outputs.tag }}
           labels: |
             org.opencontainers.image.version=${{ steps.changelog.outputs.tag }}
+          no-cache: true
             
       - name: Push Release
         uses: actions/create-release@v1
