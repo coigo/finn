@@ -1,8 +1,9 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: finn-deployment
-  namespace: default
+  namespace: finn
   labels:
     app: finn
 spec:
@@ -17,7 +18,26 @@ spec:
     spec:
       containers:
         - name: app
-          image: localhost:32000/finn:latest
+          image: localhost:32000/finn:v0.1.3
           ports:
             - containerPort: 5000
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
+          
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: finn
+  name: finn-svc
+  labels:
+    finn.service: finn
+spec:
+  type: NodePort
+  selector:
+    app: finn
+  ports:
+    - name: finn-api
+      port: 5000
+      targetPort: 5000
+      nodePort: 30001
