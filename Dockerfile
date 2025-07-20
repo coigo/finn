@@ -17,8 +17,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine3.22 AS api-build
 WORKDIR /app
 COPY /api/ ./
 
-COPY --from=app-build /app/dist/ ./src/wwwroot/
-
 RUN dotnet restore
 RUN dotnet publish -c Release -o ./publish
 
@@ -27,11 +25,12 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine3.22 AS runnable
 WORKDIR /app
 
 RUN addgroup -S --gid 1000 finn \
-    && adduser -S -G finn --uid 1000 finn-user
+&& adduser -S -G finn --uid 1000 finn-user
 
 RUN apk add curl
-    
+
 COPY --from=api-build /app/publish ./
+COPY --from=app-build /app/dist/ ./wwwroot/
 RUN mkdir -p /app/data && chown -R finn-user:finn /app/data
 
 USER finn-user
