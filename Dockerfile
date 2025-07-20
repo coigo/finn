@@ -6,7 +6,7 @@ COPY /app/package.json /app/yarn*.lock ./
 RUN mkdir -p /app/node_modules && chown -R node:node /app
 
 USER node
-RUN yarn
+RUN npm i
 
 COPY --chown=node:node /app .
 
