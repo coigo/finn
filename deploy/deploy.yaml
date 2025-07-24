@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: localhost:32000/finn:v0.1.3
+          image: localhost:32000/finn:latest
           ports:
             - containerPort: 5000
           imagePullPolicy: IfNotPresent
