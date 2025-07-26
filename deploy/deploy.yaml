@@ -39,7 +39,7 @@ spec:
         volumeMounts:
           - name: storage              
             mountPath: /app/data       
-      volumes:
+        volumes:
         - name: storage                  
           hostPath:
             path: /mnt/storage          
