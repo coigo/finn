@@ -44,3 +44,26 @@ spec:
       port: 5000
       targetPort: 5000
       nodePort: 30001
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: finn-ingress
+  namespace: finn
+spec:
+  ingressClassName: nginx  
+  rules:
+    - host: teste.127.0.0.1.nip.io  
+      http:
+        paths:
+          - path: /  
+            pathType: Prefix
+            backend:
+              service:
+                name: finn-svc
+                port:
+                  number: 5000
+
+--- 
