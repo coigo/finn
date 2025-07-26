@@ -3,6 +3,7 @@ using Infra.Database;
 using Infra.Http.Middlewares;
 using Infra.Repositories;
 using Infra.Repositories.Adapters;
+using Microsoft.EntityFrameworkCore;
 using Movimentacoes.Factories;
 using Movimentacoes.UseCases;
 using Resumos.UseCases;
@@ -10,6 +11,8 @@ using Salarios.UseCases;
 
 
 // LoadEnv.Load();
+
+
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT")}");
 
@@ -74,6 +77,17 @@ builder.Services.AddCors(opt =>
 
 
 var app = builder.Build();
+
+if (args.Contains("--migrate"))
+{
+    Console.WriteLine("Aplicando migracoes");
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<Context>();
+    db.Database.Migrate(); // aplica as migrations
+    Console.WriteLine("Finalizado.");
+
+    return;
+}
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
 
