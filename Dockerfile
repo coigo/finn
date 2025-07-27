@@ -24,7 +24,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine3.22 AS runnable
 
 WORKDIR /app
 
-RUN addgroup -S --gid 1000 finn \
+RUN addgroup -S --gid 1003 finn \
 && adduser -S -G finn --uid 1000 finn-user
 
 RUN apk add curl
