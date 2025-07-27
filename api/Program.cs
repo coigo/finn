@@ -12,6 +12,11 @@ using Salarios.UseCases;
 
 // LoadEnv.Load();
 
+Console.WriteLine("Args recebidos:");
+foreach (var arg in args)
+{
+    Console.WriteLine($"- {arg}");
+}
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT")}");
