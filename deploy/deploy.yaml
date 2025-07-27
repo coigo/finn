@@ -18,7 +18,7 @@ spec:
       initContainers:
         - name: apply-migrations
           image: localhost:32000/finn:latest
-          command: ["dotnet", "finn.dll", "--migrate"]
+          command: ["dotnet", "api.dll", "--migrate"]
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
