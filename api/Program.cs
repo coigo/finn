@@ -88,7 +88,6 @@ if (args.Contains("--migrate"))
     Console.WriteLine("Aplicando migracoes");
     using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<Context>();
-    db.Database.EnsureCreated(); 
     db.Database.Migrate(); 
     Console.WriteLine("Finalizado.");
 
