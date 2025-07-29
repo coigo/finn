@@ -3,7 +3,7 @@ on:
   push:
     branches: ["main"]
 env:
-  VITE_API_BASE_URL: http://10.0.0:5000/api
+  API_BASE_URL: http://10.0.0:5000/api
   IMAGE_NAME: finn
   REGISTRY: localhost:32000
 jobs:
@@ -28,6 +28,8 @@ jobs:
       - name: Build 
         uses: docker/build-push-action@v4
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        env:
+          VITE_API_BASE_URL: ${{env.API_BASE_URL}}
         with:
           push: true
           file: ./Dockerfile
