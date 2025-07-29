@@ -4,7 +4,7 @@ import { BaseUrl } from "../../vite.env";
 
 
 export const api = axios.create({
-    baseURL: BaseUrl || "http://localhost:5000/apia",
+    baseURL: BaseUrl || "http://localhost:5000/api",
     headers: {
         "Content-Type": 'application/json'
     },
@@ -17,7 +17,6 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
         config.data = convertStringsToNumbers(config.data)
     }
 
-    console.log(config.data)
     return config
 })
 
