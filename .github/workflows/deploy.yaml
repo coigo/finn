@@ -3,7 +3,7 @@ on:
   push:
     branches: ["main"]
 env:
-  API_BASE_URL: http://10.0.0:5000/api
+  API_BASE_URL: http://10.0.0.187:5000/api
   IMAGE_NAME: finn
   REGISTRY: localhost:32000
 jobs:
