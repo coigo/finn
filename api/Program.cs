@@ -11,7 +11,7 @@ using Resumos.UseCases;
 using Salarios.UseCases;
 
 
-LoadEnv.Load();
+// LoadEnv.Load();
 
 Console.WriteLine("Args recebidos:");
 foreach (var arg in args)
