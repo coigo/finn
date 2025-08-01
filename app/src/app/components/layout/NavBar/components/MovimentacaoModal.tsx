@@ -14,6 +14,7 @@ import { useMovimentacoesHook } from "@/hooks/useBuscarMovimentacoes"
 import { useModal } from "@/app/components/Modal/useModal"
 import { toast } from "sonner"
 import { Button } from "@/app/components/Button"
+import { corrigirTipagem } from "@/lib/utils"
 
 const MovimentacooesTipos: ["PONTUAL", "PARCELADA", "PERSISTENTE", "ENTRADA"] = ["PONTUAL", "PARCELADA", "PERSISTENTE", "ENTRADA"]
 
@@ -60,7 +61,9 @@ export const MovimentacaoModal = () => {
                     : 1;
 
             const persistente = movimentacaoTipo == "PERSISTENTE" 
-
+            console.log(data)
+            data = corrigirTipagem(data)
+            console.log(data)
             validate(data)
             await CriarMovimentacaoRequest({ ...data, tipo, persistente })
             await buscar()

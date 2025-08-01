@@ -15,7 +15,6 @@ public class BuscarPendentesDoMesUseCase : IUseCase<Unity, List<ListaPendentesDT
     {
         var hoje = DateTime.Now;
         var parcelas = await this._movimentacoes.BuscarPendentesDoMes(hoje);
-        Console.WriteLine(parcelas.Count);
         return parcelas;
     }
 

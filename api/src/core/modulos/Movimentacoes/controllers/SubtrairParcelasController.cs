@@ -16,7 +16,6 @@ public class SubtrairParcelasController : ControllerBase {
     [HttpPost]
     [Route("parcelas")]
     public async Task<SubtrairParcelas> Handle ([FromBody] SubtrairParcelas data) {
-        Console.WriteLine("teste");
         var mov = await UseCase.Execute(data);
         return mov;
     }

@@ -31,7 +31,6 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimen
             {MovimentacoesDerivadosDTO.PERSISTENTE, () => CriarPersistente(derivadosMovimentacao.Persistente) },
             {MovimentacoesDerivadosDTO.PARCELAS, () => CriarParcela(derivadosMovimentacao.Parcela) }
         };
-        Console.WriteLine();
         await coisa[derivadosMovimentacao.derivado]();
         return data;
     }

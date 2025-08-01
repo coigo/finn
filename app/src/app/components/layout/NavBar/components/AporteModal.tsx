@@ -15,13 +15,14 @@ import { useModal } from "@/app/components/Modal/useModal"
 import { toast } from "sonner"
 import { Controller, useForm } from "react-hook-form"
 import { Button } from "@/app/components/Button"
+import { corrigirTipagem } from "@/lib/utils"
 
 const schema = z.object({
     identificador: z.string(),
     quantidade: z.number(),
     preco: z.string(),
     categoria: z.string(),
-    dataCompra: z.custom<Date>(),
+    dataCompra: z.date(),
 })
 
 type AporteForm = z.infer<typeof schema>
@@ -39,6 +40,7 @@ export const AporteModal = () => {
 
     const submit = async (data: AporteForm) => {
         try {
+            (data as any) = corrigirTipagem(data as any)
             await CriarAporteRequest(data)
             onClose()
         }

@@ -9,8 +9,8 @@ import { TextField } from "@/app/components/Inputs/TextField"
 export const persistenteSchema = z.object({
     descricao: z.string(),
     categoriaId: z.number(),
-    valor: z.string(),
-    dataCompra: z.custom<dayjs.Dayjs>(),
+    valor: z.number(),
+    dataCompra: z.date(),
 })
 
 export type PersistenteForm = z.infer<typeof persistenteSchema>

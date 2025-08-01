@@ -1,5 +1,6 @@
 using Aportes.UseCases;
 using Infra.Database;
+using Infra.Env;
 using Infra.Http.Middlewares;
 using Infra.Repositories;
 using Infra.Repositories.Adapters;
@@ -10,7 +11,7 @@ using Resumos.UseCases;
 using Salarios.UseCases;
 
 
-// LoadEnv.Load();
+LoadEnv.Load();
 
 Console.WriteLine("Args recebidos:");
 foreach (var arg in args)

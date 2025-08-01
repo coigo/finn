@@ -9,8 +9,8 @@ import { TextField } from "@/app/components/Inputs/TextField"
 
 export const pontualSchema = z.object({
     categoriaId: z.number(),
-    valor: z.string(),
-    data: z.custom<dayjs.Dayjs>(),
+    valor: z.number(),
+    data: z.date(),
     descricao: z.string()
 })
 

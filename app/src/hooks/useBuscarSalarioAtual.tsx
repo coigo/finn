@@ -2,6 +2,7 @@
 
 import { BuscarSalarioAtualRequest, CriarSalarioRequest } from "@/services/salario"
 import { useState } from "react"
+import { toast } from "sonner"
 
 export const useBuscarSalarioAtual = () => {
 
@@ -17,7 +18,7 @@ export const useBuscarSalarioAtual = () => {
         }
         catch (err: any) {
             setLoading(false)
-            
+            toast(err.data.message)
         }
     }
 

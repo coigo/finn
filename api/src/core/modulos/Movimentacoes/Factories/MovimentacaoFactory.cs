@@ -46,7 +46,6 @@ public class MovimentacaoFactory : IMovimentacaoFactory
     }
     private void CriarParcelas(CriarMovimentacao data)
     {
-        Console.WriteLine(1);
         var (valor, tipo, categoriaId, descricao, date, quantidadeParcelas, primeiroVencimento, persistente) = data;
 
         int quantidade = quantidadeParcelas.Value;

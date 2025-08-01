@@ -19,7 +19,7 @@ spec:
         - name: apply-migrations
           image: localhost:32000/finn:latest
           command: ["dotnet", "api.dll", "--migrate"]
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           envFrom:
             - configMapRef:
                 name: finn-env
@@ -32,7 +32,7 @@ spec:
           image: localhost:32000/finn:latest
           ports:
             - containerPort: 5000
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           envFrom:
             - configMapRef:
                 name: finn-env

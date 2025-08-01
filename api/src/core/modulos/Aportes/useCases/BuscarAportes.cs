@@ -28,7 +28,6 @@ public class BuscarAportesUseCase : IUseCase<Unity, List<BuscarAportesDTO>>
         foreach (var aporte in aportes)
         {
             var precoAtual = await this.BuscarPrecoAtual(aporte);
-            
             if (!precoAtual.HasValue) {
                 throw new BusinessError("Ativo não encontrado!");
             }

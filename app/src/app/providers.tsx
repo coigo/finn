@@ -16,7 +16,11 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       <AportesProvider>
         <MovimentacoesProvider>
           <ModalProvider>
-            <Toaster />
+            <Toaster 
+
+              richColors
+              theme="dark"
+              toastOptions={{style: { backgroundColor:'#232323'}}} />
             {children}
             <Modal />
           </ModalProvider>

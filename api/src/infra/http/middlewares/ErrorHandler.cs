@@ -32,11 +32,11 @@ public class ErrorHandlerMiddleware
             {
                 case KeyNotFoundException:
                     statusCode = StatusCodes.Status400BadRequest;
-                    message = "Não encontrado.";
+                    message = ex.Message ?? "Não encontrado.";
                     break;
                 default:
                     statusCode = StatusCodes.Status500InternalServerError;
-                    message = "Erro Interno.";
+                    message =  ex.Message ?? "Erro Interno.";
                     break;
             }
 

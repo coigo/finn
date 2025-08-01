@@ -26,7 +26,6 @@ public class MovimentarAportesUseCase : IUseCase<MovimentarAporteDTO, Aporte>
     public async Task<Aporte> Execute(MovimentarAporteDTO data)
     {
         var ( Identificador, Quantidade, Preco, Categoria, DataCompra ) = data;
-
         var aporte = await this._aportes.BuscarPorIdentificador(data.Identificador);
         
         var tipo = Quantidade < 0 ? AporteTipo.VENDA : AporteTipo.COMPRA; 

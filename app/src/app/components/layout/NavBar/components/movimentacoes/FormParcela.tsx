@@ -10,9 +10,9 @@ import { TextField } from "@/app/components/Inputs/TextField"
 export const parcelaSchema = z.object({
     categoriaId: z.number(),
     descricao: z.string(),
-    valor: z.string(),
+    valor: z.number(),
     quantidadeParcelas: z.number(),
-    primeiroVencimento: z.custom<dayjs.Dayjs>(),
+    primeiroVencimento: z.date(),
 }) 
 
 export type ParcelaForm = z.infer<typeof parcelaSchema>

@@ -92,7 +92,6 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
     public async Task MarcarParcelaComoPaga(int id)
     {
         var parcela = await this._context.MovimentacoesParcelas.FindAsync(id);
-        Console.WriteLine(parcela.Id);
         if (parcela == null) {
             return;
         }

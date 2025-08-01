@@ -11,7 +11,6 @@ public class AtivosRepository: IAtivosRepository {
     }
 
     public async Task<decimal?> BuscarPorTicker (string ticker) {
-
         var queryParams = new Dictionary<string, string?> {
             {"token", Environment.GetEnvironmentVariable("B3_API_KEY")}
         };
@@ -36,9 +35,6 @@ public class AtivosRepository: IAtivosRepository {
             {"symbols", "BTC"},
             
         };
-
-        Console.WriteLine($"{Environment.GetEnvironmentVariable("CRYPTO_API_URL")}/{crypto}");
-
 
         var url = QueryHelpers.AddQueryString($"{Environment.GetEnvironmentVariable("CRYPTO_API_URL")}", queryParams);
         var result = await _httpClient.GetAsync(url);

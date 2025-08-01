@@ -28,7 +28,7 @@ export default function NavBar() {
       setValue("")
     }
     catch (err: any) {
-      toast(err.message)
+      toast("asdasdasdasdasdhasawyaj ajahsfa k a asjha ")
     }
   }
 

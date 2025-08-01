@@ -20,7 +20,6 @@ public class AdicionarSalarioController : ControllerBase
     [HttpPost("adicionar")]
     public async Task<Salario> handle()
     {
-        Console.WriteLine("asdasdasd");
         return await UseCase.Execute(Unity.Value);
     }
 

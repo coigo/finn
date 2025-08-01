@@ -13,7 +13,6 @@ public class BasePathEnforcer {
     public async Task InvokeAsync (HttpContext context) {
 
         if (!context.Request.Path.StartsWithSegments(_pathPath)) {
-            Console.WriteLine(context.Request.Path);
             context.Response.StatusCode = StatusCodes.Status404NotFound;
             return;
         }
