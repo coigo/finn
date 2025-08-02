@@ -61,9 +61,7 @@ export const MovimentacaoModal = () => {
                     : 1;
 
             const persistente = movimentacaoTipo == "PERSISTENTE" 
-            console.log(data)
             data = corrigirTipagem(data)
-            console.log(data)
             validate(data)
             await CriarMovimentacaoRequest({ ...data, tipo, persistente })
             await buscar()

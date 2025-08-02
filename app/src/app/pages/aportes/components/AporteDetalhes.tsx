@@ -83,7 +83,7 @@ export const AportesDetalhes = () => {
                 </div>
             </div>
             <div>
-                <div className="transparent-scrollbar p-4 rounded-2xl h-[88vh] bg-neutral-800/40 shadow-lg overflow-y-scroll scroll-smooth">
+                <div className="card transparent-scrollbar p-4 rounded-2xl h-[88vh] bg-neutral-800/40 shadow-lg overflow-y-scroll scroll-smooth">
 
                     {Object.keys(aportesAgrupados).map((cat, i) => {
                         return <div key={cat + i} className="p-2">

@@ -22,7 +22,6 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimen
 
     public async Task<CriarMovimentacao> Execute(CriarMovimentacao data)
     {
-
         var derivadosMovimentacao = this._movFactory.Execute(data);
 
         var coisa = new Dictionary<MovimentacoesDerivadosDTO, Func<Task>>

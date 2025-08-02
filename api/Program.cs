@@ -1,3 +1,4 @@
+using System.Globalization;
 using Aportes.UseCases;
 using Infra.Database;
 using Infra.Env;
@@ -9,7 +10,7 @@ using Movimentacoes.Factories;
 using Movimentacoes.UseCases;
 using Resumos.UseCases;
 using Salarios.UseCases;
-
+using System.Globalization;
 
 // LoadEnv.Load();
 
@@ -24,6 +25,10 @@ builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PO
 
 var allowLocal = "allowLocal";
 
+CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
+
+Console.WriteLine(DateTime.Now);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

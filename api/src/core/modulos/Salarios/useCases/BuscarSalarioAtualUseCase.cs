@@ -19,6 +19,7 @@ public class BuscarSalarioAtualUseCase : IUseCase<Unity, Salario>
         var salario = await this._salario.BuscarUltimo();
         if (salario == null)
         {
+        throw new KeyNotFoundException("Salário não cadastrado");
         }
         return salario;
     }

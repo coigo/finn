@@ -32,8 +32,8 @@ export const MovimentacoesProvider = ({ children }: { children: ReactNode }) => 
     const buildDate = (periodo: MovimentacoesPeriodo) => {
         const [inicio, fim] = periodos[periodo]()
         return {
-            inicio: dayjs(inicio).format('DD-MM-YYYY'),
-            fim: dayjs(fim).format('DD-MM-YYYY'),
+            inicio: dayjs(inicio).format('YYYY-MM-DD'),
+            fim: dayjs(fim).format('YYYY-MM-DD'),
         }
     }
 

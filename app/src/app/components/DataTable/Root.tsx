@@ -25,7 +25,8 @@ export function Root({ data, children }: ICustomDataTable) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.map((row, i) => (
+                    {!data.length ? <div className="py-4">Não há nada por aqui!</div> :
+                    data.map((row, i) => (
                         <TableRow
                             key={"row" + i}
                         >
@@ -38,7 +39,9 @@ export function Root({ data, children }: ICustomDataTable) {
                                 )
                             })}
                         </TableRow>
-                    ))}
+                    ))
+                    }
+                    
                 </TableBody>
             </Table>
     )
