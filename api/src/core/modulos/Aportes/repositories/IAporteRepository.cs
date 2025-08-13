@@ -5,6 +5,8 @@ namespace Infra.Repositories;
 
 public interface IAporteRepository {
     public Task<List<Aporte>> BuscarTodos ();
+    
+    public Task<List<AporteHistoricoDTO>> BuscarDetalhesDoAporte (string Identificador);
 
     public Task<Aporte?> BuscarPorIdentificador (string Identificador);
 

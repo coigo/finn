@@ -17,6 +17,14 @@ type Aporte = {
     categoria: string 
 }
 
+type AporteHistorico = {
+    identificador: string 
+    preco: number 
+    data: Date 
+    quantidade: number 
+    tipo: string
+}
+
 type AporteTotalizado = {
     identificador: string 
     total: number

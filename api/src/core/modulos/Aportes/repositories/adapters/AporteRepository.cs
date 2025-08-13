@@ -17,6 +17,21 @@ public class AporteRepository: IAporteRepository {
         return await this._context.Aportes.ToListAsync();
     }
 
+    public async Task<List<AporteHistoricoDTO>> BuscarDetalhesDoAporte(string Identificador)
+    {
+        var teste = await this._context.AportesHistoricos
+        .Where(a => a.Identificador == Identificador)
+        .Select(h => new AporteHistoricoDTO {
+            Identificador = h.Identificador,
+            Quantidade = h.Quantidade,
+            Preco = h.Preco,
+            Data = h.Data,
+            Tipo = h.Tipo.ToString(),
+        })
+        .ToListAsync();
+        return teste; 
+    }
+
     public async Task<Aporte?> BuscarPorIdentificador (string Identificador) {
         return await this._context.Aportes
         .Where(a => a.Identificador == Identificador)

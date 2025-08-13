@@ -8,4 +8,7 @@ public record MovimentarAporteDTO(
     decimal Preco,
     AporteCategoria Categoria,
     DateTime DataCompra
-);
+)
+{
+    public string Identificador { get; init; } = Identificador.Trim().ToUpper();
+};

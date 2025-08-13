@@ -10,11 +10,14 @@ public class AporteHistorico {
     [Column("id")]
     public int Id { get ; set; }
     
-    [Column("precoMedio")]
+    [Column("preco")]
     public decimal Preco { get ; set; }
     
     [Column("identificador")]
     public string Identificador { get ; set; }
+
+    [Column("quantidade")]
+    public decimal Quantidade { get ; set; }
 
     [Column("categoria")]
     public AporteCategoria Categoria { get ; set; }
@@ -33,6 +36,7 @@ public class AporteHistorico {
     public AporteHistorico (
         decimal preco,
         string identificador,
+        decimal quantidade,
         AporteTipo tipo,
         AporteCategoria categoria,
         DateTime data
@@ -40,6 +44,7 @@ public class AporteHistorico {
     ) {
         Preco = preco;
         Identificador = identificador;
+        Quantidade = quantidade;
         Tipo = tipo;
         Categoria = categoria;
         Data = data;

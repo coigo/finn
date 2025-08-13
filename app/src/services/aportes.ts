@@ -13,3 +13,8 @@ export const BuscarCategoriasRequest = async () => {
     const {data} = await api.get('/aportes/categorias')
     return data
 }
+
+export const BuscarHistoricoRequest = async (identificador: string) => {
+    const {data} = await api.get(`/aportes/${identificador}/historico`)
+    return data
+}
