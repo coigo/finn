@@ -14,7 +14,9 @@ public class AporteRepository: IAporteRepository {
     }
     
     public async Task<List<Aporte>> BuscarTodos () {
-        return await this._context.Aportes.ToListAsync();
+        return await this._context.Aportes
+            .Where(a => a.Quantidade > 0)
+            .ToListAsync();
     }
 
     public async Task<List<AporteHistoricoDTO>> BuscarDetalhesDoAporte(string Identificador)
