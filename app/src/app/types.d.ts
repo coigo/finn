@@ -17,6 +17,21 @@ type Aporte = {
     categoria: string 
 }
 
+type MovimentarAporte = {
+    preco?: string 
+    data: Date 
+    quantidade: string 
+    tipoStr: string 
+}
+
+type AporteHistorico = {
+    identificador: string 
+    preco: number 
+    data: Date 
+    quantidade: number 
+    tipo: string
+}
+
 type AporteTotalizado = {
     identificador: string 
     total: number
@@ -75,3 +90,5 @@ type Salario = {
 }
 
 type MovimentacoesPeriodo = 'SEMANA' | 'MES' | 'SEIS_MESES' | 'DURANTE_ANO' | 'DOZE_MESES' 
+
+type AporteTipo = 'COMPRA' | 'VENDA' | 'DESDOBRAMENTO' 

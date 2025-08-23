@@ -54,11 +54,13 @@ builder.Services.AddScoped<SubtrairParcelasUseCase>();
 builder.Services.AddScoped<SubtrairParcelasUseCase>();
 builder.Services.AddScoped<BuscarCategoriasUseCase>();
 builder.Services.AddScoped<BuscarAportesUseCase>();
+builder.Services.AddScoped<BuscarAportesHistoricoUseCase>();
 builder.Services.AddScoped<BuscarMovimentacoesCategoriasUseCase>();
 builder.Services.AddScoped<BuscarPendentesDoMesUseCase>();
 builder.Services.AddScoped<ProcessarMovimentacoesPendentesUseCase>();
 
 builder.Services.AddScoped<MovimentarAportesUseCase>();
+builder.Services.AddScoped<MovimentarAportesPorIdentificadorUseCase>();
 builder.Services.AddScoped<BuscarSaldoUseCase>();
 
 builder.Services.AddScoped<BuscarSalarioAtualUseCase>();

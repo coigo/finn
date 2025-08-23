@@ -10,26 +10,23 @@ public class MovimentarAportesUseCase : IUseCase<MovimentarAporteDTO, Aporte>
 
     private readonly IAporteRepository _aportes;
     private readonly IAporteHistoricoRepository _historico;
-    private readonly IResumoRepository _resumo;
 
     public MovimentarAportesUseCase(
         IAporteRepository aportes,
-        IAporteHistoricoRepository historico,
-        IResumoRepository resumo
+        IAporteHistoricoRepository historico
     )
     {
         _aportes = aportes;
         _historico = historico;
-        _resumo = resumo;
     }
 
     public async Task<Aporte> Execute(MovimentarAporteDTO data)
     {
         var ( Identificador, Quantidade, Preco, Categoria, DataCompra ) = data;
         var aporte = await this._aportes.BuscarPorIdentificador(data.Identificador);
-        
+
         var tipo = Quantidade < 0 ? AporteTipo.VENDA : AporteTipo.COMPRA; 
-        await this._historico.CriarRegistro(new AporteHistorico(Preco, Identificador, tipo, Categoria, DataCompra));
+        await this._historico.CriarRegistro(new AporteHistorico(Preco, Identificador, Quantidade, tipo, Categoria, DataCompra));
 
         return aporte == null 
         ? await this.CriarAporte(data)

@@ -2,16 +2,19 @@
 import { PieChart } from "@/app/components/Charts/pie"
 import Datatable from "@/app/components/DataTable"
 import { SelectField } from "@/app/components/Inputs/SelectField"
+import { useModal } from "@/app/components/Modal/useModal"
 import { useAportesHook } from "@/hooks/UseBuscarAportes"
 import { filterBy, groupBy, sortBy, totalizarAportes, totalizarAportesPorCategoria } from "@/utils/array"
 import { useEffect, useState } from "react"
+import { IoIosArrowForward } from "react-icons/io";
+import { AporteDetalhesDialog } from "./AporteDetalhesDialog"
 
 
 export const AportesDetalhes = () => {
 
     const { aportes, buscar, loading } = useAportesHook()
     const [categoria, setCategoria] = useState<string>("ACAO")
-
+    const { openModal } = useModal()
 
     const aportesAgrupados = groupBy(aportes, "categoria")
     const quantidadeCategoria = totalizarAportesPorCategoria(aportes)
@@ -28,6 +31,11 @@ export const AportesDetalhes = () => {
 
     }, [aportes])
 
+    const buscarDetalhes = (row:AporteTotalizado) => {
+        openModal(<AporteDetalhesDialog identificador={row.identificador}/>)        
+    }
+
+
     const precoMedioTempl = (row:AporteTotalizado) => {
         return `R$ ${row.precoMedio.toFixed(2)}`
     }
@@ -38,6 +46,14 @@ export const AportesDetalhes = () => {
 
     const totalTempl = (row:AporteTotalizado) => {
         return `R$ ${row.total.toFixed(2)}`
+    }
+
+    const editarTempl = (row:AporteTotalizado) => {
+        return <button 
+        onClick={() => buscarDetalhes(row)}
+            className="custom-buttom-round hover:!bg-[#404040]">
+            <IoIosArrowForward/>
+        </button>
     }
 
     return (
@@ -102,6 +118,7 @@ export const AportesDetalhes = () => {
                                         : <></>
                                 }
                                 <Datatable.Column description="Quantidade" field="quantidade"/>
+                                <Datatable.Column body={editarTempl} description="" class="flex-none mr-6"/>
 
                             </Datatable.Root>
                         </div>
