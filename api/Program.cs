@@ -11,7 +11,7 @@ using Resumos.UseCases;
 using Salarios.UseCases;
 
 
-LoadEnv.Load();
+// LoadEnv.Load();
 
 Console.WriteLine("Args recebidos:");
 foreach (var arg in args)
@@ -55,6 +55,7 @@ builder.Services.AddScoped<BuscarPendentesDoMesUseCase>();
 builder.Services.AddScoped<ProcessarMovimentacoesPendentesUseCase>();
 
 builder.Services.AddScoped<MovimentarAportesUseCase>();
+builder.Services.AddScoped<MovimentarAportesPorIdentificadorUseCase>();
 builder.Services.AddScoped<BuscarSaldoUseCase>();
 
 builder.Services.AddScoped<BuscarSalarioAtualUseCase>();

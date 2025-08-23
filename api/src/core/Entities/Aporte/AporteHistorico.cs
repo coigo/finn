@@ -11,7 +11,7 @@ public class AporteHistorico {
     public int Id { get ; set; }
     
     [Column("preco")]
-    public decimal Preco { get ; set; }
+    public decimal? Preco { get ; set; }
     
     [Column("identificador")]
     public string Identificador { get ; set; }
@@ -34,7 +34,7 @@ public class AporteHistorico {
     protected AporteHistorico () {}
 
     public AporteHistorico (
-        decimal preco,
+        decimal? preco,
         string identificador,
         decimal quantidade,
         AporteTipo tipo,

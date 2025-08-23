@@ -4,6 +4,10 @@ export const  CriarAporteRequest = async (data: any) => {
     await api.post("/aportes", data)
 }
 
+export const MovimentarAporteRequest = async (identificador: string, data: MovimentarAporte) => {
+    await api.post(`/aportes/${identificador}` , data)
+}
+
 export const BuscarAportesRequest = async (): Promise<Aporte[]> => {
     const { data } = await api.get('/aportes') 
     return data
