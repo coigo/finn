@@ -9,14 +9,17 @@ public class MovimentarAportesUseCase : IUseCase<MovimentarAporteDTO, Aporte>
 {
 
     private readonly IAporteRepository _aportes;
+    private readonly IAtivosRepository _ativos;
     private readonly IAporteHistoricoRepository _historico;
 
     public MovimentarAportesUseCase(
         IAporteRepository aportes,
+        IAtivosRepository ativos,
         IAporteHistoricoRepository historico
     )
     {
         _aportes = aportes;
+        _ativos = ativos;
         _historico = historico;
     }
 
@@ -24,7 +27,7 @@ public class MovimentarAportesUseCase : IUseCase<MovimentarAporteDTO, Aporte>
     {
         var ( Identificador, Quantidade, Preco, Categoria, DataCompra ) = data;
         var aporte = await this._aportes.BuscarPorIdentificador(data.Identificador);
-
+        
         var tipo = Quantidade < 0 ? AporteTipo.VENDA : AporteTipo.COMPRA; 
         await this._historico.CriarRegistro(new AporteHistorico(Preco, Identificador, Quantidade, tipo, Categoria, DataCompra));
 
@@ -35,6 +38,12 @@ public class MovimentarAportesUseCase : IUseCase<MovimentarAporteDTO, Aporte>
     }
 
     private async Task<Aporte> CriarAporte(MovimentarAporteDTO data) {
+        var aporteExiste = await this._ativos.BuscarPorTicker(data.Identificador);
+        if (aporteExiste == null)
+        {
+            throw new BusinessError($"O Ticker {data.Identificador} não existe! ");
+        }
+        
         Aporte novoAporte = new ( data.Preco, data.Identificador, data.Quantidade, data.Categoria );
         return await this._aportes.CriarAporte(novoAporte);
     }

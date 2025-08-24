@@ -27,9 +27,20 @@ public class BuscarAportesUseCase : IUseCase<Unity, List<BuscarAportesDTO>>
 
         foreach (var aporte in aportes)
         {
-            var precoAtual = await this.BuscarPrecoAtual(aporte);
-            if (!precoAtual.HasValue) {
-                throw new BusinessError("Ativo não encontrado!");
+            var categoriasQueDevemBuscarNaAPI = new List<AporteCategoria>{
+                AporteCategoria.ACAO,
+                AporteCategoria.ETF,
+                AporteCategoria.FII,
+                AporteCategoria.CRIPTOMOEDA
+            };
+            decimal? precoAtual = aporte.PrecoMedio;
+            if (categoriasQueDevemBuscarNaAPI.Contains(aporte.Categoria))
+            {
+                precoAtual = await this.BuscarPrecoAtual(aporte);
+                if (!precoAtual.HasValue)
+                {
+                    throw new BusinessError("Ativo não encontrado!");
+                }
             }
             listaAportes.Add(new BuscarAportesDTO(
                 aporte.Identificador,

@@ -16,7 +16,6 @@ public class BuscarAportesHistoricoUseCase : IUseCase<string, List<AporteHistori
 
     public async Task<List<AporteHistoricoDTO>> Execute(string Identificador)
     {
-        Console.WriteLine(Identificador);
         return await this._aportes.BuscarDetalhesDoAporte(Identificador);
     }
 

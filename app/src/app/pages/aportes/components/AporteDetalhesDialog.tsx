@@ -52,7 +52,7 @@ export const AporteDetalhesDialog = ({ identificador }: props) => {
             await buscarAportes()
         }
         catch (err: any) {
-            toast(err.message || "Não deu pra movimentar esse aqui")
+            toast(err.data.message || "Não deu pra movimentar esse aqui")
         }
         finally {
             reset()

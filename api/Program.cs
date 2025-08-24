@@ -12,7 +12,7 @@ using Resumos.UseCases;
 using Salarios.UseCases;
 using System.Globalization;
 
-// LoadEnv.Load();
+// LoadEnv.Load(); 
 
 Console.WriteLine("Args recebidos:");
 foreach (var arg in args)

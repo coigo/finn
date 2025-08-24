@@ -2,53 +2,60 @@ using System.Text.Json;
 using Microsoft.AspNetCore.WebUtilities;
 
 namespace Infra.Repositories.Adapters;
-public class AtivosRepository: IAtivosRepository {
-    
+
+public class AtivosRepository : IAtivosRepository
+{
+
     private static HttpClient _httpClient;
 
-    public AtivosRepository(HttpClient httpClient) {
+    public AtivosRepository(HttpClient httpClient)
+    {
         _httpClient = httpClient;
     }
 
-    public async Task<decimal?> BuscarPorTicker (string ticker) {
+    public async Task<decimal?> BuscarPorTicker(string ticker)
+    {
         var queryParams = new Dictionary<string, string?> {
             {"token", Environment.GetEnvironmentVariable("B3_API_KEY")}
         };
         var url = QueryHelpers.AddQueryString($"{Environment.GetEnvironmentVariable("B3_API_URL")}/{ticker}", queryParams);
         var result = await _httpClient.GetAsync(url);
 
-            if (result.IsSuccessStatusCode) {
-                var stream = await result.Content.ReadAsStreamAsync();
-                using var json = await JsonDocument.ParseAsync(stream);
+        if (result.IsSuccessStatusCode)
+        {
+            var stream = await result.Content.ReadAsStreamAsync();
+            using var json = await JsonDocument.ParseAsync(stream);
 
-                var data = json.RootElement.GetProperty("results")[0].GetProperty("regularMarketPrice").GetDecimal();
-                return data;
-            }
-            return null;
+            var data = json.RootElement.GetProperty("results")[0].GetProperty("regularMarketPrice").GetDecimal();
+            return data;
         }
-    public async Task<decimal?> BuscarCrypto (string crypto) {
+        return null;
+    }
+    public async Task<decimal?> BuscarCrypto(string crypto)
+    {
 
         var queryParams = new Dictionary<string, string?> {
             {"x_cg_demo_api_key", Environment.GetEnvironmentVariable("CRYPTO_API_KEY")},
             {"vs_currencies", "brl"},
             {"precision", "2"},
-            {"symbols", "BTC"},
-            
+            {"symbols", crypto},
+
         };
 
         var url = QueryHelpers.AddQueryString($"{Environment.GetEnvironmentVariable("CRYPTO_API_URL")}", queryParams);
         var result = await _httpClient.GetAsync(url);
 
-            if (result.IsSuccessStatusCode) {
-                var stream = await result.Content.ReadAsStreamAsync();
-                using var json = await JsonDocument.ParseAsync(stream);
+        if (result.IsSuccessStatusCode)
+        {
+            var stream = await result.Content.ReadAsStreamAsync();
+            using var json = await JsonDocument.ParseAsync(stream);
 
-                var data = json.RootElement.GetProperty(crypto.ToLower()).GetProperty("brl").GetDecimal();
-                return data;
+            var data = json.RootElement.GetProperty(crypto.ToLower()).GetProperty("brl").GetDecimal();
+            return data;
 
-            }
-            return null;
         }
+        return null;
+    }
 
 
 }

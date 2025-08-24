@@ -41,9 +41,7 @@ public class MovimentarAportesPorIdentificadorUseCase : IUseCase<MovimentarAport
     private async Task<Aporte> AtualizarAporte(MovimentarAportePorIdentificadorDTO dto, Aporte aporte)
     {
         var novaQuantidade = GarantirValor(CalcularQuantidade(dto, aporte), "Quantidade inválida");
-        Console.WriteLine(novaQuantidade);
         var precoMedio = GarantirValor(CalcularPrecoMedio(dto, aporte, novaQuantidade), "Preço médio inválido");
-        Console.WriteLine(precoMedio);
 
         var dtoAtualizado = new AtualizarAporteDTO(
             precoMedio,
