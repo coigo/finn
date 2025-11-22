@@ -1,3 +1,7 @@
+using Infra.Repositories;
+using Infra.Shared;
+using Saldos.Models;
+
 namespace Saldos.UseCases;
 
 public class BuscarSaldoUseCase : IUseCase<string, Saldo>

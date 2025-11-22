@@ -67,11 +67,12 @@ public class SaldoRepository : ISaldoRepository
 
     public async Task<Saldo> BuscarSaldoPorNome(string Nome)
     {
-        var saldo = await _context.Saldos.Where(m => m.Nome == Nome).FirstAsync();
+        var saldo = await _context.Saldos.FirstOrDefaultAsync(m => m.Nome == Nome);
         if (saldo == null)
         {
-            throw new KeyNotFoundException("Reusmo não encontrado!");
+            throw new KeyNotFoundException("Saldo não encontrado!");
         }
+        Console.WriteLine(saldo);
         return saldo;
     }
 }

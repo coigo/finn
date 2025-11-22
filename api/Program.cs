@@ -12,7 +12,7 @@ using Saldos.UseCases;
 using Salarios.UseCases;
 using System.Globalization;
 
-// LoadEnv.Load(); 
+LoadEnv.Load(); 
 
 Console.WriteLine("Args recebidos:");
 foreach (var arg in args)
@@ -62,6 +62,7 @@ builder.Services.AddScoped<ProcessarMovimentacoesPendentesUseCase>();
 builder.Services.AddScoped<MovimentarAportesUseCase>();
 builder.Services.AddScoped<MovimentarAportesPorIdentificadorUseCase>();
 builder.Services.AddScoped<BuscarSaldoUseCase>();
+builder.Services.AddScoped<EditarSaldoUseCase>();
 
 builder.Services.AddScoped<BuscarSalarioAtualUseCase>();
 builder.Services.AddScoped<CriarSalarioUseCase>();
