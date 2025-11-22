@@ -3,13 +3,15 @@ using Movimentacoes.Models;
 
 namespace Movimentacoes.UseCases;
 
-public class ProcessarMovimentacoesPendentesUseCase {
+public class ProcessarMovimentacoesPendentesUseCase
+{
 
     private readonly IMovimentacaoRepository _movimentacoes;
-    private readonly IResumoRepository _resumo;
-    public ProcessarMovimentacoesPendentesUseCase  ( IMovimentacaoRepository movimentacoes, IResumoRepository resumo ) {
+    private readonly ISaldoRepository _saldo;
+    public ProcessarMovimentacoesPendentesUseCase(IMovimentacaoRepository movimentacoes, ISaldoRepository saldo)
+    {
         _movimentacoes = movimentacoes;
-        _resumo = resumo;
+        _saldo = saldo;
     }
 
     public async Task Execute()
@@ -26,20 +28,21 @@ public class ProcessarMovimentacoesPendentesUseCase {
                 DateTime.Now
             );
 
-            var atualizarSaldo = this._resumo.AtualizarSaldo("Corrente",
+            var atualizarSaldo = this._saldo.AtualizarSaldo("Corrente",
 
             mov.Tipo == MovimentacaoTipo.ENTRADA
-                ? novaMovimentacao.Valor 
-                : - novaMovimentacao.Valor
+                ? novaMovimentacao.Valor
+                : -novaMovimentacao.Valor
             );
-            
+
             if (mov.TipoDerivado == "PARCELA")
             {
                 novaMovimentacao.ParcelaId = mov.Id;
                 await this._movimentacoes.CriarMovimentacao(novaMovimentacao);
                 await this._movimentacoes.MarcarParcelaComoPaga(mov.Id);
             }
-            else if (mov.TipoDerivado == "PERSISTENTE") {
+            else if (mov.TipoDerivado == "PERSISTENTE")
+            {
                 novaMovimentacao.PersistenteId = mov.Id;
                 await this._movimentacoes.CriarMovimentacao(novaMovimentacao);
 

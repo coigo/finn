@@ -41,14 +41,14 @@ export const MovimentacoesDetalhes = () => {
             await ProcessarMovimentacoesPendentesRequest()
             await buscar()
         }
-        catch(err: any) {
+        catch (err: any) {
             toast(err.message)
         }
         finally {
             setPendentesLoadgind(false)
         }
     }
-    
+
     const onAdicionarSalario = async () => {
         try {
             setSalarioLoadgind(true)
@@ -66,7 +66,7 @@ export const MovimentacoesDetalhes = () => {
     const tipoTempl = (row: Movimentacao) => {
         return row.tipo == 'SAIDA'
             ? <IoMdArrowDropdown color="warning" className="text-bold text-[#ec9b30]" />
-            : <IoMdArrowDropup color="success" className="text-[#39c429]"/>
+            : <IoMdArrowDropup color="success" className="text-[#39c429]" />
     }
 
     const dataTmpl = (row: Movimentacao) => {
@@ -99,26 +99,26 @@ export const MovimentacoesDetalhes = () => {
                     <div className="block md:flex">
                         <div className=" mb-20 md:mb-0 flex flex-col justify-center w-full ">
                             <div className="m-4 flex font-semibold w-full md:mb-12">
-                                <h3 className="mt-2">Resumo</h3>
+                                <h3 className="mt-2">Saldo</h3>
                                 <div className="mx-4 pr-4 font-semibold w-full ">
                                     <SelectField
-                                            classname="bg-neutral-700/50 border-none focus:outline-none focus:border-none"
-                                            onChange={(e) => definirPeriodo(e as MovimentacoesPeriodo)}
-                                            value={periodo}
-                                            data={SelectDate}
-                                            placeholder="Tipo de Movimentação "
+                                        classname="bg-neutral-700/50 border-none focus:outline-none focus:border-none"
+                                        onChange={(e) => definirPeriodo(e as MovimentacoesPeriodo)}
+                                        value={periodo}
+                                        data={SelectDate}
+                                        placeholder="Tipo de Movimentação "
 
                                     />
                                 </div>
                             </div>
                             <div className="flex justify-center w-full h-80">
-                               <PieChart loading={loading} data={movimentacoesAgrupadas} />
+                                <PieChart loading={loading} data={movimentacoesAgrupadas} />
                             </div>
                             <div className="mt-6 flex flex-col">
-                            <div className="flex justify-between p-4 ">
-                                <span className="w-4/5">Pendentes</span>
-                                <Button disabled={pendentesLoading || pendentes.length ==0 } onClick={processarMovimentacoesPendentes}> Pagar </Button>
-                            </div>
+                                <div className="flex justify-between p-4 ">
+                                    <span className="w-4/5">Pendentes</span>
+                                    <Button disabled={pendentesLoading || pendentes.length == 0} onClick={processarMovimentacoesPendentes}> Pagar </Button>
+                                </div>
                                 <div className="h-[30vh] scroll-smooth transparent-scrollbar">
                                     <DataTable.Root data={pendentes}>
                                         <DataTable.Column description="Valor" body={valorTempl} />

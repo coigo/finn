@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using Resumos.Models;
-using Resumos.UseCases;
+using Saldos.Models;
+using Saldos.UseCases;
 
 namespace Infra.Http.Controllers.Movimentacoes;
 
- [ApiController]
+[ApiController]
 [Route("api/saldos")]
 public class BuscarSaldoController : ControllerBase
 {
@@ -17,7 +17,7 @@ public class BuscarSaldoController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<Resumo> handle([FromQuery] string saldoNome)
+    public async Task<Saldo> handle([FromQuery] string saldoNome)
     {
         return await UseCase.Execute(saldoNome);
     }

@@ -8,7 +8,7 @@ using Infra.Repositories.Adapters;
 using Microsoft.EntityFrameworkCore;
 using Movimentacoes.Factories;
 using Movimentacoes.UseCases;
-using Resumos.UseCases;
+using Saldos.UseCases;
 using Salarios.UseCases;
 using System.Globalization;
 
@@ -39,7 +39,7 @@ builder.Services.AddScoped<Context>();
 //Repositorios
 
 builder.Services.AddScoped<IMovimentacaoRepository, MovimentacaoRepository>();
-builder.Services.AddScoped<IResumoRepository, ResumoRepository>();
+builder.Services.AddScoped<ISaldoRepository, SaldoRepository>();
 builder.Services.AddScoped<IAporteHistoricoRepository, AporteHistoricoRepository>();
 builder.Services.AddScoped<IAporteRepository, AporteRepository>();
 builder.Services.AddScoped<ISalarioRepository, SalarioRepository>();
@@ -96,7 +96,7 @@ if (args.Contains("--migrate"))
     Console.WriteLine("Aplicando migracoes");
     using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<Context>();
-    db.Database.Migrate(); 
+    db.Database.Migrate();
     Console.WriteLine("Finalizado.");
 
     return;
@@ -106,7 +106,7 @@ app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
-app.UseCors(allowLocal);    
+app.UseCors(allowLocal);
 
 app.UseRouting();
 app.MapControllers();

@@ -11,13 +11,13 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimen
 
     private readonly IMovimentacaoFactory _movFactory;
     private readonly IMovimentacaoRepository _movimentacoes;
-    private readonly IResumoRepository _resumos;
+    private readonly ISaldoRepository _saldos;
 
-    public CriarMovimentacaoUseCase(IMovimentacaoRepository movimentacoes, IResumoRepository resumos, IMovimentacaoFactory factory)
+    public CriarMovimentacaoUseCase(IMovimentacaoRepository movimentacoes, ISaldoRepository saldos, IMovimentacaoFactory factory)
     {
         _movimentacoes = movimentacoes;
         _movFactory = factory;
-        _resumos = resumos;
+        _saldos = saldos;
     }
 
     public async Task<CriarMovimentacao> Execute(CriarMovimentacao data)
@@ -37,21 +37,22 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimen
     private async Task CriarPersistente(MovimentacaoPersistente? data)
     {
         if (data == null) return;
-    
+
         await this._movimentacoes.CriarMovimentacaoPersistente(data);
-        
+
     }
-    
+
     private async Task CriarParcela(List<MovimentacaoParcela>? data)
     {
         if (data == null) return;
         await this._movimentacoes.CriarMovimentacaoParcela(data);
     }
-    
-    private async Task CriarMovimentacao(Movimentacao? data) {
 
-        if (data == null) return; 
-        
+    private async Task CriarMovimentacao(Movimentacao? data)
+    {
+
+        if (data == null) return;
+
         var SalvarPorTipo = new Dictionary<MovimentacaoTipo, Func<Movimentacao, Task>>{
             { MovimentacaoTipo.INVESTIMENTOS, CriarTipoInvestimento },
             { MovimentacaoTipo.ENTRADA, CriarTipoEntrada },
@@ -67,16 +68,17 @@ public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimen
 
         if (!categorias.Contains(data.CategoriaId))
         {
-            await this._resumos.AtualizarSaldo("Corrente", data.Valor);
+            await this._saldos.AtualizarSaldo("Corrente", data.Valor);
         }
     }
-    
+
     private async Task CriarTipoInvestimento(Movimentacao data)
     {
-        await this._resumos.AtualizarSaldo("Corrente", -data.Valor);
+        await this._saldos.AtualizarSaldo("Corrente", -data.Valor);
     }
-    private async Task CriarTipoSaida(Movimentacao data) {
-        await this._resumos.AtualizarSaldo("Corrente", -data.Valor);
+    private async Task CriarTipoSaida(Movimentacao data)
+    {
+        await this._saldos.AtualizarSaldo("Corrente", -data.Valor);
     }
 
 }
