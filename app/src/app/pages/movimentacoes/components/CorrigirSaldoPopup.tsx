@@ -6,16 +6,18 @@ import { CurrencyField } from '@/app/components/Inputs/CurrencyField'
 import { Controller, useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { Button as CustomButton } from '@/app/components/Button'
 import { CorrigirSaldoRequest } from '@/services/saldo'
-import { corrigirTipagem } from '@/lib/utils'
 
-export const CorrigirSaldoPopup = () => {
+type Props = {
+  onSubmit: () => Promise<void>
+}
+
+export const CorrigirSaldoPopup = ({onSubmit}: Props) => {
 
   const { control, handleSubmit } = useForm<{valor: string}>()
   const [loading, setLoading] = useState(false)
 
-  const onSubmit = async (data: any) => {
+  const submit = async (data: any) => {
     try {
       setLoading(true);
       // (data as any) = corrigirTipagem(data as any)
@@ -23,6 +25,7 @@ export const CorrigirSaldoPopup = () => {
         ...data,
         nome: "Corrente"
       })
+      await onSubmit()
     }
     catch (err: any) {
       toast(err.message || "Algo deu errado ao corrigir o saldo!")
@@ -46,7 +49,7 @@ export const CorrigirSaldoPopup = () => {
             <p className='text-muted-foreground text-sm'>Edite o saldo atual</p>
           </div>
           <div className='grid gap-2'>
-            <form className="flex gap-4"onSubmit={handleSubmit(onSubmit)}>
+            <form className="flex gap-4"onSubmit={handleSubmit(submit)}>
               <Controller
                 name="valor"
                 control={control}

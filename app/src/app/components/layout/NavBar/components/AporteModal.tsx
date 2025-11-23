@@ -45,7 +45,6 @@ export const AporteModal = () => {
             onClose()
         }
         catch (err: any) {
-            console.log(err)
             toast(err.data.message)
         }finally {
             closeModal()

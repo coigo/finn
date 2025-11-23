@@ -44,7 +44,7 @@ type AporteTotalizado = {
 type Movimentacao = {
     valor: number
     categoria: string
-    tipo: string
+    tipo: "ENTRADA" | "SAIDA" | "INVESTIMENTOS"
     data: string
 }
 

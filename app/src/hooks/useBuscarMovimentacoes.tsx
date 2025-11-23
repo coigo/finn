@@ -40,14 +40,12 @@ export const MovimentacoesProvider = ({ children }: { children: ReactNode }) => 
     const buscar = async () => {
 
         const data = buildDate(periodo)
-        console.log('apareceu aqui o ')
         try {
             setLoading(true)
             const [movimentacoes, pendentes] = await Promise.all([
                 BuscarMovimentacoesRequest(data),
                 BuscarMovimentacoesPendentesRequest()
             ]) 
-            console.log(movimentacoes)
             setMovimentacoes(movimentacoes)
             setPendentes(pendentes)
             setLoading(false)

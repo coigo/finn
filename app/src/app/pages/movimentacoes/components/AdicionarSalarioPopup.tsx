@@ -2,14 +2,17 @@ import { PlusIcon, Send } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { CurrencyField } from '@/app/components/Inputs/CurrencyField'
-import { Controller, useForm } from 'react-hook-form'
+  import {  useForm } from 'react-hook-form'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { useBuscarSalarioAtual } from '@/hooks/useBuscarSalarioAtual'
 import { AdicionarSalarioRequest } from '@/services/salario'
 
-export const AdicionarSalarioPopup = () => {
+type Props = {
+  onSubmit: () => Promise<void>
+}
+
+export const AdicionarSalarioPopup = ({onSubmit}: Props) => {
 
   const { control, handleSubmit } = useForm()
   const [loading, setLoading] = useState(false)
@@ -17,7 +20,6 @@ export const AdicionarSalarioPopup = () => {
   const {buscar, salario, loading: loadingSalario} =  useBuscarSalarioAtual()
 
   useEffect(() => {
-    console.log("wewewe")
     if (!salario) {
       buscar()
     }
@@ -27,7 +29,7 @@ export const AdicionarSalarioPopup = () => {
         try {
             setLoading(true)
             await AdicionarSalarioRequest()
-            // await buscarSaldo("Corrente")
+            await onSubmit()
         }
         catch (err: any) {
             toast(err.message)

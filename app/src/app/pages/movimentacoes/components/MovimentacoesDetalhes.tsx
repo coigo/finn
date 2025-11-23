@@ -2,21 +2,18 @@
 
 import DataTable from "@/app/components/DataTable"
 import { useMovimentacoesHook } from "@/hooks/useBuscarMovimentacoes"
-import { sortBy, totalizarMovimentacoesPorCategoria } from "@/utils/array"
+import { totalizarMovimentacoesPorCategoria, totalPorTipo } from "@/utils/array"
 import { useEffect, useState } from "react"
 
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
-import { IoMdArrowUp } from "react-icons/io";
 
 import dayjs from "dayjs"
 import { useBuscarSaldo } from "@/hooks/useBuscarSaldo"
 import { Button } from "@/app/components/Button"
-import { AdicionarSalarioRequest } from "@/services/salario"
 import { ProcessarMovimentacoesPendentesRequest } from "@/services/movimentacoes"
 import { toast } from "sonner"
 import { SelectField } from "@/app/components/Inputs/SelectField"
 import { PieChart } from "@/app/components/Charts/pie"
-import { useModal } from "@/app/components/Modal/useModal"
 import { CorrigirSaldoPopup } from "./CorrigirSaldoPopup"
 import { AdicionarSalarioPopup } from "./AdicionarSalarioPopup"
 
@@ -28,11 +25,10 @@ export const MovimentacoesDetalhes = () => {
     const { movimentacoes, pendentes, buscar, loading, definirPeriodo, periodo } = useMovimentacoesHook()
     const { saldo, buscar: buscarSaldo, loading: loadingSaldo } = useBuscarSaldo()
     const movimentacoesAgrupadas = totalizarMovimentacoesPorCategoria(movimentacoes, "SAIDA")
+    const total = totalPorTipo(movimentacoes)
 
     const [pendentesLoading, setPendentesLoadgind] = useState(false)
-    const [salarioLoading, setSalarioLoadgind] = useState(false)
 
-    const {openModal} = useModal()
 
     useEffect(() => {
         buscar()
@@ -53,6 +49,14 @@ export const MovimentacoesDetalhes = () => {
         }
     }
 
+    const refreshSaldo = async () => {
+        try {
+            await buscarSaldo("Corrente")
+        }
+        catch (err) {
+            toast("Algo deu errado buscando pelo saldo atual!")
+        }
+    }
 
     const tipoTempl = (row: Movimentacao) => {
         return row.tipo == 'SAIDA'
@@ -87,26 +91,26 @@ export const MovimentacoesDetalhes = () => {
                     Saldo <span>R$ {saldo?.valor.toFixed(2) || 0}</span>
                 </div>
                 <div className="flex gap-1">
-                    <CorrigirSaldoPopup />
-                    <AdicionarSalarioPopup />
+                    <CorrigirSaldoPopup onSubmit={refreshSaldo}/>
+                    <AdicionarSalarioPopup onSubmit={refreshSaldo}/>
                 </div>
-                {/* <Button disabled={salarioLoading} onClick={onAdicionarSalario} > + </Button> */}
             </div>
             <div className="align-center items-center card flex py-4 rounded-2xl h-[8vh] bg-neutral-800/40 shadow-lg">
                 <div className="flex w-full justify-between text-lg">
-                    Gastos <span>R$ {saldo?.valor.toFixed(2) || 0}</span>
-                </div>
-            </div>
-
-            <div className="align-center items-center card flex py-4 rounded-2xl h-[8vh] bg-neutral-800/40 shadow-lg">
-                <div className="flex w-full justify-between text-lg">
-                    Entradas <span>R$ {saldo?.valor.toFixed(2) || 0}</span>
+                    Gastos <span className="text-[#b84149]">R$ {total.saidas.toFixed(2) || 0}</span>
                 </div>
             </div>
 
             <div className="align-center items-center card flex py-4 rounded-2xl h-[8vh] bg-neutral-800/40 shadow-lg">
                 <div className="flex w-full justify-between text-lg">
-                    Investimentos <span>R$ {saldo?.valor.toFixed(2) || 0}</span>
+                    Entradas <span className=" text-[#468856]">R$ {total.entradas.toFixed(2) || 0}</span>
+                </div>
+            </div>
+
+            <div className="align-center items-center card flex py-4 rounded-2xl h-[8vh] bg-neutral-800/40 shadow-lg">
+                <div className="flex w-full justify-between text-lg">
+                    Investimentos 
+                    <span className="text-[#de983b]">R$ {total.investimentos.toFixed(2) || 0}</span>
                 </div>
             </div>
 
