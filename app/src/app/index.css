@@ -73,7 +73,16 @@ input[type=number] {
   -moz-appearance:textfield;
 }
 
-.custom-buttom {
+.small-button {
+  text-align: center;
+  padding: 8px;
+  width: fit-content;
+  border-radius: 8px;
+  aspect-ratio: 1/1;
+  transition: background-color 200ms linear;
+}
+
+.custom-button {
   text-align: center;
   padding: 8px;
   width: fit-content;
@@ -81,7 +90,7 @@ input[type=number] {
   border-radius: 8px;
   transition: background-color 200ms linear;
 }
-.custom-buttom-round {
+.custom-button-round {
   background-color: transparent;
   text-align: center;
   padding: 8px;
@@ -95,15 +104,19 @@ input[type=number] {
   transition: background-color 200ms linear;
 }
 
-.custom-buttom-round:hover {
+.custom-button-round:hover {
   background-color: rgba(10, 10, 10, 0.2);
 }
-.custom-buttom:hover {
+.custom-button:hover {
+  cursor:pointer;
+  background-color: #a06b27;
+}
+.small-button:hover {
   cursor:pointer;
   background-color: #a06b27;
 }
 
-.custom-buttom:disabled {
+.custom-button:disabled {
   cursor:default;
   background-color: #a06b27;
 }

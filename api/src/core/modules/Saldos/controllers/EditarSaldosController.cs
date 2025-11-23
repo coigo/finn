@@ -3,7 +3,7 @@ using Saldos.DTOS;
 using Saldos.Models;
 using Saldos.UseCases;
 
-namespace Infra.Http.Controllers.Movimentacoes;
+namespace Infra.Http.Controllers.Saldos;
 
 [ApiController]
 [Route("api/saldos")]
@@ -17,7 +17,7 @@ public class EditarSaldoController : ControllerBase
         UseCase = useCase;
     }
 
-    [HttpPut]
+    [HttpPost]
     public async Task<Saldo> handle([FromBody] EditarSaldoDTO data)
     {
         return await UseCase.Execute(data);

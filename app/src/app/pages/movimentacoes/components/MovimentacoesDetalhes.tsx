@@ -16,6 +16,9 @@ import { ProcessarMovimentacoesPendentesRequest } from "@/services/movimentacoes
 import { toast } from "sonner"
 import { SelectField } from "@/app/components/Inputs/SelectField"
 import { PieChart } from "@/app/components/Charts/pie"
+import { useModal } from "@/app/components/Modal/useModal"
+import { CorrigirSaldoPopup } from "./CorrigirSaldoPopup"
+import { AdicionarSalarioPopup } from "./AdicionarSalarioPopup"
 
 
 
@@ -29,6 +32,7 @@ export const MovimentacoesDetalhes = () => {
     const [pendentesLoading, setPendentesLoadgind] = useState(false)
     const [salarioLoading, setSalarioLoadgind] = useState(false)
 
+    const {openModal} = useModal()
 
     useEffect(() => {
         buscar()
@@ -49,19 +53,6 @@ export const MovimentacoesDetalhes = () => {
         }
     }
 
-    const onAdicionarSalario = async () => {
-        try {
-            setSalarioLoadgind(true)
-            await AdicionarSalarioRequest()
-            await buscarSaldo("Corrente")
-        }
-        catch (err: any) {
-            toast(err.message)
-        }
-        finally {
-            setSalarioLoadgind(false)
-        }
-    }
 
     const tipoTempl = (row: Movimentacao) => {
         return row.tipo == 'SAIDA'
@@ -89,12 +80,39 @@ export const MovimentacoesDetalhes = () => {
 
     return (
 
-        <div className="grid grid-cols-1 md:grid-cols-2  flex-1 md:max-h-full gap-4">
-            <div className=" flex w-full flex-col gap-4">
-                <div className="align-center items-center card flex p-4 rounded-2xl h-[8vh] bg-neutral-800/40 shadow-lg">
-                    <div className="flex w-4/5 px-5 justify-between text-lg">Saldo <span>R$ {saldo?.valor.toFixed(2) || 0}</span></div>
-                    <Button disabled={salarioLoading} onClick={onAdicionarSalario} > + Salario </Button>
+        <div className="grid grid-cols-4 gap-4 h-full grid-rows-[min-content_1fr]">
+            <div className=" align-center items-center card flex py-4 rounded-2xl h-[8vh] bg-neutral-800/40 shadow-lg !pr-3">
+                <div 
+                    className="flex w-full justify-between gap-5 text-lg mr-2">
+                    Saldo <span>R$ {saldo?.valor.toFixed(2) || 0}</span>
                 </div>
+                <div className="flex gap-1">
+                    <CorrigirSaldoPopup />
+                    <AdicionarSalarioPopup />
+                </div>
+                {/* <Button disabled={salarioLoading} onClick={onAdicionarSalario} > + </Button> */}
+            </div>
+            <div className="align-center items-center card flex py-4 rounded-2xl h-[8vh] bg-neutral-800/40 shadow-lg">
+                <div className="flex w-full justify-between text-lg">
+                    Gastos <span>R$ {saldo?.valor.toFixed(2) || 0}</span>
+                </div>
+            </div>
+
+            <div className="align-center items-center card flex py-4 rounded-2xl h-[8vh] bg-neutral-800/40 shadow-lg">
+                <div className="flex w-full justify-between text-lg">
+                    Entradas <span>R$ {saldo?.valor.toFixed(2) || 0}</span>
+                </div>
+            </div>
+
+            <div className="align-center items-center card flex py-4 rounded-2xl h-[8vh] bg-neutral-800/40 shadow-lg">
+                <div className="flex w-full justify-between text-lg">
+                    Investimentos <span>R$ {saldo?.valor.toFixed(2) || 0}</span>
+                </div>
+            </div>
+
+
+            <div className=" flex w-full flex-col gap-4 col-span-2">
+
                 <div className="card border-1 border-neutral-600/70 p-4 pt-2 rounded-2xl h-[78.3vh] bg-neutral-800/40 shadow-lg">
                     <div className="block md:flex">
                         <div className=" mb-20 md:mb-0 flex flex-col justify-center w-full ">
@@ -130,19 +148,23 @@ export const MovimentacoesDetalhes = () => {
                         </div>
                     </div>
                 </div>
+
             </div>
-            <div>
-                <div className="card p-4 rounded-2xl h-[88vh] bg-neutral-800/40 shadow-lg overflow-y-scroll scroll-smooth transparent-scrollbar">
 
-                    <DataTable.Root data={movimentacoes} >
-                        <DataTable.Column description="" body={tipoTempl} />
-                        <DataTable.Column description="Valor" body={valorTempl} />
-                        <DataTable.Column description="Categoria" field="categoria" />
-                        <DataTable.Column description="Data" body={dataTmpl} />
-                    </DataTable.Root>
+            <div className="card col-span-2 p-4 rounded-2xl flex flex-1 bg-neutral-800/40 shadow-lg overflow-y-scroll scroll-smooth transparent-scrollbar ">
 
-                </div>
+                <DataTable.Root data={movimentacoes} >
+                    <DataTable.Column description="" body={tipoTempl} />
+                    <DataTable.Column description="Valor" body={valorTempl} />
+                    <DataTable.Column description="Categoria" field="categoria" />
+                    <DataTable.Column description="Data" body={dataTmpl} />
+                </DataTable.Root>
+
+
             </div>
         </div>
+
+
+
     )
 }

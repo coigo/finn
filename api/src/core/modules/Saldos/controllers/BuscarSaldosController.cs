@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Saldos.Models;
 using Saldos.UseCases;
 
-namespace Infra.Http.Controllers.Movimentacoes;
+namespace Infra.Http.Controllers.Saldos;
 
 [ApiController]
 [Route("api/saldos")]
