@@ -50,6 +50,7 @@ builder.Services.AddHttpClient<IAtivosRepository, AtivosRepository>();
 
 builder.Services.AddScoped<CriarMovimentacaoUseCase>();
 builder.Services.AddScoped<BuscarMovimentacoesUseCase>();
+builder.Services.AddScoped<DesfazerMovimentacaoUseCase>();
 builder.Services.AddScoped<SubtrairParcelasUseCase>();
 builder.Services.AddScoped<SubtrairParcelasUseCase>();
 builder.Services.AddScoped<BuscarCategoriasUseCase>();
@@ -85,6 +86,7 @@ builder.Services.AddCors(opt =>
  policy =>
     {
         policy.WithOrigins($"{Environment.GetEnvironmentVariable("WEB_URL")}")
+              .AllowAnyMethod()
               .AllowAnyHeader();
     });
 });

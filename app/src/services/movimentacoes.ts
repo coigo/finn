@@ -21,3 +21,6 @@ export const  BuscarCategoriasRequest = async () => {
 export const ProcessarMovimentacoesPendentesRequest = async () => {
     return api.post("/movimentacoes/pendentes")
 }
+export const DesfazerMovimentacaoRequest = async (id: number) => {
+    return api.delete(`/movimentacoes/${id}`)
+}

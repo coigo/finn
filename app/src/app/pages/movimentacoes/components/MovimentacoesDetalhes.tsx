@@ -16,6 +16,7 @@ import { SelectField } from "@/app/components/Inputs/SelectField"
 import { PieChart } from "@/app/components/Charts/pie"
 import { CorrigirSaldoPopup } from "./CorrigirSaldoPopup"
 import { AdicionarSalarioPopup } from "./AdicionarSalarioPopup"
+import { DetalhePopup } from "./DetalhePopup"
 
 
 
@@ -52,6 +53,16 @@ export const MovimentacoesDetalhes = () => {
     const refreshSaldo = async () => {
         try {
             await buscarSaldo("Corrente")
+        }
+        catch (err) {
+            toast("Algo deu errado buscando pelo saldo atual!")
+        }
+    }
+
+    const onDesfazer = async () => {
+        try {
+            await buscarSaldo("Corrente")
+            await buscar()
         }
         catch (err) {
             toast("Algo deu errado buscando pelo saldo atual!")
@@ -162,6 +173,10 @@ export const MovimentacoesDetalhes = () => {
                     <DataTable.Column description="Valor" body={valorTempl} />
                     <DataTable.Column description="Categoria" field="categoria" />
                     <DataTable.Column description="Data" body={dataTmpl} />
+                    <DataTable.Column description="Data" 
+                        body={(row) => <DetalhePopup refresh={onDesfazer} row={row}/>} 
+                        
+                        class="flex justify-end pr-2" />
                 </DataTable.Root>
 
 

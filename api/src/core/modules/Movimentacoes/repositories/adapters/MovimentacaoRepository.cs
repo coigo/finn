@@ -23,6 +23,17 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
         await _context.SaveChangesAsync();
         return data;
     }
+
+    public async Task<Movimentacao?> BuscarMovimentacao(int id) {
+        var movimentacao = await _context.Movimentacoes.FirstOrDefaultAsync(d => d.Id == id);
+        return movimentacao;
+    }
+
+    public async void ApagarMovimentacao(int id) {
+        await _context.Movimentacoes
+        .Where(m => m.Id == id)
+        .ExecuteDeleteAsync();
+    }
     
     public async Task<MovimentacaoPersistente> CriarMovimentacaoPersistente(MovimentacaoPersistente data)
     {
@@ -53,8 +64,10 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
     {
         return await _context.Database.SqlQuery<ListaMovimentacoesDTO>($@"
             SELECT 
+                m.id AS id,
                 m.valor AS valor,
                 m.tipo,
+                m.descricao,
                 mc.nome as categoria,
                 m.data
             FROM movimentacoes m

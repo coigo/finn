@@ -6,9 +6,10 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from "@/components/u
 export interface ICustomDataTable {
     data: any[]
     children: ReactElement<FieldProps | FieldProps>[]
+    onClickRow?: (data: any) => void
 }
 
-export function Root({ data, children }: ICustomDataTable) {
+export function Root({ data, children, onClickRow }: ICustomDataTable) {
 
 
     return (
@@ -28,6 +29,8 @@ export function Root({ data, children }: ICustomDataTable) {
                     {!data.length ? <div className="py-4">Não há nada por aqui!</div> :
                     data.map((row, i) => (
                         <TableRow
+                            onClick={onClickRow ? () => onClickRow(row) : undefined}
+
                             key={"row" + i}
                         >
                             {children.map(( {props}, j) => {

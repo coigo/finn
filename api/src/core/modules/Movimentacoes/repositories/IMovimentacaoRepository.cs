@@ -7,6 +7,8 @@ namespace Infra.Repositories;
 public interface IMovimentacaoRepository {
 
     public Task<Movimentacao> CriarMovimentacao(Movimentacao data);
+    public Task<Movimentacao?> BuscarMovimentacao(int id);
+    public void ApagarMovimentacao(int id);
     public Task CriarMovimentacaoParcela(List<MovimentacaoParcela> data);
     public Task<MovimentacaoPersistente> CriarMovimentacaoPersistente(MovimentacaoPersistente data);
     
