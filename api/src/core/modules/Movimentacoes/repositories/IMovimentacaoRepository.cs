@@ -10,7 +10,6 @@ public interface IMovimentacaoRepository {
     public Task<Movimentacao?> BuscarMovimentacao(int id);
     public void ApagarMovimentacao(int id);
     public Task CriarMovimentacaoParcela(List<MovimentacaoParcela> data);
-    public Task<MovimentacaoPersistente> CriarMovimentacaoPersistente(MovimentacaoPersistente data);
     
     public Task<List<ListaMovimentacoesDTO>> BuscarPorPeriodo(DateTime inicio, DateTime fim);
     public Task<Movimentacao> AtualizarMovimentacao(int id, Movimentacao data);
@@ -22,5 +21,10 @@ public interface IMovimentacaoRepository {
 
     public Task<MovimentacaoCategoria> BuscarCategoriaPorNome(string nome);
     public Task<List<BuscarMovimentacaoCategoriaDTO>> BuscarCategorias();
+
+    public Task<MovimentacaoPersistente> CriarMovimentacaoPersistente(MovimentacaoPersistente data);
+    public Task<MovimentacaoPersistente?> BuscarMovimentacaoPersistente(int id);
+    public void EditarMovimentacaoPersistente(EditarPersistenteDTO data);
+    public void DeletarMovimentacaoPersistente(int data);
 
 }

@@ -11,10 +11,10 @@ public class MovimentacaoPersistente {
     public int Id { get; private set; }
 
     [Column("valor")]
-    public decimal Valor { get; private set; }
+    public decimal Valor { get; set; }
 
     [Column("descricao")]
-    public string Descricao { get; private set; }
+    public string Descricao { get; set; }
 
     [Column("tipo")]
     public MovimentacaoTipo Tipo { get ; set; }
@@ -24,6 +24,9 @@ public class MovimentacaoPersistente {
 
     [Column("criadoEm")]
     public DateTime CriadoEm { get; private set; } = DateTime.Now;
+
+    [Column("deletadoEm")]
+    public DateTime? DeletadoEm { get; set; }
 
     protected MovimentacaoPersistente() { }
 

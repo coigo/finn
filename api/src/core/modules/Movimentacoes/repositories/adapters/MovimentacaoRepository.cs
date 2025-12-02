@@ -1,4 +1,5 @@
 using Infra.Database;
+using Infra.Shared;
 using Microsoft.EntityFrameworkCore;
 using Movimentacoes.DTOS;
 using Movimentacoes.Models;
@@ -151,13 +152,14 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
             'PERSISTENTE' as tipoDerivado
         from movimentacoes_persistentes mp 
         left join movimentacoes_categorias mc on mc.id = mp.categoriaId 
-        where mp.id not in (
-            select persistenteId 
-            from movimentacoes 
-            where persistenteId is not null 
-            and strftime('%m', data) = {hoje.Month.ToString("D2")}
-            AND strftime('%Y', data) = {hoje.Year.ToString()}
-        )").ToListAsync();
+        where mp.deletadoEm is null 
+            and mp.id not in (
+                select persistenteId 
+                from movimentacoes 
+                where persistenteId is not null 
+                and strftime('%m', data) = {hoje.Month.ToString("D2")}
+                AND strftime('%Y', data) = {hoje.Year.ToString()}
+            )").ToListAsync();
         return result;
     }
 
@@ -181,6 +183,48 @@ public class MovimentacaoRepository: IMovimentacaoRepository {
             throw new KeyNotFoundException(nameof(categoria));
         }
         return categoria;
+    }
+
+    public async Task<MovimentacaoPersistente?> BuscarMovimentacaoPersistente( int id ) {
+        Console.WriteLine(id);
+        var movimentacao = await _context.MovimentacoesPersistentes
+            .Where(m => m.Id == id)
+            .FirstOrDefaultAsync();
+        return movimentacao;
+    }
+
+    public async void EditarMovimentacaoPersistente(EditarPersistenteDTO data)
+    {
+        Console.WriteLine(data);
+        var movimentacao = await _context.MovimentacoesPersistentes
+            .Where(p => p.Id == data.PersistenteId)
+            .FirstOrDefaultAsync();
+
+        if (movimentacao == null)
+        {
+            throw new BusinessError("Movimentacao não encontrada");
+        }
+
+        movimentacao.Descricao = data.Descricao;
+        movimentacao.Valor = data.Valor;
+        movimentacao.CategoriaId = data.CategoriaId ;
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async void DeletarMovimentacaoPersistente(int id)
+    {
+        var movimentacao = await _context.MovimentacoesPersistentes
+            .Where(p => p.Id == id)
+            .FirstOrDefaultAsync();
+
+        if (movimentacao == null)
+        {
+            throw new BusinessError("Movimentacao não encontrada");
+        }
+
+        movimentacao.DeletadoEm = DateTime.Now ;
+        await _context.SaveChangesAsync();
     }
 
 }

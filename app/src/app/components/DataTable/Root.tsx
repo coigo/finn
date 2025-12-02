@@ -30,7 +30,7 @@ export function Root({ data, children, onClickRow }: ICustomDataTable) {
                     data.map((row, i) => (
                         <TableRow
                             onClick={onClickRow ? () => onClickRow(row) : undefined}
-
+                            className="relative"
                             key={"row" + i}
                         >
                             {children.map(( {props}, j) => {

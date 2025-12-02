@@ -22,7 +22,7 @@ type SelectFieldProps = {
 
 export const SelectField = ({ data, placeholder, classname, onChange, value }: SelectFieldProps) => {
   return (
-    <Select value={value} onValueChange={onChange}>
+    <Select value={String(value)} onValueChange={onChange}>
       <SelectTrigger className={classname || "w-[180px]"}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>

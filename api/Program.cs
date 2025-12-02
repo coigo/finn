@@ -59,6 +59,10 @@ builder.Services.AddScoped<BuscarAportesHistoricoUseCase>();
 builder.Services.AddScoped<BuscarMovimentacoesCategoriasUseCase>();
 builder.Services.AddScoped<BuscarPendentesDoMesUseCase>();
 builder.Services.AddScoped<ProcessarMovimentacoesPendentesUseCase>();
+builder.Services.AddScoped<BuscarPersistenteUseCase>();
+
+builder.Services.AddScoped<DeletarPersistenteUseCase>();
+builder.Services.AddScoped<EditarPersistenteUseCase>();
 
 builder.Services.AddScoped<MovimentarAportesUseCase>();
 builder.Services.AddScoped<MovimentarAportesPorIdentificadorUseCase>();
@@ -87,6 +91,7 @@ builder.Services.AddCors(opt =>
     {
         policy.WithOrigins($"{Environment.GetEnvironmentVariable("WEB_URL")}")
               .AllowAnyMethod()
+              .AllowCredentials()
               .AllowAnyHeader();
     });
 });

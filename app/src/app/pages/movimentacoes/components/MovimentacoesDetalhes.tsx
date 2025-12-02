@@ -17,19 +17,17 @@ import { PieChart } from "@/app/components/Charts/pie"
 import { CorrigirSaldoPopup } from "./CorrigirSaldoPopup"
 import { AdicionarSalarioPopup } from "./AdicionarSalarioPopup"
 import { DetalhePopup } from "./DetalhePopup"
-
-
-
+import { DetalhePendentePopup } from "./DetalhePendentesPopup"
+import { InfoIcon } from "lucide-react"
 
 export const MovimentacoesDetalhes = () => {
 
-    const { movimentacoes, pendentes, buscar, loading, definirPeriodo, periodo } = useMovimentacoesHook()
+    const { movimentacoes, pendentes, buscar, loading, definirPeriodo, periodoPendentes, periodo } = useMovimentacoesHook()
     const { saldo, buscar: buscarSaldo, loading: loadingSaldo } = useBuscarSaldo()
     const movimentacoesAgrupadas = totalizarMovimentacoesPorCategoria(movimentacoes, "SAIDA")
     const total = totalPorTipo(movimentacoes)
 
     const [pendentesLoading, setPendentesLoadgind] = useState(false)
-
 
     useEffect(() => {
         buscar()
@@ -91,19 +89,17 @@ export const MovimentacoesDetalhes = () => {
         { id: 'DOZE_MESES', name: 'Últimos 12 Mêses' }
     ]
 
-
-
     return (
 
         <div className="grid grid-cols-4 gap-4 h-full grid-rows-[min-content_1fr]">
             <div className=" align-center items-center card flex py-4 rounded-2xl h-[8vh] bg-neutral-800/40 shadow-lg !pr-3">
-                <div 
+                <div
                     className="flex w-full justify-between gap-5 text-lg mr-2">
                     Saldo <span>R$ {saldo?.valor.toFixed(2) || 0}</span>
                 </div>
                 <div className="flex gap-1">
-                    <CorrigirSaldoPopup onSubmit={refreshSaldo}/>
-                    <AdicionarSalarioPopup onSubmit={refreshSaldo}/>
+                    <CorrigirSaldoPopup onSubmit={refreshSaldo} />
+                    <AdicionarSalarioPopup onSubmit={refreshSaldo} />
                 </div>
             </div>
             <div className="align-center items-center card flex py-4 rounded-2xl h-[8vh] bg-neutral-800/40 shadow-lg">
@@ -120,7 +116,7 @@ export const MovimentacoesDetalhes = () => {
 
             <div className="align-center items-center card flex py-4 rounded-2xl h-[8vh] bg-neutral-800/40 shadow-lg">
                 <div className="flex w-full justify-between text-lg">
-                    Investimentos 
+                    Investimentos
                     <span className="text-[#de983b]">R$ {total.investimentos.toFixed(2) || 0}</span>
                 </div>
             </div>
@@ -147,17 +143,33 @@ export const MovimentacoesDetalhes = () => {
                             <div className="flex justify-center w-full h-80">
                                 <PieChart loading={loading} data={movimentacoesAgrupadas} />
                             </div>
-                            <div className="mt-6 flex flex-col">
+                            <div className="mt-6 flex flex-col ">
                                 <div className="flex justify-between p-4 ">
-                                    <span className="w-4/5">Pendentes</span>
-                                    <Button disabled={pendentesLoading || pendentes.length == 0} onClick={processarMovimentacoesPendentes}> Pagar </Button>
+                                    <div className="flex text-start flex-col w-4/5">
+                                        <div className="">Pendentes</div>
+                                        {
+                                            periodoPendentes == 1 && 
+                                            <div className="flex text-[14px] text-center items-center gap-2 text-neutral-500">
+                                                <InfoIcon size="16"/> <span>As pendências a seguir são do próximo mês.</span>
+                                            </div>
+                                        }
+                                    </div>
+                                    <Button 
+                                        disabled={pendentesLoading || pendentes?.length == 0} 
+                                        onClick={processarMovimentacoesPendentes}> 
+                                        Pagar 
+                                    </Button>
                                 </div>
-                                <div className="h-[30vh] scroll-smooth transparent-scrollbar">
-                                    <DataTable.Root data={pendentes}>
+                                <div className="flex flex-1 scroll-smooth transparent-scrollbar">
+                                    {pendentes && <DataTable.Root data={pendentes}>
                                         <DataTable.Column description="Valor" body={valorTempl} />
                                         <DataTable.Column description="Categoria" field="categoria" />
                                         <DataTable.Column description="Data" body={dataTmpl} />
-                                    </DataTable.Root>
+                                        <DataTable.Column description="Data"
+                                            body={(row) => <DetalhePendentePopup refresh={onDesfazer} row={row} />}
+
+                                            class="flex justify-end pr-2" />
+                                    </DataTable.Root>}
                                 </div>
                             </div>
                         </div>
@@ -173,9 +185,9 @@ export const MovimentacoesDetalhes = () => {
                     <DataTable.Column description="Valor" body={valorTempl} />
                     <DataTable.Column description="Categoria" field="categoria" />
                     <DataTable.Column description="Data" body={dataTmpl} />
-                    <DataTable.Column description="Data" 
-                        body={(row) => <DetalhePopup refresh={onDesfazer} row={row}/>} 
-                        
+                    <DataTable.Column description="Data"
+                        body={(row) => <DetalhePopup refresh={onDesfazer} row={row} />}
+
                         class="flex justify-end pr-2" />
                 </DataTable.Root>
 

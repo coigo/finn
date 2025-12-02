@@ -1,27 +1,41 @@
-import { ArrowRight, ArrowRightIcon, PlusIcon, Trash } from 'lucide-react'
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-
-
+import { PencilIcon, Trash } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { DesfazerMovimentacaoRequest } from '@/services/movimentacoes';
+import { DeletarMovimentacaoPersistente, DesfazerMovimentacaoRequest } from '@/services/movimentacoes';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { useModal } from '@/app/components/Modal/useModal';
+import { MovimentacaoModal } from '@/app/components/layout/NavBar/components/MovimentacaoModal';
 
 type Props = {
-  row: Movimentacao
+  row: MovimentacoesPendentes
   refresh: () =>  void 
 }
 
-export const DetalhePopup = ({row, refresh}: Props) => {
+export const DetalhePendentePopup = ({row, refresh}: Props) => {
   
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
+  const {openModal} = useModal()
 
-  const onDesfazer = async () => {
+  const onEdit = async () => {
+    try {
+      openModal(<MovimentacaoModal id={row.id} lockIn='PERSISTENTE'/>)
+      setOpen(false)
+    }
+    catch (err: any) {
+      toast(err.message || "Algo deu errado ao desfazer a movimentação!")
+    }
+    finally {
+      setLoading(false)
+
+    }
+  }
+
+  const onDelete = async () => {
     try {
       setLoading(true)
-      await DesfazerMovimentacaoRequest(row.id)
+      await DeletarMovimentacaoPersistente(row.id)
       toast("Movimentção desfeita!")
       await refresh()
       setOpen(false)
@@ -44,18 +58,27 @@ export const DetalhePopup = ({row, refresh}: Props) => {
         <div className='grid gap-4'>
           <div className='space-y-2'>
             <h4 className='leading-none font-medium text-white'>Detalhes da Movimentação</h4>
-            <p className='text-neutral-400 text-sm'>{row?.tipo}</p>
+            <p className='text-neutral-400 text-sm'>{row.tipoDerivado}</p>
           </div>
           <div className='flex gap-2 text-neutral-400'>
             <span className='font-semibold'>Descrição:</span> {row.descricao}
 
           </div>
-          <div className='flex justify-end'>
-            <Button 
-              onClick={onDesfazer}
-              className='small-button bg-[#de983b] font-semibold'>
-              <Trash color="black"/>
+          <div className='flex justify-end gap-2'>
+            { 
+              row.tipoDerivado == "PERSISTENTE" && <>
+              <Button 
+              onClick={onDelete}
+              className='small-button bg-transparent font-semibold hover:!bg-[#b84149]'>
+              <Trash />
             </Button>
+            <Button 
+              onClick={onEdit}
+              className='small-button bg-[#de983b] font-semibold'>
+              <PencilIcon color="black"/>
+            </Button>
+            </>
+            }
           </div>
         </div>
       </PopoverContent>

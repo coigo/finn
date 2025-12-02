@@ -13,17 +13,18 @@ type MovimentacoesContextProps = {
     movimentacoes: Movimentacao[]
     periodo: MovimentacoesPeriodo
     pendentes: MovimentacoesPendentes[]
+    periodoPendentes: 0 | 1
 }
 
 const MovimentacoesContext = createContext<MovimentacoesContextProps | undefined>(undefined)
 
 export const MovimentacoesProvider = ({ children }: { children: ReactNode }) => {
 
-
     const [ movimentacoes, setMovimentacoes ] = useState<Movimentacao[]>([])
     const [ pendentes, setPendentes ] = useState<MovimentacoesPendentes[]>([])
     const [ loading, setLoading ] = useState(false)
     const [ periodo, setPeriodo ] = useState<MovimentacoesPeriodo>("MES")
+    const [ periodoPendentes, setPeriodoPendentes ] = useState<0 | 1>(0)
     
     const definirPeriodo = (novoPeriodo: MovimentacoesPeriodo) => {
         setPeriodo(novoPeriodo)
@@ -39,6 +40,7 @@ export const MovimentacoesProvider = ({ children }: { children: ReactNode }) => 
 
     const buscar = async () => {
 
+        console.log('oi')
         const data = buildDate(periodo)
         try {
             setLoading(true)
@@ -46,8 +48,13 @@ export const MovimentacoesProvider = ({ children }: { children: ReactNode }) => 
                 BuscarMovimentacoesRequest(data),
                 BuscarMovimentacoesPendentesRequest()
             ]) 
+
+            console.log(pendentes)
             setMovimentacoes(movimentacoes)
-            setPendentes(pendentes)
+            if (pendentes) {
+                setPendentes(pendentes.pendentes)
+                setPeriodoPendentes(pendentes.periodo)
+            }
             setLoading(false)
         }
         catch ( err: any ) {
@@ -57,7 +64,7 @@ export const MovimentacoesProvider = ({ children }: { children: ReactNode }) => 
     }
 
 
-    return <MovimentacoesContext.Provider value={{ buscar, definirPeriodo ,movimentacoes, pendentes, loading, periodo }} >
+    return <MovimentacoesContext.Provider value={{ buscar, definirPeriodo ,movimentacoes, pendentes, loading, periodo, periodoPendentes }} >
         {children}
     </MovimentacoesContext.Provider>
 }

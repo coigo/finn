@@ -12,3 +12,13 @@ public record ListaPendentesDTO (
     MovimentacaoTipo Tipo,
     string TipoDerivado
 );
+
+public enum Periodo
+{
+    MES_ATUAL,
+    PROXIMO_MES
+}
+public record PendentesDTO(
+    List<ListaPendentesDTO> pendentes,
+    Periodo periodo
+);

@@ -18,7 +18,7 @@ public class BuscarMovimentacoesPendentesDoMesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<List<ListaPendentesDTO>> handle()
+    public async Task<PendentesDTO> handle()
     {
         var mov = await UseCase.Execute(Unity.Value);
         return mov;

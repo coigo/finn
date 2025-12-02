@@ -1,15 +1,17 @@
 import { CurrencyField } from "@/app/components/Inputs/CurrencyField"
 import { DateField } from "@/app/components/Inputs/DateField"
-import dayjs from "dayjs"
-import { Control, Controller, FieldValues, UseFormHandleSubmit } from "react-hook-form"
-import { z } from "zod"
 import { SelectField } from "@/app/components/Inputs/SelectField"
-import { useEffect, useState } from "react"
 import { TextField } from "@/app/components/Inputs/TextField"
+import { useForm, Controller } from "react-hook-form"
+import { z } from "zod"
+import { toast } from "sonner"
+import { corrigirTipagem } from "@/lib/utils"
+import { CriarMovimentacaoRequest } from "@/services/movimentacoes"
+import { useEffect } from "react"
 
 export const pontualSchema = z.object({
-    categoriaId: z.number(),
-    valor: z.number(),
+    categoriaId: z.string(),
+    valor: z.string(),
     data: z.date(),
     descricao: z.string()
 })
@@ -17,85 +19,87 @@ export const pontualSchema = z.object({
 export type PontualForm = z.infer<typeof pontualSchema>
 
 type FormProps = {
-    config: {
-        control: Control<FieldValues, any, FieldValues>
-        handleSubmit: UseFormHandleSubmit<FieldValues, FieldValues>
-        onSubmit: (data: FieldValues) => void
-    }
-    categorias: MovimentacaoCategoria[]
-    dividendos?: boolean
+  formTipo: "ENTRADA" | "SAIDA"
+  categorias: MovimentacaoCategoria[]
+  onSuccess: () => void
+  id?: number
 }
 
-export const FormPontual = ({ config: { control, handleSubmit, onSubmit }, categorias, dividendos }: FormProps) => {
+export const FormPontual = ({ categorias, onSuccess, formTipo }: FormProps) => {
 
-    const [aporteSelect, setAporteSelect] = useState<boolean>(Boolean(dividendos))
+  const { control, handleSubmit, reset } = useForm<PontualForm>({
+    defaultValues: {
+      data: new Date()
+    } as any
+  })
 
-    useEffect(() => {
-        setAporteSelect(Boolean(dividendos))
-    }, [dividendos])
+    const onSubmit = async (data: PontualForm) => {
+        try {
+            const payload = corrigirTipagem(data as any)
+            const tipo = formTipo == "ENTRADA"
+                ? 0
+                : payload.categoriaId == 3
+                    ? 2
+                    : 1;
+            console.log(payload)
+            await CriarMovimentacaoRequest({ ...payload, tipo })
+            onSuccess()
+        }
+        catch (err: any) {
+            toast(err.message)
+        }finally {
+        }
+    }
 
-    return (
+  return (
+    <form
+      id="movimentacao-form"
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col md:flex-row flex-wrap gap-3 justify-evenly"
+    >
+      <Controller
+        name="categoriaId"
+        control={control}
+        render={({ field }) => (
+          <SelectField
+            data={categorias}
+            placeholder="Categoria"
+            {...field}
+          />
+        )}
+      />
 
-        <form onSubmit={() => handleSubmit(onSubmit)} className="flex flex-col md:flex-row flex-wrap gap-3 justify-evenly">
-            <Controller
-                name="categoriaId"
-                control={control}
-                render={({ field }) => (
-                    <SelectField
-                        data={categorias}
-                        placeholder="Categoria"
-                        {...field}
-                    />
-                )}
-            />{
-                aporteSelect &&
-                <Controller
-                    name="identificador"
-                    control={control}
-                    render={({ field }) => (
-                        <SelectField
-                            data={categorias}
-                            placeholder="Aporte"
-                            {...field}
-                        />
-                    )}
-                />
-            }
-            <Controller
-                name="valor"
-                control={control}
-                render={({ field }) =>
-                    <CurrencyField
-                        {...field}
-                        placeholder="Valor"
-                    />
-                }
-            />
-            <Controller
-                name="data"
-                control={control}
-                render={({ field }) =>
-                    <DateField
-                        {...field}
-                        label="Data"
-                    />
-                }
-            />
-            <Controller
-                name="descricao"
-                control={control}
-                render={({ field }) =>
-                    <TextField
-                        {...field}
-                        className="w-full"
-                        placeholder="Descrição"
-
-                    />
-                }
-            />
-
-
-        </form>
-
-    )
+      <Controller
+        name="valor"
+        control={control}
+        render={({ field }) =>
+          <CurrencyField
+            {...field}
+            placeholder="Valor"
+          />
+        }
+      />
+      <Controller
+        name="data"
+        control={control}
+        render={({ field }) =>
+          <DateField
+            {...field}
+            label="Data"
+          />
+        }
+      />
+      <Controller
+        name="descricao"
+        control={control}
+        render={({ field }) =>
+          <TextField
+            {...field}
+            className="w-full"
+            placeholder="Descrição"
+          />
+        }
+      />
+    </form>
+  )
 }

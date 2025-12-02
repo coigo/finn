@@ -1,3 +1,4 @@
+
 type Error = {
     succes:boolean
     message: string
@@ -51,12 +52,17 @@ type Movimentacao = {
 }
 
 type MovimentacoesPendentes = {
+    id: number
     valor: number
     categoria: string
     tipo: string
-    tipoDerivado: string
+    tipoDerivado: "PARCELA" | "PERSISTENTE"
     vencimento: Date
     descricao: string
+}
+type Pendentes = {
+    periodo: 0 | 1
+    pendentes: MovimentacoesPendentes[]
 }
 
 type MovimentacaoCategoria = {
@@ -94,3 +100,13 @@ type Salario = {
 type MovimentacoesPeriodo = 'SEMANA' | 'MES' | 'SEIS_MESES' | 'DURANTE_ANO' | 'DOZE_MESES' 
 
 type AporteTipo = 'COMPRA' | 'VENDA' | 'DESDOBRAMENTO' 
+
+type MovimentacaoPersistente = {
+    id: number,
+    valor: number,
+    descricao: string,
+    tipo: number,
+    categoriaId: number,
+    criadoEm: Date,
+    deletadoEm: Date|null
+}
