@@ -17,7 +17,12 @@ public class ProcessarMovimentacoesPendentesUseCase
     public async Task Execute()
     {
         var pendentes = await this._movimentacoes.BuscarPendentesDoMes(DateTime.Now);
-
+        if (pendentes.Count == 0 )
+        {
+            var nextMonth = DateTime.Now.AddMonths(1);
+            pendentes = await this._movimentacoes.BuscarPendentesDoMes(nextMonth);
+            Console.WriteLine("O proximo mes foi buscado");
+        }
         foreach (var mov in pendentes)
         {
             Movimentacao novaMovimentacao = new(

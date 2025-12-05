@@ -148,10 +148,10 @@ export const MovimentacoesDetalhes = () => {
                                     <div className="flex text-start flex-col w-4/5">
                                         <div className="">Pendentes</div>
                                         {
-                                            periodoPendentes == 1 && 
+                                            (periodoPendentes == 1 && pendentes.length) ?
                                             <div className="flex text-[14px] text-center items-center gap-2 text-neutral-500">
                                                 <InfoIcon size="16"/> <span>As pendências a seguir são do próximo mês.</span>
-                                            </div>
+                                            </div> : null
                                         }
                                     </div>
                                     <Button 
