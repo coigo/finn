@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Movimentacoes.DTOS;
+using Movimentacoes.Factories;
 using Movimentacoes.UseCases;
 
 namespace Movimentacoes.Routes ;
@@ -8,16 +9,16 @@ namespace Movimentacoes.Routes ;
 [Route("api/movimentacoes")]
 public class CriarMovimentacaoController : ControllerBase {
 
-    private readonly CriarMovimentacaoUseCase UseCase;
+    private readonly MovimentacaoFactory UseCase;
 
-    public CriarMovimentacaoController(CriarMovimentacaoUseCase useCase) {
+    public CriarMovimentacaoController(MovimentacaoFactory useCase) {
         UseCase = useCase;
     }
 
     [HttpPost]
     public async Task<CriarMovimentacao> handle ([FromBody] CriarMovimentacao data) {
-        var mov = await UseCase.Execute(data);
-        return mov;
+        UseCase.Execute(data);
+        return data;
     }
 
 }

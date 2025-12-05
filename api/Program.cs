@@ -49,6 +49,9 @@ builder.Services.AddHttpClient<IAtivosRepository, AtivosRepository>();
 //UseCases
 
 builder.Services.AddScoped<CriarMovimentacaoUseCase>();
+builder.Services.AddScoped<MovimentacaoFactory>();
+builder.Services.AddScoped<CriarParcelaUseCase>();
+builder.Services.AddScoped<CriarPersistenteUseCase>();
 builder.Services.AddScoped<BuscarMovimentacoesUseCase>();
 builder.Services.AddScoped<DesfazerMovimentacaoUseCase>();
 builder.Services.AddScoped<SubtrairParcelasUseCase>();
@@ -75,7 +78,6 @@ builder.Services.AddScoped<AdicionarSalarioAtualUseCase>();
 
 //Factories
 
-builder.Services.AddScoped<IMovimentacaoFactory, MovimentacaoFactory>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

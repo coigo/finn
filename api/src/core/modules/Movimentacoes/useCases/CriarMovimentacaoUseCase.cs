@@ -6,60 +6,39 @@ using Movimentacoes.Factories;
 
 namespace Movimentacoes.UseCases;
 
-public class CriarMovimentacaoUseCase : IUseCase<CriarMovimentacao, CriarMovimentacao>
+public class CriarMovimentacaoUseCase
 {
 
-    private readonly IMovimentacaoFactory _movFactory;
     private readonly IMovimentacaoRepository _movimentacoes;
     private readonly ISaldoRepository _saldos;
 
-    public CriarMovimentacaoUseCase(IMovimentacaoRepository movimentacoes, ISaldoRepository saldos, IMovimentacaoFactory factory)
+    public CriarMovimentacaoUseCase (
+        IMovimentacaoRepository movimentacoes, 
+        ISaldoRepository saldos
+    )
     {
         _movimentacoes = movimentacoes;
-        _movFactory = factory;
         _saldos = saldos;
     }
 
-    public async Task<CriarMovimentacao> Execute(CriarMovimentacao data)
+    public async void  Execute(CriarMovimentacao data)
     {
-        var derivadosMovimentacao = this._movFactory.Execute(data);
-
-        var coisa = new Dictionary<MovimentacoesDerivadosDTO, Func<Task>>
-        {
-            {MovimentacoesDerivadosDTO.MOVIMENTACAO, () => CriarMovimentacao(derivadosMovimentacao.Movimentacao) },
-            {MovimentacoesDerivadosDTO.PERSISTENTE, () => CriarPersistente(derivadosMovimentacao.Persistente) },
-            {MovimentacoesDerivadosDTO.PARCELAS, () => CriarParcela(derivadosMovimentacao.Parcela) }
-        };
-        await coisa[derivadosMovimentacao.derivado]();
-        return data;
-    }
-
-    private async Task CriarPersistente(MovimentacaoPersistente? data)
-    {
-        if (data == null) return;
-
-        await this._movimentacoes.CriarMovimentacaoPersistente(data);
-
-    }
-
-    private async Task CriarParcela(List<MovimentacaoParcela>? data)
-    {
-        if (data == null) return;
-        await this._movimentacoes.CriarMovimentacaoParcela(data);
-    }
-
-    private async Task CriarMovimentacao(Movimentacao? data)
-    {
-
-        if (data == null) return;
 
         var SalvarPorTipo = new Dictionary<MovimentacaoTipo, Func<Movimentacao, Task>>{
             { MovimentacaoTipo.INVESTIMENTOS, CriarTipoInvestimento },
             { MovimentacaoTipo.ENTRADA, CriarTipoEntrada },
             { MovimentacaoTipo.SAIDA, CriarTipoSaida }
         };
-        await SalvarPorTipo[data.Tipo](data);
-        await this._movimentacoes.CriarMovimentacao(data);
+
+        Movimentacao mov = new (
+            data.valor, 
+            data.tipo, 
+            data.categoriaId, 
+            data.descricao, 
+            data.data
+        ); 
+        await SalvarPorTipo[data.tipo](mov);
+        await this._movimentacoes.CriarMovimentacao(mov);
     }
 
     private async Task CriarTipoEntrada(Movimentacao data)
