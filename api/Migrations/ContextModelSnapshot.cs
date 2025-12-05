@@ -183,91 +183,91 @@ namespace api.Migrations
                         new
                         {
                             Id = 1,
-                            CriadoEm = new DateTime(2025, 8, 22, 15, 58, 5, 223, DateTimeKind.Local).AddTicks(2421),
+                            CriadoEm = new DateTime(2025, 11, 29, 10, 1, 35, 968, DateTimeKind.Local).AddTicks(5811),
                             Nome = "Comida e Mercado",
                             Tipo = "SAIDA"
                         },
                         new
                         {
                             Id = 2,
-                            CriadoEm = new DateTime(2025, 8, 22, 15, 58, 5, 223, DateTimeKind.Local).AddTicks(2464),
+                            CriadoEm = new DateTime(2025, 11, 29, 10, 1, 35, 968, DateTimeKind.Local).AddTicks(5857),
                             Nome = "Educação e Desenvolvimento",
                             Tipo = "SAIDA"
                         },
                         new
                         {
                             Id = 3,
-                            CriadoEm = new DateTime(2025, 8, 22, 15, 58, 5, 223, DateTimeKind.Local).AddTicks(2466),
+                            CriadoEm = new DateTime(2025, 11, 29, 10, 1, 35, 968, DateTimeKind.Local).AddTicks(5858),
                             Nome = "Investimentos",
                             Tipo = "SAIDA"
                         },
                         new
                         {
                             Id = 4,
-                            CriadoEm = new DateTime(2025, 8, 22, 15, 58, 5, 223, DateTimeKind.Local).AddTicks(2467),
+                            CriadoEm = new DateTime(2025, 11, 29, 10, 1, 35, 968, DateTimeKind.Local).AddTicks(5860),
                             Nome = "Lazer e Bem-estar",
                             Tipo = "SAIDA"
                         },
                         new
                         {
                             Id = 5,
-                            CriadoEm = new DateTime(2025, 8, 22, 15, 58, 5, 223, DateTimeKind.Local).AddTicks(2468),
+                            CriadoEm = new DateTime(2025, 11, 29, 10, 1, 35, 968, DateTimeKind.Local).AddTicks(5861),
                             Nome = "Serviços",
                             Tipo = "SAIDA"
                         },
                         new
                         {
                             Id = 6,
-                            CriadoEm = new DateTime(2025, 8, 22, 15, 58, 5, 223, DateTimeKind.Local).AddTicks(2470),
+                            CriadoEm = new DateTime(2025, 11, 29, 10, 1, 35, 968, DateTimeKind.Local).AddTicks(5862),
                             Nome = "Moradia",
                             Tipo = "SAIDA"
                         },
                         new
                         {
                             Id = 7,
-                            CriadoEm = new DateTime(2025, 8, 22, 15, 58, 5, 223, DateTimeKind.Local).AddTicks(2471),
+                            CriadoEm = new DateTime(2025, 11, 29, 10, 1, 35, 968, DateTimeKind.Local).AddTicks(5863),
                             Nome = "Transporte",
                             Tipo = "SAIDA"
                         },
                         new
                         {
                             Id = 8,
-                            CriadoEm = new DateTime(2025, 8, 22, 15, 58, 5, 223, DateTimeKind.Local).AddTicks(2472),
+                            CriadoEm = new DateTime(2025, 11, 29, 10, 1, 35, 968, DateTimeKind.Local).AddTicks(5864),
                             Nome = "Saúde",
                             Tipo = "SAIDA"
                         },
                         new
                         {
                             Id = 9,
-                            CriadoEm = new DateTime(2025, 8, 22, 15, 58, 5, 223, DateTimeKind.Local).AddTicks(2473),
+                            CriadoEm = new DateTime(2025, 11, 29, 10, 1, 35, 968, DateTimeKind.Local).AddTicks(5866),
                             Nome = "Salário",
                             Tipo = "ENTRADA"
                         },
                         new
                         {
                             Id = 10,
-                            CriadoEm = new DateTime(2025, 8, 22, 15, 58, 5, 223, DateTimeKind.Local).AddTicks(2475),
+                            CriadoEm = new DateTime(2025, 11, 29, 10, 1, 35, 968, DateTimeKind.Local).AddTicks(5867),
                             Nome = "Dividendo",
                             Tipo = "ENTRADA"
                         },
                         new
                         {
                             Id = 11,
-                            CriadoEm = new DateTime(2025, 8, 22, 15, 58, 5, 223, DateTimeKind.Local).AddTicks(2476),
+                            CriadoEm = new DateTime(2025, 11, 29, 10, 1, 35, 968, DateTimeKind.Local).AddTicks(5868),
                             Nome = "Venda",
                             Tipo = "ENTRADA"
                         },
                         new
                         {
                             Id = 12,
-                            CriadoEm = new DateTime(2025, 8, 22, 15, 58, 5, 223, DateTimeKind.Local).AddTicks(2477),
+                            CriadoEm = new DateTime(2025, 11, 29, 10, 1, 35, 968, DateTimeKind.Local).AddTicks(5869),
                             Nome = "Transferências",
                             Tipo = "ENTRADA"
                         },
                         new
                         {
                             Id = 13,
-                            CriadoEm = new DateTime(2025, 8, 22, 15, 58, 5, 223, DateTimeKind.Local).AddTicks(2478),
+                            CriadoEm = new DateTime(2025, 11, 29, 10, 1, 35, 968, DateTimeKind.Local).AddTicks(5870),
                             Nome = "Outros",
                             Tipo = "ENTRADA"
                         });
@@ -333,6 +333,10 @@ namespace api.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("criadoEm");
 
+                    b.Property<DateTime?>("DeletadoEm")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("deletadoEm");
+
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -349,67 +353,6 @@ namespace api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("movimentacoes_persistentes");
-                });
-
-            modelBuilder.Entity("Resumos.Models.Resumo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("nome");
-
-                    b.Property<decimal>("Valor")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("valor");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("resumo");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Nome = "Corrente",
-                            Valor = 0m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Nome = "Investimentos",
-                            Valor = 0m
-                        });
-                });
-
-            modelBuilder.Entity("Resumos.Models.ResumoHistorico", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("criadoEm");
-
-                    b.Property<int>("ResumoId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("resumoId");
-
-                    b.Property<decimal>("Valor")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("valor");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResumoId");
-
-                    b.ToTable("resumo_historico");
                 });
 
             modelBuilder.Entity("Rotinas.Models.Rotina", b =>
@@ -448,6 +391,67 @@ namespace api.Migrations
                     b.ToTable("salarios");
                 });
 
+            modelBuilder.Entity("Saldos.Models.Saldo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("nome");
+
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("valor");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("saldos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nome = "Corrente",
+                            Valor = 0m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nome = "Investimentos",
+                            Valor = 0m
+                        });
+                });
+
+            modelBuilder.Entity("Saldos.Models.SaldoHistorico", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("criadoEm");
+
+                    b.Property<int>("SaldoId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("resumoId");
+
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("valor");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SaldoId");
+
+                    b.ToTable("saldos_historico");
+                });
+
             modelBuilder.Entity("Movimentacoes.Models.Movimentacao", b =>
                 {
                     b.HasOne("Movimentacoes.Models.MovimentacaoCategoria", "Categoria")
@@ -471,15 +475,15 @@ namespace api.Migrations
                     b.Navigation("Persistente");
                 });
 
-            modelBuilder.Entity("Resumos.Models.ResumoHistorico", b =>
+            modelBuilder.Entity("Saldos.Models.SaldoHistorico", b =>
                 {
-                    b.HasOne("Resumos.Models.Resumo", "Resumo")
-                        .WithMany("ResumoHistorico")
-                        .HasForeignKey("ResumoId")
+                    b.HasOne("Saldos.Models.Saldo", "Saldo")
+                        .WithMany("SaldoHistorico")
+                        .HasForeignKey("SaldoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Resumo");
+                    b.Navigation("Saldo");
                 });
 
             modelBuilder.Entity("Movimentacoes.Models.MovimentacaoCategoria", b =>
@@ -487,9 +491,9 @@ namespace api.Migrations
                     b.Navigation("Movimentacoes");
                 });
 
-            modelBuilder.Entity("Resumos.Models.Resumo", b =>
+            modelBuilder.Entity("Saldos.Models.Saldo", b =>
                 {
-                    b.Navigation("ResumoHistorico");
+                    b.Navigation("SaldoHistorico");
                 });
 #pragma warning restore 612, 618
         }

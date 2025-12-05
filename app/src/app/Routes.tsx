@@ -5,9 +5,9 @@ import Aportes from "./pages/aportes"
 export const Router = () => {
     return (
     <Routes >
+        <Route path="*" element={<Navigate to={'/movimentacoes'} replace/>} />
         <Route path="/movimentacoes" element={<Movimentacoes />} />
         <Route path="/aportes" element={<Aportes />} />
-        <Route path="/" element={<Navigate to={'/movimentacoes'} replace/>} />
         
     </Routes>)
 }

@@ -13,8 +13,12 @@ type DatePickerProps =  {
   name: string
 }
 
-export const DateField = (props: DatePickerProps) => {
-  const [date, setDate] = React.useState<Date>()
+export const DateField = ({ label, value, onChange }: DatePickerProps) => {
+  const [date, setDate] = React.useState<Date | undefined>(value)
+
+  React.useEffect(() => {
+    setDate(value)
+  }, [value])
 
   return (
     <Popover>
@@ -25,14 +29,19 @@ export const DateField = (props: DatePickerProps) => {
           className="border-neutral-500 data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal hover:bg-transparent"
         >
           <CalendarIcon />
-          {date ? format(date, "PPP") : <span>{props.label || "Selecione uma Data"}</span>}
+          {date ? format(date, "PPP") : <span>{label}</span>}
         </Button>
       </PopoverTrigger>
+
       <PopoverContent className="w-auto p-0">
-        <Calendar mode="single" selected={date} onSelect={(e) => {
-            setDate(e)
-            props.onChange && props.onChange(e)
-          }} />
+        <Calendar
+          mode="single"
+          selected={date}
+          onSelect={(e) => {
+            setDate(e ?? undefined)
+            onChange(e ?? undefined)
+          }}
+        />
       </PopoverContent>
     </Popover>
   )

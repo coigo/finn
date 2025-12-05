@@ -53,7 +53,7 @@ export const totalizarAportesPorCategoria = (aportes: Aporte[]): PieData[] => {
             
 }
 
-export const totalizarMovimentacoesPorCategoria = (movimentacoes: Movimentacao[], tipo: "ENTRADA" | "SAIDA"): PieData[] => {
+export const totalizarMovimentacoesPorCategoria = (movimentacoes: Movimentacao[], tipo: "ENTRADA" | "SAIDA" | "INVESTIMENTOS"): PieData[] => {
     const movimentacoesAgrupadas = groupBy(
         movimentacoes.filter(m => m.tipo == tipo)
         , "categoria"
@@ -68,8 +68,30 @@ export const totalizarMovimentacoesPorCategoria = (movimentacoes: Movimentacao[]
             value: total
         }
     })
-        
             
+}
+
+export const totalPorTipo = (movimentacoes: Movimentacao[]) => {
+    let result = {
+        investimentos: 0,
+        entradas: 0,
+        saidas: 0,
+    }
+
+    movimentacoes.forEach(mov => {
+        if (mov.tipo == "INVESTIMENTOS") {
+            result.investimentos += mov.valor
+        }
+        if (mov.tipo == "ENTRADA") {
+            result.entradas += mov.valor
+        }
+        if (mov.tipo == "SAIDA") {
+            result.saidas += mov.valor
+        }
+    });
+
+    return result
+
 }
 
 export function sortBy (arr: any[], key: string): any[] {

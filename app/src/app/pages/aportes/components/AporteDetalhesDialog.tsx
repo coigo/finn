@@ -36,7 +36,7 @@ export const AporteDetalhesDialog = ({ identificador }: props) => {
     const { buscar, historico } = useBuscarAporteHistorico()
     const [currentForm, setCurrentForm] = useState<AporteTipo>("COMPRA")
 
-    const {buscar: buscarAportes} = useAportesHook()
+    const { buscar: buscarAportes } = useAportesHook()
 
     const formSchema = schema(currentForm)
     type MovimentarAporte = z.infer<typeof formSchema>
@@ -48,7 +48,7 @@ export const AporteDetalhesDialog = ({ identificador }: props) => {
         setLoading(true)
         try {
             (data as any) = corrigirTipagem(data as any)
-            await MovimentarAporteRequest(identificador, data) 
+            await MovimentarAporteRequest(identificador, data)
             await buscarAportes()
         }
         catch (err: any) {
@@ -70,7 +70,7 @@ export const AporteDetalhesDialog = ({ identificador }: props) => {
     }
 
     const totalTempl = (row: AporteHistorico) => {
-        return row.preco ? `R$ ${row.preco.toFixed(2)} `: 'N/A'
+        return row.preco ? `R$ ${row.preco.toFixed(2)} ` : 'N/A'
     }
 
     const dataCompraTempl = (row: AporteHistorico) => {
@@ -110,7 +110,7 @@ export const AporteDetalhesDialog = ({ identificador }: props) => {
                         <div className="w-full md:w-fit md:flex-1">
                             <form className="grid gap-2" onSubmit={() => handleSubmit(onSubmit)}>
                                 <div className="px-4 mb-3">{currentForm}</div>
-                                { currentForm == "COMPRA" && <Controller
+                                {currentForm == "COMPRA" && <Controller
                                     control={control}
                                     name="preco"
                                     render={({ field }) =>
@@ -144,24 +144,24 @@ export const AporteDetalhesDialog = ({ identificador }: props) => {
                             </form>
                         </div>
                         <div className="h-full block p-4">
-                            <button className="custom-buttom-round hover:!bg-[#404040]"
+                            <button className="custom-button-round hover:!bg-[#404040]"
                                 onClick={() => changeForm("COMPRA")}
                             >
                                 <FaPlus />
                             </button>
-                            <button className="custom-buttom-round hover:!bg-[#404040]"
+                            <button className="custom-button-round hover:!bg-[#404040]"
                                 onClick={() => changeForm("VENDA")}
                             >
                                 <FaMinus />
                             </button>
-                            <button className="custom-buttom-round hover:!bg-[#404040]"
+                            <button className="custom-button-round hover:!bg-[#404040]"
                                 onClick={() => changeForm("DESDOBRAMENTO")}
                             >
                                 <FaDivide style={{ transform: 'rotate(45deg)' }} />
                             </button>
                             <Button
                                 disabled={loading}
-                                className="custom-buttom-round hover:!bg-[#404040]"
+                                className="custom-button-round hover:!bg-[#404040]"
                                 type="submit"
                                 onClick={handleSubmit(onSubmit)} >
                                 <IoMdSend style={{ color: '#de983b' }} />

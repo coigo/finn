@@ -1,34 +1,83 @@
 import { CurrencyField } from "@/app/components/Inputs/CurrencyField"
 import { DateField } from "@/app/components/Inputs/DateField"
-import dayjs from "dayjs"
-import { Control, Controller, FieldValues, UseFormHandleSubmit } from "react-hook-form"
-import { z } from "zod"
 import { SelectField } from "@/app/components/Inputs/SelectField"
 import { TextField } from "@/app/components/Inputs/TextField"
+import { useForm, Controller } from "react-hook-form"
+import { z } from "zod"
+import { toast } from "sonner"
+import {  CriarMovimentacaoRequest, EditarMovimentacaoPersistente } from "@/services/movimentacoes"
+import { corrigirTipagem } from "@/lib/utils"
+import { useEffect, useState } from "react"
+import { usePersistente } from "@/hooks/usePersistente"
 
 export const persistenteSchema = z.object({
+    id: z.number(),
     descricao: z.string(),
-    categoriaId: z.number(),
-    valor: z.number(),
+    categoriaId: z.string(),
+    valor: z.string(),
     dataCompra: z.date(),
 })
 
 export type PersistenteForm = z.infer<typeof persistenteSchema>
 
 type FormProps = {
-    config: {
-        control: Control<FieldValues, any, FieldValues>
-        handleSubmit: UseFormHandleSubmit<FieldValues, FieldValues>
-        onSubmit: (data: FieldValues) => void
-    }
     categorias: MovimentacaoCategoria[]
+    onSuccess: () => void
+    id?: number
 }
 
-export const FormPersistente = ({ config: { control, handleSubmit, onSubmit }, categorias }: FormProps) => {
+export const FormPersistente = ({ categorias, onSuccess, id }: FormProps) => {
+
+    const {buscar, loading, movimentacao} = usePersistente()
+    const { control, handleSubmit, reset } = useForm<PersistenteForm>()
+
+    useEffect(() => {
+        if (id) {
+            buscar(id)
+        }
+    }, [])
+
+    useEffect(() => {
+        if (movimentacao) {
+            reset({
+                id,
+                categoriaId: String(movimentacao.categoriaId),
+                dataCompra: new Date(),
+                descricao: movimentacao.descricao,
+                valor: String(movimentacao.valor)
+            })
+        }
+    },[movimentacao, reset])
+
+    const onSubmit = async (data: PersistenteForm) => {
+        try {
+            const corrigido = corrigirTipagem(data as any)
+            if (id) {
+                await EditarMovimentacaoPersistente({...corrigido, persistenteId: data.id})
+            }
+            else {
+                const payload = {
+                    ...corrigido,
+                    tipo: 1,
+                    persistente: true
+                }
+                console.log(payload)
+                await CriarMovimentacaoRequest(payload)
+
+            }
+            toast("Movimentação persistente criada com sucesso!")
+            onSuccess()
+        } catch (err: any) {
+            toast(err.message || "Erro ao salvar movimentação persistente")
+        }
+    }
+
     return (
-
-        <form onSubmit={() => handleSubmit(onSubmit)} className="flex flex-col md:flex-row flex-wrap gap-3 justify-evenly">
-
+        <form
+            id="movimentacao-form"
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col md:flex-row flex-wrap gap-3 justify-evenly"
+        >
             <Controller
                 name="categoriaId"
                 control={control}
@@ -46,7 +95,7 @@ export const FormPersistente = ({ config: { control, handleSubmit, onSubmit }, c
                 render={({ field }) =>
                     <CurrencyField
                         {...field}
-                        placeholder="valor"
+                        placeholder="Valor"
                     />
                 }
             />
@@ -57,7 +106,6 @@ export const FormPersistente = ({ config: { control, handleSubmit, onSubmit }, c
                     <DateField
                         {...field}
                         label="Data da Compra"
-
                     />
                 }
             />
@@ -72,8 +120,6 @@ export const FormPersistente = ({ config: { control, handleSubmit, onSubmit }, c
                     />
                 }
             />
-
         </form>
-
     )
 }

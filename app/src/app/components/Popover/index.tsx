@@ -28,21 +28,21 @@ export default function CustomPopover({ children }: PopoverProps) {
     return (
         <>
 
-	<Popover.Root>
-		<Popover.Trigger asChild>
-			<button className="custom-buttom-round" aria-label="Update dimensions">
-				<FaBars className="text-bold text-yellow-950"/>
-			</button>
-		</Popover.Trigger>
-		<Popover.Portal>
-			<Popover.Content className="bg-neutral-800 border border-neutral-700 rounded-lg p-4 " sideOffset={5}>
-				<div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                    {children}
-				</div>
-				<Popover.Arrow className="PopoverArrow" />
-			</Popover.Content>
-		</Popover.Portal>
-	</Popover.Root>
+            <Popover.Root>
+                <Popover.Trigger asChild>
+                    <button className="custom-button-round" aria-label="Update dimensions">
+                        <FaBars className="text-bold text-yellow-950" />
+                    </button>
+                </Popover.Trigger>
+                <Popover.Portal>
+                    <Popover.Content className="bg-neutral-800 border border-neutral-700 rounded-lg p-4 " sideOffset={5}>
+                        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                            {children}
+                        </div>
+                        <Popover.Arrow className="PopoverArrow" />
+                    </Popover.Content>
+                </Popover.Portal>
+            </Popover.Root>
             {/* <IconButton  aria-describedby={id} onClick={handleClick}>
                 <SettingsIcon className='text-yellow-950' />
             </IconButton>

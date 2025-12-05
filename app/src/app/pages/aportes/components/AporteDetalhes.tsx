@@ -31,28 +31,28 @@ export const AportesDetalhes = () => {
 
     }, [aportes])
 
-    const buscarDetalhes = (row:AporteTotalizado) => {
-        openModal(<AporteDetalhesDialog identificador={row.identificador}/>)        
+    const buscarDetalhes = (row: AporteTotalizado) => {
+        openModal(<AporteDetalhesDialog identificador={row.identificador} />)
     }
 
 
-    const precoMedioTempl = (row:AporteTotalizado) => {
+    const precoMedioTempl = (row: AporteTotalizado) => {
         return `R$ ${row.precoMedio.toFixed(2)}`
     }
 
-    const precoAtualTempl = (row:AporteTotalizado) => {
+    const precoAtualTempl = (row: AporteTotalizado) => {
         return `R$ ${row.precoAtual.toFixed(2)}`
     }
 
-    const totalTempl = (row:AporteTotalizado) => {
+    const totalTempl = (row: AporteTotalizado) => {
         return `R$ ${row.total.toFixed(2)}`
     }
 
-    const editarTempl = (row:AporteTotalizado) => {
-        return <button 
-        onClick={() => buscarDetalhes(row)}
-            className="custom-buttom-round hover:!bg-[#404040]">
-            <IoIosArrowForward/>
+    const editarTempl = (row: AporteTotalizado) => {
+        return <button
+            onClick={() => buscarDetalhes(row)}
+            className="custom-button-round hover:!bg-[#404040]">
+            <IoIosArrowForward />
         </button>
     }
 
@@ -75,11 +75,11 @@ export const AportesDetalhes = () => {
                             <div className="m-4 pr-4 font-semibold w-full md:mb-12">
 
                                 <SelectField
-                                    placeholder="Tipo de Aporte" 
+                                    placeholder="Tipo de Aporte"
                                     onChange={e => setCategoria(e)}
                                     value={categoria}
-                                    data={Object.keys(aportesAgrupados).map(c => { return { id: c, name: c } } )}
-                                    
+                                    data={Object.keys(aportesAgrupados).map(c => { return { id: c, name: c } })}
+
                                 />
 
                             </div>
@@ -109,16 +109,16 @@ export const AportesDetalhes = () => {
                             </div>
 
                             <Datatable.Root data={aportesAgrupados[cat].reverse()} >
-                                <Datatable.Column description="Ticker" field="identificador"/>
-                                <Datatable.Column description="Total" body={totalTempl}/>
-                                <Datatable.Column description="Preço Médio" body={precoMedioTempl}/>
+                                <Datatable.Column description="Ticker" field="identificador" />
+                                <Datatable.Column description="Total" body={totalTempl} />
+                                <Datatable.Column description="Preço Médio" body={precoMedioTempl} />
                                 {
-                                    cat != "CRIPTOMOEDA" 
-                                        ? <Datatable.Column description="Preço Atual" body={precoAtualTempl}/> 
+                                    cat != "CRIPTOMOEDA"
+                                        ? <Datatable.Column description="Preço Atual" body={precoAtualTempl} />
                                         : <></>
                                 }
-                                <Datatable.Column description="Quantidade" field="quantidade"/>
-                                <Datatable.Column body={editarTempl} description="" class="flex-none mr-6"/>
+                                <Datatable.Column description="Quantidade" field="quantidade" />
+                                <Datatable.Column body={editarTempl} description="" class="flex-none mr-6" />
 
                             </Datatable.Root>
                         </div>
