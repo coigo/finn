@@ -1,11 +1,18 @@
-services: 
-  finn: 
+services:
+  finn:
     build:
       context: .
-      dockerfile: Dockerfile
+    image: finn:latest
+    restart: unless-stopped
     ports:
-      - 5000:5000
+      - "5000:5000"
     env_file:
-      - ./.env
+      - .env
     volumes:
-      - ./api/data:/app/data
+      - /home/pi/mnt/storage:/app/data
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"

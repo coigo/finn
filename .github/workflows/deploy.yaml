@@ -50,5 +50,8 @@ jobs:
           release_name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
 
+      - name: Current folder
+        run: pwd
+
       - name: Update Kubernetes Pod
-        run: microk8s kubectl set image deployment/finn-deployment app=localhost:32000/finn:${{steps.changelog.outputs.tag}} -n finn
+        run: docker compose restart
