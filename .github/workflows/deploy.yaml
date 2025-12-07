@@ -5,7 +5,6 @@ on:
 env:
   API_BASE_URL: http://10.0.0.187:30001/api
   IMAGE_NAME: finn
-  REGISTRY: localhost:32000
 jobs:
   release:
     runs-on: self-hosted
@@ -32,8 +31,8 @@ jobs:
           push: true
           file: ./Dockerfile
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.changelog.outputs.tag }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.IMAGE_NAME }}:${{ steps.changelog.outputs.tag }}
+            ${{ env.IMAGE_NAME }}:latest
           labels: |
             org.opencontainers.image.version=${{ steps.changelog.outputs.tag }}
           no-cache: true
