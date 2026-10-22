@@ -1,0 +1,30 @@
+version: "2"
+sql:
+  - engine: sqlite
+    schema: db/migrations
+    queries: internal/sqlcgen/saldos/queries.sql
+    gen:
+      go:
+        package: sqlcgen
+        out: internal/sqlcgen/saldos
+  - engine: sqlite
+    schema: db/migrations
+    queries: internal/sqlcgen/salarios/queries.sql
+    gen:
+      go:
+        package: sqlcgen
+        out: internal/sqlcgen/salarios
+  - engine: sqlite
+    schema: db/migrations
+    queries: internal/sqlcgen/aportes/queries.sql
+    gen:
+      go:
+        package: sqlcgen
+        out: internal/sqlcgen/aportes
+  - engine: sqlite
+    schema: db/migrations
+    queries: internal/sqlcgen/movimentacoes/queries.sql
+    gen:
+      go:
+        package: sqlcgen
+        out: internal/sqlcgen/movimentacoes
