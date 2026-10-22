@@ -15,30 +15,48 @@ COPY --chown=node:node /app .
 
 RUN yarn build --debug
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine3.22 AS api-build
+FROM golang:1.26.4-alpine AS api-build
 
 WORKDIR /app
-COPY /api/ ./
+COPY /new-api/go.mod /new-api/go.sum ./
+RUN go mod download
 
-RUN dotnet restore
-RUN dotnet publish -c Release -o ./publish
+COPY /new-api ./
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine3.22 AS runnable
+# CGO off: driver SQLite é o modernc.org/sqlite (pure Go) → binário estático
+RUN CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o ./api ./cmd/api
+
+FROM alpine:3.22 AS runnable
 
 WORKDIR /app
 
 RUN addgroup -S --gid 1003 finn \
 && adduser -S -G finn --uid 1000 finn-user
 
-RUN apk add curl
-
-COPY --from=api-build /app/publish ./
-COPY --from=app-build /app/dist/ ./wwwroot/
 RUN mkdir -p /app/data && chown -R finn-user:finn /app/data
+
+# PORT, WEB_URL, B3_API_URL, B3_API_KEY, CRYPTO_API_URL e CRYPTO_API_KEY são
+# OBRIGATÓRIAS (o Go falha no startup sem elas — config.Load, paridade do C#).
+# Opcionais: DB_PATH (padrão data/finn.sqlite) e WEB_ROOT (padrão wwwroot).
+ENV \
+    PORT="5000" \
+    WEB_URL="http://localhost:3000" \
+    B3_API_URL="https://brapi.dev/api/quote" \
+    B3_API_KEY="" \
+    CRYPTO_API_URL="https://api.coingecko.com/api/v3/simple/price" \
+    CRYPTO_API_KEY=""
+
+COPY --from=api-build /app/api ./
+COPY --from=app-build /app/dist/ ./wwwroot/
 
 USER finn-user
 
 EXPOSE 5000
 
 
-CMD [ "dotnet", "api.dll" ]
+# Sem ./api --migrate: no Go as migrations (goose) rodam no próprio startup
+# (cmd/api/main.go run() aplica antes de servir).
+
+CMD [ "./api" ]
+
+# O modo ./api --migrate continua disponível para o initContainer do deploy.yaml.
